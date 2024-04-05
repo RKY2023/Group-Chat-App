@@ -1,4 +1,3 @@
-// import express from 'express';
 const path = require("path");
 var cors = require("cors");
 require("dotenv").config();
@@ -16,7 +15,9 @@ app.set("views", "views");
 
 const userRoutes = require("./routes/user");
 
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:3000",
+}));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -26,6 +27,6 @@ sequelize
   // .sync({ force: true})
   .sync()
   .then((k) => {
-    app.listen( process.env.PORT || 3000);
+    app.listen( process.env.PORT || 5000);
   })
   .catch((err) => console.log(err));

@@ -28,7 +28,13 @@ const signupAPI = async (req, res, next) => {
   }
 };
 
+const apiTest = async (req, res, next) => {
+  console.log('api called');
+  res.status(203).json({ 'apitest': "hi" });
+}
+
 module.exports = {
+  apiTest,
   signup: signup,
   signupAPI: signupAPI,
 };
