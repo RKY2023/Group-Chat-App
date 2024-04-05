@@ -24,18 +24,27 @@ const Login = () => {
     }
     const [backendData, setBackendData] = useState();
 
-
-
     const loginHandler = useCallback( async (userData) => {
-        
-        const response = await  fetch("http://localhost:5000/api/signup", {
-            method: "POST",
-            body: JSON.stringify({
+        let loginUrl, payload;
+        if(loginMode == 'signup') {
+            loginUrl = "http://localhost:5000/api/signup";
+            payload = {
                 email: userData.email,
                 password: userData.password,
                 name: userData.name,
                 phoneno: userData.phoneno,
-            }),
+            };
+        } else {
+            loginUrl = "http://localhost:5000/api/login"
+            payload = {
+                email: userData.email,
+                password: userData.password,
+            }
+        }
+         
+        const response = await  fetch(loginUrl, {
+            method: "POST",
+            body: JSON.stringify(payload),
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -50,22 +59,34 @@ const Login = () => {
         }
     
         setBackendData(data);
-    },[])
+    },[]);
+
+    const switchLoginModeHandler = () => {
+        if(loginMode == 'signup') {
+            setLoginMode('login');
+        } else {
+            setLoginMode('signup');
+        }
+    }
 
     useEffect( () => {
         console.log('useEffect');
         // datafetcher();
     },[]);
 
+
+
     return (
         <>
         <div className="container">
         <div>{error}</div>
         <Form onSubmit={submitHandler}>
+            { loginMode == 'signup' && 
             <Form.Group className="mt-2">
                 <Form.Label>Name</Form.Label>
                 <Form.Control type="text" placeholder="Enter Name" ref={inputNameRef}/>
             </Form.Group>
+            }
             <Form.Group className="mt-2">
                 <Form.Label>Email</Form.Label>
                 <Form.Control type="email" placeholder="Enter Email" ref={inputEmailRef}/>
@@ -74,12 +95,18 @@ const Login = () => {
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="Password" ref={inputPasswordRef}/>
             </Form.Group>
+            { loginMode == 'signup' && 
             <Form.Group className="mt-2">
                 <Form.Label>Phone No</Form.Label>
                 <Form.Control type="number" placeholder="Phone no" ref={inputPhonenoRef}/>
             </Form.Group>
+            }
             <Button variant="primary" type="submit" className="mt-3">
                 {loginMode == 'signup' ? 'Sign Up': 'Login' }
+            </Button>
+            <hr/>
+            <Button onClick={switchLoginModeHandler} variant="success">
+                {(loginMode == 'signup') ? 'Already have an Account? Login' : 'Don\'t have an account? Signup' }
             </Button>
         </Form>
         </div>
