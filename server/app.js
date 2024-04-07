@@ -10,16 +10,13 @@ const sequelize = require("./util/database");
 
 const app = express();
 
-app.set("view engine", "ejs");
-app.set("views", "views");
-
 const userRoutes = require("./routes/user");
 
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000", "http://127.0.0.1:5000"]
 }));
+// app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, "public")));
 
 app.use(userRoutes);
 

@@ -12,12 +12,20 @@ const Login = () => {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        const userData = {
-            email: inputEmailRef.current.value,
-            password: inputPasswordRef.current.value,
-            name: inputNameRef.current.value, 
-            phoneno: inputPhonenoRef.current.value
-        }
+        let userData;
+        if(loginMode == 'signup') {
+            userData = {
+                email: inputEmailRef.current.value,
+                password: inputPasswordRef.current.value,
+                name: inputNameRef.current.value, 
+                phoneno: inputPhonenoRef.current.value
+            }    
+        } else {
+            userData = {
+                email: inputEmailRef.current.value,
+                password: inputPasswordRef.current.value,
+            }
+        }        
         console.log(userData)
         loginHandler(userData);
 
@@ -51,15 +59,18 @@ const Login = () => {
         });
         const data = await response.json();
         console.log(data);
+        if(data.token) {
+            localStorage.setItem('token', data.token);
+        }
         if(data.error) {
             setError(data.error.message);
         }
         if (loginMode == 'login' || loginMode == 'signup') {
-        window.location.href = 'http://'+window.location.host+'/chat';
+        // window.location.href = 'http://'+window.location.host+'/chat';
         }
     
         setBackendData(data);
-    },[]);
+    },[loginMode]);
 
     const switchLoginModeHandler = () => {
         if(loginMode == 'signup') {
@@ -71,8 +82,9 @@ const Login = () => {
 
     useEffect( () => {
         console.log('useEffect');
+        console.log('Mode:', loginMode);
         // datafetcher();
-    },[]);
+    },[loginMode]);
 
 
 
