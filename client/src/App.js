@@ -3,6 +3,7 @@ import './App.css';
 import { Switch, Route } from 'react-router-dom';
 import MainHeader from './components/Login/UI/MainHeader';
 import Login from './components/Login/login';
+import Chat from './components/chat/chat';
 
 const App = () => {
   
@@ -12,8 +13,11 @@ const App = () => {
       <MainHeader />
       
       <Switch>
-        <Route path='/'>
+        <Route path='/' exact>
           <Login />
+        </Route>
+        <Route path='/chat'>
+          <Chat />
         </Route>
       </Switch>
     </div>
