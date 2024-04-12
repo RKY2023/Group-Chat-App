@@ -1,9 +1,10 @@
 import React, { useEffect, useCallback, useState, useReducer, useRef } from "react";
 import { Row, Col, FormGroup, FormLabel, FormControl, Form, Button} from 'react-bootstrap';
-
+import { useHistory } from 'react-router-dom';
 
 const Login = () => {
-    const [loginMode, setLoginMode] = useState('signup');
+    const history = useHistory();
+    const [loginMode, setLoginMode] = useState('login');
     const [error, setError] = useState();
     const inputNameRef = useRef();
     const inputEmailRef = useRef();
@@ -61,6 +62,7 @@ const Login = () => {
         console.log(data);
         if(data.token) {
             localStorage.setItem('token', data.token);
+            history.replace('/chat');
         }
         if(data.error) {
             setError(data.error.message);
@@ -78,6 +80,7 @@ const Login = () => {
         } else {
             setLoginMode('signup');
         }
+        setError('');
     }
 
     useEffect( () => {

@@ -12,4 +12,6 @@ router.post('/api/signup', userController.signupAPI);
 
 router.post('/api/login', userController.loginAPI);
 
+router.get('/api/onlineUsers', userController.getOnlineUsers);
+
 module.exports = router;

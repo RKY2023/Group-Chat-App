@@ -6,7 +6,7 @@ import Login from './components/Login/login';
 import Chat from './components/chat/chat';
 
 const App = () => {
-  
+
 
   return (
     <div className="App">

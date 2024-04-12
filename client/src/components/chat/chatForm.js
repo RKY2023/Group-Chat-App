@@ -1,14 +1,18 @@
 import React, { useCallback, useRef, useState } from "react";
 import { Form, Button } from 'react-bootstrap';
+import { useDispatch , useSelector } from 'react-redux';
 
-const ChatForm = () => {
-    const [loginUserId, setUserId] = useState(1);
+const ChatForm = (props) => {
+    const userId = useSelector(state => state.chat.loggedInUserId);
+    
+    const receiverList = useSelector(state => state.chat.receiverList);
+    // console.log('ll',loginUserId, receiverList);
     const inputMsgRef = useRef();
     const submitHandler = (event) => {
         event.preventDefault();
         const msgData = {
-            sender: loginUserId,
-            receiver: 2,
+            sender: userId,
+            receiverList: receiverList || [],
             message: inputMsgRef.current.value
         }
         console.log(msgData);
@@ -23,7 +27,11 @@ const ChatForm = () => {
                 'Content-Type': 'application/json'
             }
         });
-        console.log(response);
+        const data = await response.json();
+        // console.log(data);
+        if(data && data.thread === 'success'){
+            props.onChats({ sender: msgData.sender, receiver: msgData.receiver, message: msgData.message});
+        }
     },[]);
     
     return (

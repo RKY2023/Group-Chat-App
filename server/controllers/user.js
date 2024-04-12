@@ -12,8 +12,8 @@ const signupAPI = async (req, res, next) => {
   console.log(name, email, password, phoneno );
   try{
     const encryptedPassword = await bcrypt.hash(password, 10);
-    const userData = await User.create({ name, email, password: encryptedPassword, phoneno });
-    const token = generateAccessToken(userData);
+    const userData = await User.create({ name, email, password: encryptedPassword, phoneno, isLoggedIn: true });
+    const token = generateAccessToken({ userid: userData.id, username: userData.name, useremail: userData.email });
 
     res.status(203).json({ userData, token });
   } catch (err) {
@@ -42,8 +42,13 @@ const loginAPI = async (req, res, next) => {
       console.log(user.password, password, isMatched);
       if(isMatched)
       {
-        const token = generateAccessToken({ name: user.name, email: user.email});
+        const token = generateAccessToken({ userid: user.id, username: user.name, useremail: user.email });
+        user.set({
+          isLoggedIn: true,
+        });
+        const loggedIn = await user.save();
         res.status(203).json({ userData: user, token });
+        
       } else {
         res.status(201).json({ error: { message: "Invalid Password" } });
       }
@@ -57,6 +62,23 @@ const loginAPI = async (req, res, next) => {
   }
 };
 
+const getOnlineUsers = async (req, res, next) => {
+  try {
+      const onlineUsers = await User.findAll({
+          where: { isLoggedIn: true },
+          order: [
+              ['updatedAt', 'ASC']
+          ] 
+      });
+      const onlineUsersData = onlineUsers.map((u) => {
+        return ({uid: u.id, name: u.name})
+      })
+      res.status(203).json({ 'onlineUsers': onlineUsersData });
+  } catch (err) {
+      console.log(err);
+  };
+}
+
 const apiTest = async (req, res, next) => {
   console.log('api called');
   res.status(203).json({ 'apitest': "hi" });
@@ -66,4 +88,5 @@ module.exports = {
   apiTest,
   signupAPI,
   loginAPI,
+  getOnlineUsers,
 };

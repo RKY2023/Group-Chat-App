@@ -1,13 +1,9 @@
-.chats div {
+.chats {
     color: white;
-    background-color: black;
+    background-color: lightgray;
+    padding: 1rem;
 }
 
-.chat-msg {
-    border-radius: .2rem;
-    padding: .5rem;
-    background-color: black;
-}
 .chat-msg__text {
     border: 2px solid grey;
     border-radius: .5rem;

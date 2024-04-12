@@ -26,6 +26,10 @@ const User = sequelize.define('user', {
                 return phoneValidationRegex.test(v); 
             },
         }
+    },
+    isLoggedIn: {
+        type: Sequelize.BOOLEAN,
+        default: false,
     }
 });
 
