@@ -17,6 +17,7 @@ const ChatForm = (props) => {
         }
         console.log(msgData);
         submitMsg(msgData);
+        inputMsgRef.current.value = '';
     }
 
     const submitMsg = useCallback( async (msgData) => {

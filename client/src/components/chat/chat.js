@@ -9,6 +9,7 @@ import { chatActions } from "../../store/chatReducer";
 const Chat = () => {
   const dispatch = useDispatch();
   const receiverList = useSelector(state => state.chat.receiverList);
+  const lastMessageId = useSelector(state => state.chat.lastMsgId);
   const userId = useSelector(state => state.chat.loggedInUserId);
   const isInit = useSelector(state => state.chat.isInit);
 
@@ -22,11 +23,13 @@ const Chat = () => {
     return JSON.parse(jsonPayload);
   }
 
-  const getChats = useCallback( async (userId, receiverList) => {
+  const getChats = useCallback( async (userId, receiverList, lastMessageId) => {
     const msgData = {
       user: userId,
-      receiverList: receiverList
+      receiverList: receiverList,
+      lastMessageId: lastMessageId
     }
+    console.log(msgData);
       const response = await fetch("http://localhost:5000/getThread",{
           method: "POST",
           body: JSON.stringify(msgData),
@@ -40,7 +43,7 @@ const Chat = () => {
 
         dispatch(chatActions.setNewChats(data.threads));
       }
-  },[userId, receiverList]);
+  },[userId, receiverList, lastMessageId]);
 
   const getOnlineUsers = useCallback( async (userId) => {
     const response = await fetch("http://localhost:5000/api/onlineUsers",{
@@ -62,9 +65,11 @@ const Chat = () => {
       // console.log('RL',newReceiverList);
       dispatch(chatActions.setReceiverList(newReceiverList));
       dispatch(chatActions.setNewChats(data.onlineUsers));
-      // const timer1 = setTimeout( async () => {
-        await getChats(userId, receiverList);
-      // }, 1000);
+        
+      setInterval(async () => {
+        console.log('chat updated');
+        await getChats(userId, receiverList, lastMessageId);
+      },10000);
       
     }
 
@@ -79,11 +84,7 @@ const Chat = () => {
       // console.log(userTokenData, 'token user',userTokenData.userid);
       dispatch(chatActions.setUserId(userTokenData.userid));
       
-      // getOnlineUsers(userTokenData.userid);
-      setInterval(() => {
-        console.log('chat updated');
-        getOnlineUsers(userTokenData.userid);
-      },1000);
+      getOnlineUsers(userTokenData.userid);
       
       dispatch(chatActions.setIsInit());
     }

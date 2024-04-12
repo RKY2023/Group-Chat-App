@@ -8,7 +8,7 @@ const ShowChats = (props) => {
     console.log('show',chats);
     const chatsContent = chats.map((u) => {return (
         <>
-        <div className="my-3">
+        <div key={u.id || `u-${u.uid}`} className="my-3">
         {(u.uid === userId) && 
         <>
             <div className="chat-msg__text w-auto float-end">You Joined</div><br/>
@@ -19,12 +19,12 @@ const ShowChats = (props) => {
             <div className="chat-msg__text w-auto float-start">{u.name} Joined</div><br/>
         </>
         }
-        {(u.message) && (u.sender === userId) &&
+        {(u.message) && (u.userId === userId) &&
         <>
             <div className="chat-msg__text w-auto float-end">{u.message}</div><br/>
         </>
         }
-        {(u.message) && (u.sender !== userId) &&
+        {(u.message) && (u.userId !== userId) &&
         <>
             <div className="chat-msg__text w-auto float-start">{u.message}</div><br/>
         </>

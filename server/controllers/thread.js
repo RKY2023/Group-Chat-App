@@ -6,26 +6,34 @@ const Op = Sequelize.Op;
 
 const getThread = async (req, res, next) => {
     console.log('THread', req.body);
-    const { user, receiverList} = req.body;
+    const { user, receiverList, lastMessageId } = req.body;
+    let lastThreadId ;
+    if(lastMessageId == null || lastMessageId == undefined) {
+        lastThreadId = 0;
+    } else {
+        lastThreadId = lastMessageId;
+    }
+
     try {
-        // const threads = await Thread.findAll({
-        //     where: { userId: user },
-        //     order: [
-        //         ['createdAt', 'DESC']
-        //     ] 
-        // })
         const threads = await Thread.findAll({
+            attributes: ['id', 'message', 'userId'],
             include: {
                 model: User,
-                where: {
-                    isLoggedIn: {
-                        [Op.eq]: true,
-                    },
-                },
+                    attributes: [],
+                    where: {
+                        isLoggedIn: {
+                            [Op.eq]: true,
+                        },
+                    },             
             },
             order: [
-                ['createdAt', 'DESC']
-            ] 
+                ['createdAt', 'ASC']
+            ],
+            where: {
+                id: {
+                    [Op.gt]: lastThreadId,
+                }
+            }
         })
         res.status(203).json({ 'threads': threads });
     } catch (err) {
