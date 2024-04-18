@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from "react";
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Row, Col } from 'react-bootstrap';
 import { useDispatch , useSelector } from 'react-redux';
 
 const ChatForm = (props) => {
@@ -11,9 +11,9 @@ const ChatForm = (props) => {
     const submitHandler = (event) => {
         event.preventDefault();
         const msgData = {
-            sender: userId,
-            receiverList: receiverList || [],
-            message: inputMsgRef.current.value
+            userId,
+            message: inputMsgRef.current.value,
+            groupId: 1,
         }
         console.log(msgData);
         submitMsg(msgData);
@@ -25,7 +25,7 @@ const ChatForm = (props) => {
             method: "POST",
             body: JSON.stringify(msgData),
             headers: {
-                'Content-Type': 'application/json'
+              'Content-Type': 'application/json'
             }
         });
         const data = await response.json();
@@ -36,14 +36,22 @@ const ChatForm = (props) => {
     },[]);
     
     return (
-        <>
-        <Form onSubmit={submitHandler}>
-            <Form.Group className="mt-2">
-                <Form.Control type="input" className="form-control" ref={inputMsgRef}/>
-            </Form.Group>
-            <Button type="submit" className="btn-success">Send</Button>
-        </Form>
-        </>
+    <>
+    <Form onSubmit={submitHandler}>
+      <Col>
+      <Row className="mx-1">
+        <Col>
+          <Form.Group className="row">
+              <Form.Control type="input" className="form-control" ref={inputMsgRef} />
+          </Form.Group>
+        </Col>
+        <Col xs={2} md={2} className="">
+          <Button type="submit" className="btn-success">Send</Button>
+        </Col>
+      </Row>
+      </Col>
+    </Form>
+    </>
     );
 };
 

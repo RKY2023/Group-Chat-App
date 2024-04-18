@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 const sequelize = require("./util/database");
 const User = require("./models/user");
 const Thread = require("./models/thread");
+const Group = require("./models/group");
 
 const app = express();
 
@@ -24,7 +25,11 @@ app.use(userRoutes);
 app.use(threadRoutes);
 
 User.hasMany(Thread);
+Thread.belongsTo(Group);
 Thread.belongsTo(User);
+
+User.hasMany(Group);
+Group.hasMany(User);
 
 sequelize
   // .sync({ force: true})

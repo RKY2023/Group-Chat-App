@@ -9,9 +9,7 @@ const Thread = sequelize.define('Thread', {
         allowNull: false,
         primaryKey: true
     },
-    sender: Sequelize.INTEGER,
-    receiver: Sequelize.INTEGER,
-    message: Sequelize.TEXT
+    message: Sequelize.TEXT,
 });
 
 module.exports = Thread;

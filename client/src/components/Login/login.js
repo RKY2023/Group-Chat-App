@@ -1,15 +1,28 @@
 import React, { useEffect, useCallback, useState, useReducer, useRef } from "react";
 import { Row, Col, FormGroup, FormLabel, FormControl, Form, Button} from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import { chatActions } from "../../store/chatReducer";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
     const history = useHistory();
+    const dispatch = useDispatch();
     const [loginMode, setLoginMode] = useState('login');
     const [error, setError] = useState();
     const inputNameRef = useRef();
     const inputEmailRef = useRef();
     const inputPasswordRef = useRef();
     const inputPhonenoRef = useRef();
+
+    function parseJwt (token) {
+      var base64Url = token.split('.')[1];
+      var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+
+      return JSON.parse(jsonPayload);
+    }
 
     const submitHandler = (event) => {
         event.preventDefault();
@@ -68,7 +81,7 @@ const Login = () => {
             setError(data.error.message);
         }
         if (loginMode == 'login' || loginMode == 'signup') {
-        // window.location.href = 'http://'+window.location.host+'/chat';
+            dispatch(chatActions.setUserId());
         }
     
         setBackendData(data);
@@ -86,7 +99,7 @@ const Login = () => {
     useEffect( () => {
         console.log('useEffect');
         console.log('Mode:', loginMode);
-        // datafetcher();
+        dispatch(chatActions.setUserId());
     },[loginMode]);
 
 
