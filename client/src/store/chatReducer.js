@@ -1,4 +1,4 @@
-import { configureStore, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialChatStore = {
   theme: "light",
@@ -37,6 +37,14 @@ const chatSlice = createSlice({
         state.theme = "light";
         bodyElement.setAttribute("data-bs-theme", "light");
         localStorage.setItem("theme", "light");
+      } else if (getTheme === 'dark'){
+        state.theme = "dark";
+        bodyElement.setAttribute("data-bs-theme", "dark");
+        localStorage.setItem("theme", "dark");
+      } else if (getTheme === 'light'){
+        state.theme = "light";
+        bodyElement.setAttribute("data-bs-theme", "light");
+        localStorage.setItem("theme", "light");
       }
     },
     setIsInit(state) {
@@ -44,6 +52,9 @@ const chatSlice = createSlice({
     },
     setNewGroup(state, action) {
       state.groupId = action.payload;
+      state.lastMsgId = 0;
+      // state.chats = [];
+      state.isInit = true;
     },
     setNewChats(state, action) {
       const payload = action.payload;

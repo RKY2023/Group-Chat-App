@@ -3,12 +3,14 @@ const sequelize = require('../util/database');
 const Thread = require("../models/thread");
 const User = require("../models/user");
 const Group = require("../models/group");
+const Membership = require('../models/membership');
 
 const Op = Sequelize.Op;
 
 const getThread = async (req, res, next) => {
-    console.log('THread', req.body);
+    // console.log('THread', req.body);
     const { user, groupId, lastMessageId } = req.body;
+    console.log(user, groupId, lastMessageId);
     let lastThreadId ;
     if(lastMessageId == null || lastMessageId == undefined) {
         lastThreadId = 0;
@@ -17,6 +19,12 @@ const getThread = async (req, res, next) => {
     }
 
     try {
+        const grp_list = await Group.findAll({
+            where: {
+                userId : user, id: groupId
+            }
+        })
+        console.log('GRp_lst',grp_list.length);
         const threads = await Thread.findAll({
             attributes: ['id', 'message', 'userId'],
             include: {
@@ -35,25 +43,28 @@ const getThread = async (req, res, next) => {
                 id: {
                     [Op.gt]: lastThreadId,
                 },
-                groupId: 1,
+                groupId: groupId,
             }
         })
+        // console.log(threads);
         res.status(203).json({ 'threads': threads });
     } catch (err) {
         console.log(err);
+        res.status(203).json({ 'error': err });
     };
 }
 
 const sendMsg = async (req, res, next) => {
     console.log('THread', req.body);
     const { userId, groupId, message } = req.body;
+    console.log(userId, groupId, message);
     let trans;
     let chats = []
     try {
         trans = await sequelize.transaction();
         const thread = await Thread.create({
                 message, userId, groupId
-            })
+            } ,{trans})
         res.status(201).json({ 'message': 'success', thread});
         await trans.commit();
     } catch (err) {
@@ -64,23 +75,36 @@ const sendMsg = async (req, res, next) => {
 }
 
 const newGroup = async (req, res, next) => {
+    // let trans;
     try {
-        const { title, info, people, invites } = req.body;
-        console.log('new grp',req.user, title, info, people, invites);
-        let invites_str;
-        if(invites !== undefined) {
-            invites_str = invites.toString()
-        } else {
-            invites_str = '';
-        }
-        const newGroup = await req.user.createGroup({
+        // trans = await sequelize.transaction();
+        const { title, info, invites } = req.body;
+        // console.log('new grp',req.user, title, info, invites);
+        invites.push(req.user.id.toString());
+        console.log('new grp',invites);
+        // req.user.createGroup
+        const newGroup = await Group.create({
             title: title || 'New Group',
-            info: info || 'Group Info',
-            invites: invites_str,
-            people: people || req.user.id,
+            info: info || 'Group Info'
         });
+        // console/log(newGroup);
+        console.log('new grp id', newGroup.id);
+        invites.forEach(async(member) => {
+            // console.log('mem',member)
+            let isAdmin = false;
+            if(member === req.user.id.toString())
+                isAdmin = true;
+
+            const newMember = await Membership.create({
+                member: member,
+                groupId: newGroup.id,
+                isAdmin: isAdmin,
+            });
+        });
+        // await trans.commit();
         res.status(201).json({ 'message': 'success', group: newGroup});
     } catch (err) {
+        // await trans.rollback();
         res.status(203).json({ 'message': 'fail'});
     }
 }
@@ -121,7 +145,12 @@ const checkGroup = async (req, res, next) => {
                 userId: req.user.id
             }
         })
-        if(group) {
+        // console.log('ttttt',group);
+        if(group.length === 0) {
+            // const tt = await newGroup(req, res, next);
+            // console.log(tt)
+            res.status(401).json({ status: 'fail', message: 'no group found'});
+        } else  if(group.length > 0) {
             res.status(201).json({ status: 'success', group});
         } else {
             res.status(401).json({ status: 'fail', message: 'You are not the member of this group'});
@@ -131,7 +160,6 @@ const checkGroup = async (req, res, next) => {
         res.status(500).json({ status: 'fail', message: 'server error'});
     }    
 }
-
 
 module.exports = {
     sendMsg,

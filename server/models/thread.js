@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 
 const sequelize = require('../util/database');
 
-const Thread = sequelize.define('Thread', {
+const Thread = sequelize.define('thread', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
