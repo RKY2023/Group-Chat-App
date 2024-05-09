@@ -30,6 +30,9 @@ const App = () => {
         <Route path='/chat'>
           <MainView />
         </Route>
+        <Route path='/group'>
+          <MainView />
+        </Route>
       </Switch>
     </div>
   );
