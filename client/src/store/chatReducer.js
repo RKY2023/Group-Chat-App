@@ -29,11 +29,11 @@ const chatSlice = createSlice({
       }
     },
     setTheme(state, action) {
-      console.log("aatt");
+      // console.log("aatt");
       const bodyElement = document.getElementsByTagName("body")[0];
       const getTheme = localStorage.getItem("theme");
       if (getTheme === null) {
-        console.log("tat");
+        // console.log("tat");
         state.theme = "light";
         bodyElement.setAttribute("data-bs-theme", "light");
         localStorage.setItem("theme", "light");
@@ -49,12 +49,6 @@ const chatSlice = createSlice({
     },
     setIsInit(state) {
       state.isInit = false;
-    },
-    setNewGroup(state, action) {
-      state.groupId = action.payload;
-      state.lastMsgId = 0;
-      // state.chats = [];
-      state.isInit = true;
     },
     setNewChats(state, action) {
       const payload = action.payload;
@@ -94,19 +88,28 @@ const chatSlice = createSlice({
     },
     setUserId(state, action) {
       const token = localStorage.getItem('token');
-      const base64Url = token.split('.')[1];
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-      }).join(''));
-
-      const userData = JSON.parse(jsonPayload);
-      console.log(userData);
-      state.loggedInUserId = userData.userid;
+      if(token) {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+  
+        const userData = JSON.parse(jsonPayload);
+        console.log(userData);
+        state.loggedInUserId = userData.userid;
+      }
     },
     setNewCreatedGroup(state, action) {
       state.newCreateGroup = action.payload;
     },
+    setLastMsgId(state, action) {
+      state.lastMsgId = action.payload;
+    },
+    setNewGroupChats(state, action) {
+      state.lastMsgId = 0;
+      state.chats = [];
+    }
   }
 });
 

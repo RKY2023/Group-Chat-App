@@ -2,6 +2,7 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 
 const initialUIStore = {
   isModalShown: false,
+  isCreateGroupShown: false,
 };
 
 const uiSlice = createSlice({
@@ -11,6 +12,10 @@ const uiSlice = createSlice({
     toggleModal( state, action) {
       state.isModalShown = !state.isModalShown;
       console.log(state.isModalShown);
+    },
+    toggleCreateGroup ( state, action) {
+      state.isCreateGroupShown = !state.isCreateGroupShown;
+      console.log(state.isCreateGroupShown);
     }
   },
 });

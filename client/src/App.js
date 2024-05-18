@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import './App.css';
 import { Switch, Route } from 'react-router-dom';
 import MainHeader from './components/Login/UI/MainHeader';
 import Login from './components/Login/login';
@@ -8,6 +7,10 @@ import NewGroupForm from './components/group/NewGroup/form';
 import { useDispatch, useSelector } from 'react-redux';
 import { chatActions } from './store/chatReducer';
 import MainView from './components/chat/mainView';
+import "../node_modules/react-bootstrap/dist/react-bootstrap";
+import "../node_modules/bootstrap/dist/css/bootstrap.css";
+import GroupChatsApp from './pages/groupchatapp';
+import LoginPage from './pages/login';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -15,23 +18,24 @@ const App = () => {
 
   useEffect(() => {
     dispatch(chatActions.setTheme());
-    console.log('App');
+    // console.log('App');
     dispatch(chatActions.setUserId());
   },[dispatch]);
 
   return (
     <div className="App">
-      <MainHeader />
+      {/* <h1 className='text-blue-500'> aaa</h1> */}
+      {/* <MainHeader /> */}
       {NewGroupModal && <NewGroupForm />}      
       <Switch>
         <Route path='/' exact>
-          <Login />
+          <LoginPage />
         </Route>
         <Route path='/chat'>
           <MainView />
         </Route>
         <Route path='/group'>
-          <MainView />
+          <GroupChatsApp />
         </Route>
       </Switch>
     </div>

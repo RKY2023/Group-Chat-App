@@ -94,24 +94,24 @@ const Login = () => {
     return (
         <>
         <div className="container">
-        <div>{error}</div>
+        <div className="text-warning">{error}</div>
         <Form onSubmit={submitHandler}>
             { loginMode === 'signup' && 
-            <Form.Group className="mt-2">
+            <Form.Group className="text-white mt-2">
                 <Form.Label>Name</Form.Label>
                 <Form.Control type="text" placeholder="Enter Name" ref={inputNameRef}/>
             </Form.Group>
             }
-            <Form.Group className="mt-2">
+            <Form.Group className="text-white mt-2">
                 <Form.Label>Email</Form.Label>
                 <Form.Control type="email" placeholder="Enter Email" ref={inputEmailRef}/>
             </Form.Group>
-            <Form.Group className="mt-2">
+            <Form.Group className="text-white mt-2">
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="Password" ref={inputPasswordRef}/>
             </Form.Group>
             { loginMode === 'signup' && 
-            <Form.Group className="mt-2">
+            <Form.Group className="text-white mt-2">
                 <Form.Label>Phone No</Form.Label>
                 <Form.Control type="number" placeholder="Phone no" ref={inputPhonenoRef}/>
             </Form.Group>
@@ -120,7 +120,7 @@ const Login = () => {
                 {loginMode === 'signup' ? 'Sign Up': 'Login' }
             </Button>
             <hr/>
-            <Button onClick={switchLoginModeHandler} variant="success">
+            <Button onClick={switchLoginModeHandler} variant="success" className="mt-3">
                 {(loginMode === 'signup') ? 'Already have an Account? Login' : 'Don\'t have an account? Signup' }
             </Button>
         </Form>

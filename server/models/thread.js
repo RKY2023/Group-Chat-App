@@ -10,6 +10,14 @@ const Thread = sequelize.define('thread', {
         primaryKey: true
     },
     message: Sequelize.TEXT,
+    isLink: {
+        type: Sequelize.BOOLEAN,
+        default: false
+    },
+    isImg: {
+        type: Sequelize.BOOLEAN,
+        default: false
+    }
 });
 
 module.exports = Thread;

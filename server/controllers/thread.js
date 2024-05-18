@@ -57,6 +57,7 @@ const getThread = async (req, res, next) => {
 const sendMsg = async (req, res, next) => {
     console.log('THread', req.body);
     const { userId, groupId, message } = req.body;
+    // isLink: false, isImg: false
     console.log(userId, groupId, message);
     let trans;
     let chats = []
