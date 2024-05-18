@@ -1,9 +1,13 @@
-import React, { useEffect, useCallback, useState, useReducer, useRef } from "react";
-import { Row, Col, FormGroup, FormLabel, FormControl, Form, Button} from 'react-bootstrap';
-
+import React, { useEffect, useCallback, useState, useRef } from "react";
+import { Form, Button} from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
+import { chatActions } from "../../store/chatReducer";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
-    const [loginMode, setLoginMode] = useState('signup');
+    const history = useHistory();
+    const dispatch = useDispatch();
+    const [loginMode, setLoginMode] = useState('login');
     const [error, setError] = useState();
     const inputNameRef = useRef();
     const inputEmailRef = useRef();
@@ -13,7 +17,7 @@ const Login = () => {
     const submitHandler = (event) => {
         event.preventDefault();
         let userData;
-        if(loginMode == 'signup') {
+        if(loginMode === 'signup') {
             userData = {
                 email: inputEmailRef.current.value,
                 password: inputPasswordRef.current.value,
@@ -30,11 +34,10 @@ const Login = () => {
         loginHandler(userData);
 
     }
-    const [backendData, setBackendData] = useState();
 
     const loginHandler = useCallback( async (userData) => {
         let loginUrl, payload;
-        if(loginMode == 'signup') {
+        if(loginMode === 'signup') {
             loginUrl = "http://localhost:5000/api/signup";
             payload = {
                 email: userData.email,
@@ -61,29 +64,29 @@ const Login = () => {
         console.log(data);
         if(data.token) {
             localStorage.setItem('token', data.token);
+            dispatch(chatActions.setUserId());
+            history.replace('/chat');
         }
         if(data.error) {
             setError(data.error.message);
         }
-        if (loginMode == 'login' || loginMode == 'signup') {
-        // window.location.href = 'http://'+window.location.host+'/chat';
+        if (loginMode === 'login' || loginMode === 'signup') {
+            
         }
-    
-        setBackendData(data);
-    },[loginMode]);
+    },[loginMode, dispatch, history]);
 
     const switchLoginModeHandler = () => {
-        if(loginMode == 'signup') {
+        if(loginMode === 'signup') {
             setLoginMode('login');
         } else {
             setLoginMode('signup');
         }
+        setError('');
     }
 
     useEffect( () => {
         console.log('useEffect');
         console.log('Mode:', loginMode);
-        // datafetcher();
     },[loginMode]);
 
 
@@ -91,34 +94,34 @@ const Login = () => {
     return (
         <>
         <div className="container">
-        <div>{error}</div>
+        <div className="text-warning">{error}</div>
         <Form onSubmit={submitHandler}>
-            { loginMode == 'signup' && 
-            <Form.Group className="mt-2">
+            { loginMode === 'signup' && 
+            <Form.Group className="text-white mt-2">
                 <Form.Label>Name</Form.Label>
                 <Form.Control type="text" placeholder="Enter Name" ref={inputNameRef}/>
             </Form.Group>
             }
-            <Form.Group className="mt-2">
+            <Form.Group className="text-white mt-2">
                 <Form.Label>Email</Form.Label>
                 <Form.Control type="email" placeholder="Enter Email" ref={inputEmailRef}/>
             </Form.Group>
-            <Form.Group className="mt-2">
+            <Form.Group className="text-white mt-2">
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="Password" ref={inputPasswordRef}/>
             </Form.Group>
-            { loginMode == 'signup' && 
-            <Form.Group className="mt-2">
+            { loginMode === 'signup' && 
+            <Form.Group className="text-white mt-2">
                 <Form.Label>Phone No</Form.Label>
                 <Form.Control type="number" placeholder="Phone no" ref={inputPhonenoRef}/>
             </Form.Group>
             }
             <Button variant="primary" type="submit" className="mt-3">
-                {loginMode == 'signup' ? 'Sign Up': 'Login' }
+                {loginMode === 'signup' ? 'Sign Up': 'Login' }
             </Button>
             <hr/>
-            <Button onClick={switchLoginModeHandler} variant="success">
-                {(loginMode == 'signup') ? 'Already have an Account? Login' : 'Don\'t have an account? Signup' }
+            <Button onClick={switchLoginModeHandler} variant="success" className="mt-3">
+                {(loginMode === 'signup') ? 'Already have an Account? Login' : 'Don\'t have an account? Signup' }
             </Button>
         </Form>
         </div>

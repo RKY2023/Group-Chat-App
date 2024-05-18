@@ -8,11 +8,14 @@ const bodyParser = require("body-parser");
 const sequelize = require("./util/database");
 const User = require("./models/user");
 const Thread = require("./models/thread");
+const Group = require("./models/group");
+const Membership = require("./models/membership");
 
 const app = express();
 
 const userRoutes = require("./routes/user");
 const threadRoutes = require("./routes/thread");
+const { addAbortListener } = require("stream");
 
 app.use(cors({
     origin: ["http://localhost:3000", "http://127.0.0.1:5000"]
@@ -25,6 +28,12 @@ app.use(threadRoutes);
 
 User.hasMany(Thread);
 Thread.belongsTo(User);
+Thread.belongsTo(Group);
+
+// User.hasMany(Membership);
+User.hasMany(Group);
+
+Group.hasMany(Membership);
 
 sequelize
   // .sync({ force: true})
