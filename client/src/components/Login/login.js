@@ -65,7 +65,7 @@ const Login = () => {
         if(data.token) {
             localStorage.setItem('token', data.token);
             dispatch(chatActions.setUserId());
-            history.replace('/chat');
+            history.replace('/group');
         }
         if(data.error) {
             setError(data.error.message);

@@ -20,4 +20,6 @@ router.get('/groupList', threadController.groupList);
 
 router.post('/loadGroupChat', userController.authenticate, threadController.loadGroupChat);
 
+router.post('/groupInfo', userController.authenticate, threadController.groupInfo);
+
 module.exports = router;

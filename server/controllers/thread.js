@@ -3,7 +3,7 @@ const sequelize = require('../util/database');
 const Thread = require("../models/thread");
 const User = require("../models/user");
 const Group = require("../models/group");
-const Membership = require('../models/membership');
+const Usergroup = require('../models/usergroup');
 
 const Op = Sequelize.Op;
 
@@ -96,8 +96,8 @@ const newGroup = async (req, res, next) => {
             if(member === req.user.id.toString())
                 isAdmin = true;
 
-            const newMember = await Membership.create({
-                member: member,
+            const newMember = await Usergroup.create({
+                userId: member,
                 groupId: newGroup.id,
                 isAdmin: isAdmin,
             });
@@ -161,6 +161,53 @@ const checkGroup = async (req, res, next) => {
         res.status(500).json({ status: 'fail', message: 'server error'});
     }    
 }
+const groupInfo = async (req, res, next) => {
+    try{
+        const groupId = req.body.groupId;
+        console.log(groupId);
+        // const group = await UserGroup.findAll({
+        //     attributes: ['id', 'Members', 'isAdmin', 'groupId'],
+        //     where: {
+        //         groupId
+        //     }
+        // })
+        const group = await Usergroup.findAll({
+            attributes: ['id','userId','isAdmin','groupId'],
+            include: {
+                model: User,
+                    attributes: ['id','name','isLoggedIn'],            
+            },
+            order: [
+                ['createdAt', 'ASC']
+            ],
+            where: {
+                groupId,
+            }
+        })
+        let usergroups = [];
+        for( let i=0; i< group.length; i++) {
+            usergroups[i] = {};
+            usergroups[i]['id'] = group[i]['id'];
+            usergroups[i]['userid'] = group[i]['user']['id'];
+            usergroups[i]['name'] = group[i]['user']['name'];
+            usergroups[i]['isLoggedIn'] = group[i]['user']['isLoggedIn'];
+            usergroups[i]['isAdmin'] = group[i]['isAdmin'];                        
+        }
+        // console.log('ttttt',group);
+        if(usergroups.length === 0) {
+            // const tt = await newGroup(req, res, next);
+            // console.log(tt)
+            res.status(401).json({ status: 'fail', message: 'no group found'});
+        } else  if(usergroups.length > 0) {
+            res.status(201).json({ status: 'success', usergroups});
+        } else {
+            res.status(401).json({ status: 'fail', message: 'You are not the member of this group'});
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ status: 'fail', message: 'server error'});
+    }    
+}
 
 module.exports = {
     sendMsg,
@@ -169,4 +216,5 @@ module.exports = {
     groupList,
     loadGroupChat,
     checkGroup,
+    groupInfo,
 };

@@ -36,7 +36,7 @@ function ChatDetail() {
   },[]);
 
   const getChats = async (userId, groupId, lastMessageId) => {
-    console.log('getchat called', userId, groupId, lastMessageId);
+    // console.log('getchat called', userId, groupId, lastMessageId);
     const msgData = {
       user: userId,
       groupId,
@@ -70,7 +70,7 @@ function ChatDetail() {
   
 
   useEffect(() => { 
-    console.log('gg', groupId)   
+    // console.log('gg', groupId)   
     const timer = setInterval(async () => {
       if(groupId > 0) {
         // console.log('fetching chat =>', userId, groupId, lastMessageId);
@@ -78,7 +78,7 @@ function ChatDetail() {
       } else {
         // console.log('useff');
       }
-    }, 5000);
+    }, 1000);
     return () => {
       // Cleanup logic here
       // clear old timer bfore setting new timer

@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import RoundedBtn from "../../Common/RoundedBtn";
-import { BiEditAlt } from "react-icons/bi";
-import { useSelector } from "react-redux";
-import { FaUserGroup } from "react-icons/fa6";
-import { grf1 } from "../../../assets/groupchat";
-import CardList from "../../Common/CardList";
+import { useDispatch, useSelector } from "react-redux";
+import { groupActions } from "../../../store/groupReducer";
+import GroupMembers from "./GroupMembers";
+import GroupProfile from "./GroupProfile";
 
 function GroupInfoMenu() {
-  const groupMembers = useSelector(state => state.group.groupMembers);
+  const dispatch = useDispatch();
   const groupId = useSelector(state => state.group.groupId);
 
   const groupInfo = async () => {
@@ -24,8 +22,8 @@ function GroupInfoMenu() {
     });
     const data = await response.json();
     console.log(data);
-    if (data && data.message === "success") {
-      // setUsers(data.users);
+    if (data && data.status === "success") {
+      dispatch(groupActions.setGroupMembersList(data.usergroups));
     }
   };
 
@@ -36,38 +34,8 @@ function GroupInfoMenu() {
 
   return (
     <div className="flex flex-col border-r border-neutral-700 w-100 h-screen">
-      <div className="flex flex-col justify-between items-center bg-{#202d33] h-[200px] p-3 text-white">
-        <div className="flex justify-center items-center rounded-full p-5 bg-[#45454430]">
-        {/* <img src={pp} alt="profile_picture" className="rounded-full w-[40px]" /> */}
-         
-        <RoundedBtn icon={<FaUserGroup />}/>
-        </div>
-        <div className="flex justify-between">
-          <span>
-            Group Name
-          </span>
-          <RoundedBtn icon={<BiEditAlt />} />
-        </div>
-        <div className="flex justify-between">
-          <span>
-            Group | 2 members
-          </span>
-        </div>
-      </div>
-      {groupMembers.map((group, i) => {
-        return (
-          <CardList
-            elem-type={'groupMembers'}
-            id={group.id}
-            gp={grf1}
-            title={group.title}
-            time={group.updatedAt}
-            info={group.info}
-            unreadMsgs={group.unreadMsgs}
-            active={i === 0}
-          />
-        );
-      })}
+      <GroupProfile />
+      <GroupMembers />      
     </div>
   );
 }
