@@ -14,6 +14,12 @@ import chat10 from "./images/chat10.png";
 import chat11 from "./images/chat11.png";
 import chat12 from "./images/chat12.png";
 import chat13 from "./images/chat13.png";
+import grf1 from "./images/grf1.PNG";
+import grf2 from "./images/grf2.PNG";
+import grf3 from "./images/grf3.PNG";
+import grf4 from "./images/grf4.PNG";
+import grf5 from "./images/grf5.PNG";
+import grf6 from "./images/grf6.PNG";
 
 export {
   pp,
@@ -32,4 +38,10 @@ export {
   chat11,
   chat12,
   chat13,
+  grf1,
+  grf2,
+  grf3,
+  grf4,
+  grf5,
+  grf6,
 };

@@ -1,28 +1,20 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { groupActions } from "../store/groupReducer";
+import { groupActions } from "../../store/groupReducer";
+import { chatActions } from "../../store/chatReducer";
 
-function Member(props) {
+function CardList(props) {
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
-
-  const addMemberRef = useRef();
-
-  const setGroupHandler = () => {
-    // dispatch(groupActions.setCurrentGroup(props.id));
-  };
-
-  const addRefHandler = (event) => {
-    props.onInvite(addMemberRef.current);
-  };
-
-  // useEffect(() => {
-
-  // },[addMemberRef.current.value]);
+  const setGroupHandler = (event) => {
+    dispatch(groupActions.setGroupId(props.id));
+    dispatch(groupActions.setCurrentGroup({gp: props.gp, title: props.title, info: props.info}));
+    dispatch(chatActions.setNewGroupChats());
+  }
+  console.log('Group');
 
   return (
-    <div
-      onClick={setGroupHandler}
+    <div onClick={setGroupHandler}
       className={`flex justify-between items-center cursor-pointer w-100 h-[85px] px-3 hover:bg-[#202d33] ${
         props.active ? "bg-[#202d33]" : ""
       }`}
@@ -48,21 +40,19 @@ function Member(props) {
         </div>
         {/* Timestamp and unread messages */}
         <div className="flex flex-col justify-between items-end h-100 text-xs">
-          {/* Add  */}
-          <div className="text-emerald-500 min-w-[55px]">
-            <input
-              type="button"
-              value={"Add"}
-              onClick={addRefHandler}
-              data-key={props.id}
-              data-name={props.title}
-              ref={addMemberRef}
-            />
+          {/* Time  */}
+          <div className="text-emerald-500 min-w-[55px]">{props.time}</div>
+          {/* unread messages  */}
+          {props.unreadMsgs && 
+          <div className="flex justify-center items-center bg-emerald-500 rounded-full w-[20px] h-[20px]">
+            <p className="text-emerald-900">{props.unreadMsgs}</p>
           </div>
+          }
         </div>
       </div>
+      
     </div>
   );
 }
 
-export default Member;
+export default CardList;

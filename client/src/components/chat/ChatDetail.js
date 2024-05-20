@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import Message from "./Message";
 import { useDispatch, useSelector } from "react-redux";
-import { chatActions } from "../store/chatReducer";
-import GroupNav from "./GroupNav";
+import { chatActions } from "../../store/chatReducer";
+import GroupNav from "../group/GroupNav";
 import ChatForm from './ChatForm';
 
 function ChatDetail() {
@@ -10,6 +10,7 @@ function ChatDetail() {
   const groupId = useSelector(state => state.group.groupId);
   const lastMessageId = useSelector(state => state.chat.lastMsgId);
   const userId = useSelector(state => state.chat.loggedInUserId);
+  const [getChatsTimer, setGetChatsTimer] = useState();
 
   console.log(lastMessageId ,'user', userId, groupId, lastMessageId );
   
@@ -66,22 +67,34 @@ function ChatDetail() {
       behavior : "smooth",
     })
   },[messages]);
+  
 
   useEffect(() => { 
     console.log('gg', groupId)   
-    const timer1 = setInterval(async () => {
+    const timer = setInterval(async () => {
       if(groupId > 0) {
         // console.log('fetching chat =>', userId, groupId, lastMessageId);
         await getChats(userId, groupId, lastMessageId);
       } else {
         // console.log('useff');
       }
-      // (() => {
-      //   clearInterval(timer1);
-      // })();
     }, 5000);
-
+    return () => {
+      // Cleanup logic here
+      // clear old timer bfore setting new timer
+      (() => {
+        clearInterval(timer);
+      })();
+    };
   },[userId, groupId, lastMessageId]);
+
+  useEffect(() => {
+    // Setup logic here
+
+    return () => {
+      // Cleanup logic here
+    };
+  }, []); 
     
   return (
     <div className="flex flex-col h-screen">

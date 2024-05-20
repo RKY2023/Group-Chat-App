@@ -1,14 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import Group from "./Group";
-import { pp } from "../assets/groupchat";
-import { chatActions } from "../store/chatReducer";
-import { groupActions } from "../store/groupReducer";
-import Member from "./Member";
-import { uiActions } from "../store/uiReducer";
+import { pp } from "../../assets/groupchat";
+import { chatActions } from "../../store/chatReducer";
+import { groupActions } from "../../store/groupReducer";
+import { uiActions } from "../../store/uiReducer";
+import AddGroupMember from "./AddGroupMember";
 
-function AddGroupMember() {
+function NewGroupMenu() {
   const groupsData = useSelector((state) => state.group.groups);
   const [users, setUsers] = useState([]);
   const [invitedUsers, setInvitedUsers] = useState([]);
@@ -120,7 +119,7 @@ function AddGroupMember() {
       <div className="flex flex-col text-white">
         {users.map((user, i) => {
           return (
-            <Member
+            <AddGroupMember
               id={user.id}
               gp={pp}
               title={user.name}
@@ -146,4 +145,4 @@ function AddGroupMember() {
   );
 }
 
-export default AddGroupMember;
+export default NewGroupMenu;

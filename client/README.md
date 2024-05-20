@@ -8,3 +8,6 @@ Pay a lot of emphasis on DB Schema Design and try making the APIs as lightweight
 npm install react-icons --save
 npm install -D tailwindcss
 npx tailwindcss init
+
+
+npm install flowbite flowbite-react

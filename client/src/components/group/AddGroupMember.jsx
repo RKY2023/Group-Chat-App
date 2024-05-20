@@ -1,20 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { groupActions } from "../store/groupReducer";
-import { chatActions } from "../store/chatReducer";
+import { groupActions } from "../../store/groupReducer";
 
-function Group(props) {
+function AddGroupMember(props) {
   const dispatch = useDispatch();
   const [active, setActive] = useState(false);
-  const setGroupHandler = (event) => {
-    
-    dispatch(groupActions.setGroupId(props.id));
-    dispatch(groupActions.setCurrentGroup({gp: props.gp, title: props.title, info: props.info}));
-    dispatch(chatActions.setNewGroupChats());
-  }
+
+  const addMemberRef = useRef();
+
+  const setGroupHandler = () => {
+    // dispatch(groupActions.setCurrentGroup(props.id));
+  };
+
+  const addRefHandler = (event) => {
+    props.onInvite(addMemberRef.current);
+  };
+
+  // useEffect(() => {
+
+  // },[addMemberRef.current.value]);
 
   return (
-    <div onClick={setGroupHandler}
+    <div
+      onClick={setGroupHandler}
       className={`flex justify-between items-center cursor-pointer w-100 h-[85px] px-3 hover:bg-[#202d33] ${
         props.active ? "bg-[#202d33]" : ""
       }`}
@@ -40,19 +48,21 @@ function Group(props) {
         </div>
         {/* Timestamp and unread messages */}
         <div className="flex flex-col justify-between items-end h-100 text-xs">
-          {/* Time  */}
-          <div className="text-emerald-500 min-w-[55px]">{props.time}</div>
-          {/* unread messages  */}
-          {props.unreadMsgs && 
-          <div className="flex justify-center items-center bg-emerald-500 rounded-full w-[20px] h-[20px]">
-            <p className="text-emerald-900">{props.unreadMsgs}</p>
+          {/* Add  */}
+          <div className="text-emerald-500 min-w-[55px]">
+            <input
+              type="button"
+              value={"Add"}
+              onClick={addRefHandler}
+              data-key={props.id}
+              data-name={props.title}
+              ref={addMemberRef}
+            />
           </div>
-          }
         </div>
       </div>
-      
     </div>
   );
 }
 
-export default Group;
+export default AddGroupMember;

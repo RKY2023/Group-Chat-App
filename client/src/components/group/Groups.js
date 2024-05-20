@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { chatsData } from "../data/GroupChat";
+import { chatsData } from "../../data/GroupChat";
 import { MdOutlineGroupAdd  } from "react-icons/md";
-import Group from "./Group";
 import { useDispatch, useSelector } from "react-redux";
-import { pp } from "../assets/groupchat";
-import { uiActions } from "../store/uiReducer";
+import { grf1, grf2, grf3, grf4, grf5, grf6 } from "../../assets/groupchat";
+import { uiActions } from "../../store/uiReducer";
+import CardList from "../Common/CardList";
 
 function Groups(props) {
   const dispatch = useDispatch();
@@ -39,9 +39,10 @@ function Groups(props) {
       </div>
       {groupsData.map((group, i) => {
         return (
-          <Group
+          <CardList
+            elem-type={'group'}
             id={group.id}
-            gp={pp}
+            gp={grf1}
             title={group.title}
             time={group.updatedAt}
             info={group.info}

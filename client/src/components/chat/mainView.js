@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import Group from "../group/group";
-import Chat from "./chats/chat";
+// import Group from "../group/group";
 import { Row, Col } from "react-bootstrap";
 import { chatActions } from "../../store/chatReducer";
 import { useEffect } from "react";
@@ -42,10 +41,10 @@ const MainView = () => {
     <>
     <Row style={{width: '100vw', height: '80vh' }}> 
       <Col xs={3} md={4} className="groups">
-        <Group />
+        {/* <Group /> */}
       </Col>
       <Col xs={9} md={8} className="chats">
-        <Chat />
+        {/* <Chat /> */}
       </Col>
     </Row>
     </>

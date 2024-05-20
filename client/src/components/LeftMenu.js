@@ -1,17 +1,14 @@
 import React, { useState } from "react";
-import RoundedBtn from "./Common/RoundedBtn";
-import { MdPeopleAlt } from "react-icons/md";
-import { TbCircleDashed } from "react-icons/tb";
-import { BsFillChatLeftTextFill } from "react-icons/bs";
-import { HiDotsVertical } from "react-icons/hi";
 import { BiFilter } from "react-icons/bi";
-import { pp } from "../assets/groupchat";
-import Groups from "./Groups";
-import AddGroupMember from "./addGroupMember";
+import Groups from "./group/Groups";
+import NewGroupMenu from "./group/NewGroupMenu";
 import { useSelector } from "react-redux";
+import UserNav from "./UI/UserNav";
+import GroupInfoMenu from "./group/groupInfo/GroupInfoMenu";
 
 function LeftMenu() {
   const createGroupDiv = useSelector(state => state.ui.isCreateGroupShown);
+  const infoGroupDiv = useSelector(state => state.ui.isGroupInfoShown);
   // toggleCreateGroup
   const [filter, setFilter] = useState(false);
 
@@ -20,15 +17,9 @@ function LeftMenu() {
   };
   return (
     <div className="flex flex-col border-r border-neutral-700 w-100 h-screen">
-      <div className="flex justify-between items-center bg-{#202d33] h-[60px] p-3">
-        <img src={pp} alt="profile_picture" className="rounded-full w-[40px]" />
-        <div className="flex justify-between w-[175px]">
-          <RoundedBtn icon={<MdPeopleAlt />} />
-          <RoundedBtn icon={<TbCircleDashed />} />
-          <RoundedBtn icon={<BsFillChatLeftTextFill />} />
-          <RoundedBtn icon={<HiDotsVertical />} />
-        </div>
-      </div>
+      <UserNav />
+      {!createGroupDiv && !infoGroupDiv && 
+      <>
       <div className="flex justify-between items-center h-[60px] p-2">
         <input
           type="text"
@@ -42,11 +33,14 @@ function LeftMenu() {
           <BiFilter />
         </button>
       </div>
-      {!createGroupDiv && 
       <Groups filter={filter} />
+      </>
       }
       {createGroupDiv && 
-      <AddGroupMember />
+      <NewGroupMenu />
+      }
+      {infoGroupDiv && 
+      <GroupInfoMenu />
       }
       
 

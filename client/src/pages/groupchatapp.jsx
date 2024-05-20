@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import LeftMenu from "../components/LeftMenu";
-import ChatDetail from "../components/ChatDetail";
+import ChatDetail from "../components/chat/ChatDetail";
 import LoadingScreen from "../components/LoadingScreen";
 import { useSelector } from "react-redux";
-
 
 // TODO: loading screen component
 
@@ -36,6 +35,9 @@ function GroupChatsApp () {
       <div className="bg-[#222f35] min-w-[415px] max-w-[1120px] w-100 h-100">
         {groupId && <ChatDetail />}
       </div>
+      {/* <div className="bg-[#111a21] min-w-[340px] max-w-[500px] w-100 h-100">
+        <RightMenu />
+      </div> */}
     </div>
   </div>
   )}

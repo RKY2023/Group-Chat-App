@@ -8,6 +8,7 @@ const initialGroupStore = {
   currentGroupName: '',
   currentGroupInfo: '',
   currentGroupImg: '',
+  groupMembers: [],
 };
 
 const groupSlice = createSlice({
@@ -38,7 +39,10 @@ const groupSlice = createSlice({
     },
     setIsNewGroupRequired(state, action) {
       state.isNewGroupRequired = action.payload;
-    }
+    },
+    setGroupMembersList (state, action) {
+      state.groupMembers = action.payload;
+    },
   }
 });
 
