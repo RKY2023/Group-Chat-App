@@ -8,7 +8,7 @@ function Message(props) {
   return (
     <div
       className={`flex justify-center items-center rounded-md w-fit my-1 ${
-        (props.userId == userId) ? "bg-[#005c4b] ml-auto" : "bg-[#202d33] mr-auto"
+        (props.userId === userId) ? "bg-[#005c4b] ml-auto" : "bg-[#202d33] mr-auto"
       }`}
     >
       {/* Image msg  */}

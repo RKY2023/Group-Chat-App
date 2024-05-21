@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { chatsData } from "../../data/GroupChat";
 import { MdOutlineGroupAdd  } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { grf1, grf2, grf3, grf4, grf5, grf6 } from "../../assets/groupchat";
+import { grf1 } from "../../assets/groupchat";
 import { uiActions } from "../../store/uiReducer";
 import CardList from "../Common/CardList";
 

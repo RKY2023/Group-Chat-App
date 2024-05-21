@@ -11,7 +11,7 @@ import LoginPage from './pages/login';
 
 const App = () => {
   const dispatch = useDispatch();
-  const NewGroupModal = useSelector(state => state.ui.isModalShown);
+  // const NewGroupModal = useSelector(state => state.ui.isModalShown);
 
   useEffect(() => {
     dispatch(chatActions.setTheme());

@@ -1,11 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { groupActions } from "../../store/groupReducer";
+import React, { useRef } from "react";
 
 function AddGroupMember(props) {
-  const dispatch = useDispatch();
-  const [active, setActive] = useState(false);
-
   const addMemberRef = useRef();
 
   const setGroupHandler = () => {

@@ -1,16 +1,11 @@
 import React from "react";
 import RoundedBtn from "../Common/RoundedBtn";
-import { messagesData } from "../../data/GroupChat";
 import { MdOutlineInfo, MdSearch } from "react-icons/md";
-import { HiDotsVertical } from "react-icons/hi";
-import { cs1 } from "../../assets/groupchat";
 import { useDispatch, useSelector } from "react-redux";
-import DropdownMenu from "../UI/dropdown";
 import { uiActions } from "../../store/uiReducer";
 
 function GroupNav (props) {
   const dispatch = useDispatch();
-  const groupId = useSelector(state => state.group.groupId);
   const name = useSelector(state => state.group.currentGroupName);
   const info = useSelector(state => state.group.currentGroupInfo);
   const img = useSelector(state => state.group.currentGroupImg);

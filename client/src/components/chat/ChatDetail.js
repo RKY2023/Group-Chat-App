@@ -10,9 +10,8 @@ function ChatDetail() {
   const groupId = useSelector(state => state.group.groupId);
   const lastMessageId = useSelector(state => state.chat.lastMsgId);
   const userId = useSelector(state => state.chat.loggedInUserId);
-  const [getChatsTimer, setGetChatsTimer] = useState();
 
-  console.log(lastMessageId ,'user', userId, groupId, lastMessageId );
+  // console.log(lastMessageId ,'user', userId, groupId, lastMessageId );
   
   const messages = useSelector(state => state.chat.chats);
   // const [messages, setMessages] = useState(messageData);
@@ -28,7 +27,7 @@ function ChatDetail() {
         }
       });
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     if(data && data.thread === 'success'){
       // fetch chat / update chat again
       // setSent(true);
@@ -51,7 +50,7 @@ function ChatDetail() {
         }
     });
     const data = await response.json();
-    const tt = new Date();
+    // const tt = new Date();
     // console.log(tt.getMinutes(), tt.getSeconds());
     if(data.threads) {
       dispatch(chatActions.setNewChats(data.threads));
@@ -86,7 +85,7 @@ function ChatDetail() {
         clearInterval(timer);
       })();
     };
-  },[userId, groupId, lastMessageId]);
+  },[userId, groupId, lastMessageId, getChats]);
 
   useEffect(() => {
     // Setup logic here

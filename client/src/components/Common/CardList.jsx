@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { groupActions } from "../../store/groupReducer";
 import { chatActions } from "../../store/chatReducer";
 
 function CardList(props) {
   const dispatch = useDispatch();
-  const userId = useSelector(state => state.chat.loggedInUserId);
-  const [active, setActive] = useState(false);
+  // const userId = useSelector(state => state.chat.loggedInUserId);
+  // const [active, setActive] = useState(false);
   const setGroupHandler = (event) => {
     dispatch(groupActions.setGroupId(props.id));
     dispatch(groupActions.setCurrentGroup({gp: props.gp, title: props.title, info: props.info}));
