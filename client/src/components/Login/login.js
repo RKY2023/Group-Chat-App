@@ -75,7 +75,7 @@ const Login = () => {
         if (loginMode === 'login' || loginMode === 'signup') {
             
         }
-    },[loginMode, dispatch, history]);
+    },[loginMode, dispatch, history, api_url]);
 
     const switchLoginModeHandler = () => {
         if(loginMode === 'signup') {
