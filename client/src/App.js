@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { chatActions } from './store/chatReducer';
-// import MainView from './components/chat/mainView';
-import "../node_modules/react-bootstrap/dist/react-bootstrap";
-import "../node_modules/bootstrap/dist/css/bootstrap.css";
+import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import GroupChatsApp from './pages/groupchatapp';
 import LoginPage from './pages/login';
 
