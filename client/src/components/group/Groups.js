@@ -8,20 +8,12 @@ import CardList from "../Common/CardList";
 
 function Groups(props) {
   const dispatch = useDispatch();
-  const [chats, setChats] = useState(chatsData);
   const groupsData = useSelector(state => state.group.groups);
-  const [groups, setGroups] = useState(groupsData);
  
   const toggleCreateGroupHandler = () => {
     dispatch(uiActions.toggleCreateGroup());
   }
 
-  useEffect(() => {
-    const newChats = props.filter ? chatsData.filter((chat) => chat.unreadMsgs) : chatsData;
-    setChats(newChats);
-    
-    console.log('Group data',groupsData);
-  }, [props.filter]);
   return (
     <div className="flex flex-col overflow-y-scroll cursor-pointer h-100">
       <div className="flex justify-between items-center w-100 min-h-[55px] px-3 hover:bg-[#202d33]">

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import RoundedBtn from "../Common/RoundedBtn";
 import { MdSend } from "react-icons/md";
 import { cs2 } from "../../assets/groupchat";
@@ -58,7 +58,7 @@ function ChatForm (props) {
 
     document.addEventListener("keydown", listener);
     return () => document.removeEventListener("keydown", listener);
-  },[props.messages]);
+  },[props.messages,sendMsgHandler]);
 
   return (
     <>

@@ -7,10 +7,11 @@ import GroupProfile from "./GroupProfile";
 function GroupInfoMenu() {
   const dispatch = useDispatch();
   const groupId = useSelector(state => state.group.groupId);
+  const api_url = useSelector(state => state.ui.api_url);
 
   const groupInfo = async () => {
     const token = localStorage.getItem("token");
-    const response = await fetch("http://localhost:5000/groupInfo", {
+    const response = await fetch(api_url+"/groupInfo", {
       method: "POST",
       body: JSON.stringify({
         groupId: groupId

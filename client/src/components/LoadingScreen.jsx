@@ -2,16 +2,17 @@ import React, { useEffect, useState } from "react";
 import { PiChatsFill  } from "react-icons/pi";
 import { FaLock } from "react-icons/fa";
 import ProgressBar from 'react-bootstrap/ProgressBar';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { groupActions } from "../store/groupReducer";
 
 function LoadingScreen (props) {
   const dispatch = useDispatch();
+  const api_url = useSelector(state => state.ui.api_url);
   const [error, setError] = useState('');
   // console.log(lastMessageId ,'user', userId, groupId, lastMessageId );
 
   const getGroupList = async () => {
-    const response = await fetch("http://localhost:5000/groupList",{
+    const response = await fetch(api_url+'/groupList',{
       method: "GET",
       headers: {
           'Content-Type': 'application/json'

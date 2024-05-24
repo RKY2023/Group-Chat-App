@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { groupActions } from "../../store/groupReducer";
 import { chatActions } from "../../store/chatReducer";

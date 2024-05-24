@@ -1,12 +1,13 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import Message from "./Message";
 import { useDispatch, useSelector } from "react-redux";
 import { chatActions } from "../../store/chatReducer";
 import GroupNav from "../group/GroupNav";
-import ChatForm from './ChatForm';
+import ChatForm from "./ChatInputForm";
 
 function ChatDetail() {
   const dispatch = useDispatch();
+  const api_url = useSelector(state => state.ui.api_url);
   const groupId = useSelector(state => state.group.groupId);
   const lastMessageId = useSelector(state => state.chat.lastMsgId);
   const userId = useSelector(state => state.chat.loggedInUserId);
@@ -19,7 +20,7 @@ function ChatDetail() {
   const bottomRef = useRef(null);
 
   const submitMsg = useCallback( async (msgData) => {
-    const response = await fetch("http://localhost:5000/sendMsg",{
+    const response = await fetch(api_url+"/sendMsg",{
         method: "POST",
         body: JSON.stringify(msgData),
         headers: {
@@ -42,7 +43,7 @@ function ChatDetail() {
       lastMessageId: lastMessageId
     }
     // console.log(msgData);
-    const response = await fetch("http://localhost:5000/getThread",{
+    const response = await fetch(api_url+"/getThread",{
         method: "POST",
         body: JSON.stringify(msgData),
         headers: {

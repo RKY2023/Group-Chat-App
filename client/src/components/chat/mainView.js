@@ -6,10 +6,11 @@ import { useEffect } from "react";
 
 const MainView = () => {
   const dispatch = useDispatch();
+  const api_url = useSelector(state => state.ui.api_url);
   const userId = useSelector(state => state.chat.loggedInUserId);
 
   const getOnlineUsers = async () => {
-    const response = await fetch("http://localhost:5000/api/onlineUsers",{
+    const response = await fetch(api_url+"/api/onlineUsers",{
         method: "GET",
         headers: {
             'Content-Type': 'application/json'

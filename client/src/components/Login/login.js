@@ -2,12 +2,14 @@ import React, { useEffect, useCallback, useState, useRef } from "react";
 import { Form, Button} from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { chatActions } from "../../store/chatReducer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+// const apiKey = process.env.REACT_APP_API_KEY;
 
 const Login = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const [loginMode, setLoginMode] = useState('login');
+    const api_url = useSelector(state => state.ui.api_url);
     const [error, setError] = useState();
     const inputNameRef = useRef();
     const inputEmailRef = useRef();
@@ -38,7 +40,7 @@ const Login = () => {
     const loginHandler = useCallback( async (userData) => {
         let loginUrl, payload;
         if(loginMode === 'signup') {
-            loginUrl = "http://localhost:5000/api/signup";
+            loginUrl = api_url + "/api/signup";
             payload = {
                 email: userData.email,
                 password: userData.password,
@@ -46,7 +48,7 @@ const Login = () => {
                 phoneno: userData.phoneno,
             };
         } else {
-            loginUrl = "http://localhost:5000/api/login"
+            loginUrl = api_url + "/api/login"
             payload = {
                 email: userData.email,
                 password: userData.password,

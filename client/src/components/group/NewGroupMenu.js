@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { FaArrowLeft } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { pp } from "../../assets/groupchat";
 import { chatActions } from "../../store/chatReducer";
 import { groupActions } from "../../store/groupReducer";
@@ -12,6 +12,7 @@ function NewGroupMenu() {
   const [invitedUsers, setInvitedUsers] = useState([]);
   const [apiNotCalled, setApiNotCalled] = useState(true);
   const dispatch = useDispatch();
+  const api_url = useSelector(state => state.ui.api_url);
 
   const inputGroupNameRef = useRef();
   const inputGroupMembersRef = useRef();
@@ -35,7 +36,7 @@ function NewGroupMenu() {
 
   const userListApi = async () => {
     const token = localStorage.getItem("token");
-    const response = await fetch("http://localhost:5000/userList", {
+    const response = await fetch(api_url+"/userList", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +53,7 @@ function NewGroupMenu() {
   const submitHandler = async (event) => {
     event.preventDefault();
     const token = localStorage.getItem("token");
-    const response = await fetch("http://localhost:5000/newGroup", {
+    const response = await fetch(api_url+"/newGroup", {
       method: "POST",
       body: JSON.stringify({
         title: inputGroupNameRef.current.value,
@@ -77,7 +78,7 @@ function NewGroupMenu() {
       userListApi();
       setApiNotCalled(false);
     }
-  }, []);
+  }, [apiNotCalled, userListApi, setApiNotCalled]);
 
   return (
     <div className="flex flex-col overflow-y-scroll cursor-pointer h-100">
