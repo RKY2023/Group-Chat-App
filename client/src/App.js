@@ -19,12 +19,12 @@ const App = () => {
 
   return (
     <div className="App">
-      {/* <h1 className='text-blue-500'> aaa</h1> */}
+      <h1 className='text-blue-500'> aaa</h1>
       {/* <MainHeader /> */}
       {/* {NewGroupModal && <NewGroupForm />}       */}
       <Switch>
         <Route path='/' exact>
-          <LoginPage />
+          {/* <LoginPage /> */}
         </Route>
         <Route path='/chat'>
           {/* <MainView /> */}
