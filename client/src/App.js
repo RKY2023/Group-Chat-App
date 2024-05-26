@@ -11,11 +11,11 @@ const App = () => {
   const dispatch = useDispatch();
   // const NewGroupModal = useSelector(state => state.ui.isModalShown);
 
-  useEffect(() => {
-    dispatch(chatActions.setTheme());
-    // console.log('App');
-    dispatch(chatActions.setUserId());
-  },[dispatch]);
+  // useEffect(() => {
+  //   dispatch(chatActions.setTheme());
+  //   // console.log('App');
+  //   dispatch(chatActions.setUserId());
+  // },[dispatch]);
 
   return (
     <div className="App">
@@ -24,13 +24,13 @@ const App = () => {
       {/* {NewGroupModal && <NewGroupForm />}       */}
       <Switch>
         <Route path='/' exact>
-          <LoginPage />
+          {/* <LoginPage /> */}
         </Route>
         <Route path='/chat'>
           {/* <MainView /> */}
         </Route>
         <Route path='/group'>
-          <GroupChatsApp />
+          {/* <GroupChatsApp /> */}
         </Route>
         <Route path='/chat'>
           
