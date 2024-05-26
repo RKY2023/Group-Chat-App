@@ -8,5 +8,9 @@ module.exports = {
       }
     },
   },
-  plugins: [],
+  // plugins: {
+  //   '@tailwindcss/jit': {},
+  //   autoprefixer: {},
+  // },
+  plugins: ["@tailwindcss/jit , autoprefixer"]
 }
