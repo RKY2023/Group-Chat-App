@@ -24,13 +24,13 @@ const App = () => {
       {/* {NewGroupModal && <NewGroupForm />}       */}
       <Switch>
         <Route path='/' exact>
-          <LoginPage />
+          {/* <LoginPage /> */}
         </Route>
         <Route path='/chat'>
           {/* <MainView /> */}
         </Route>
         <Route path='/group'>
-          <GroupChatsApp />
+          {/* <GroupChatsApp /> */}
         </Route>
         <Route path='/chat'>
           
