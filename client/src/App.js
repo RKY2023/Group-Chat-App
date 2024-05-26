@@ -1,21 +1,21 @@
 import React, { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { chatActions } from './store/chatReducer';
-import '../node_modules/bootstrap/dist/css/bootstrap.css';
-import GroupChatsApp from './pages/groupchatapp';
-import LoginPage from './pages/login';
+// import { useDispatch } from 'react-redux';
+// import { chatActions } from './store/chatReducer';
+// import '../node_modules/bootstrap/dist/css/bootstrap.css';
+// import GroupChatsApp from './pages/groupchatapp';
+// import LoginPage from './pages/login';
 
 
 const App = () => {
-  const dispatch = useDispatch();
-  // const NewGroupModal = useSelector(state => state.ui.isModalShown);
+  // const dispatch = useDispatch();
+  // // const NewGroupModal = useSelector(state => state.ui.isModalShown);
 
-  useEffect(() => {
-    dispatch(chatActions.setTheme());
-    // console.log('App');
-    dispatch(chatActions.setUserId());
-  },[dispatch]);
+  // useEffect(() => {
+  //   dispatch(chatActions.setTheme());
+  //   // console.log('App');
+  //   dispatch(chatActions.setUserId());
+  // },[dispatch]);
 
   return (
     <div className="App">
@@ -30,7 +30,7 @@ const App = () => {
           {/* <MainView /> */}
         </Route>
         <Route path='/group'>
-          <GroupChatsApp />
+          {/* <GroupChatsApp /> */}
         </Route>
         <Route path='/chat'>
           
