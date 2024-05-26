@@ -3,8 +3,8 @@ import { Switch, Route } from 'react-router-dom';
 // import { useDispatch } from 'react-redux';
 // import { chatActions } from './store/chatReducer';
 // import '../node_modules/bootstrap/dist/css/bootstrap.css';
-// import GroupChatsApp from './pages/groupchatapp';
-// import LoginPage from './pages/login';
+import GroupChatsApp from './pages/groupchatapp';
+import LoginPage from './pages/login';
 
 
 const App = () => {
@@ -24,13 +24,13 @@ const App = () => {
       {/* {NewGroupModal && <NewGroupForm />}       */}
       <Switch>
         <Route path='/' exact>
-          {/* <LoginPage /> */}
+          <LoginPage />
         </Route>
         <Route path='/chat'>
           {/* <MainView /> */}
         </Route>
         <Route path='/group'>
-          {/* <GroupChatsApp /> */}
+          <GroupChatsApp />
         </Route>
         <Route path='/chat'>
           
