@@ -17,7 +17,7 @@ function LoginPage () {
         <img src={logo} alt="Welcome to Group Chat App" className="flex rounded-lg w-50 h-50" />
       </div>
       <div className="flex justify-center items-center w-50 min-w-[500px] bg-[#0E242E] rounded-lg h-50 p-5 mr-10">
-        {/* <Login /> */}
+        <Login />
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { chatsData } from "../../data/GroupChat";
+import React from "react";
+// import { chatsData } from "../../data/GroupChat";
 import { MdOutlineGroupAdd  } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { grf1 } from "../../assets/groupchat";
