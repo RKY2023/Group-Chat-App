@@ -43,6 +43,7 @@ sequelize
   // .sync({ force: true})
   .sync()
   .then((k) => {
+    console.log('server running...')
     app.listen( process.env.PORT || 5000);
   })
   .catch((err) => console.log(err));
