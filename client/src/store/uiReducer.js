@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialUIStore = {
-  api_url: 'http://localhost:5000' || 'http://13.53.45.119:5000'|| 'http://localhost:5000',
+  api_url: 'http://13.53.45.119:5000'|| 'http://localhost:5000',
   isModalShown: false,
   isCreateGroupShown: false,
   isGroupInfoShown: false,
