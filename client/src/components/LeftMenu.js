@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { BiFilter } from "react-icons/bi";
+// import { BiFilter } from "react-icons/bi";
+import { BiFilter } from "./UI/Icons/CustomIcons";
 import Groups from "./group/Groups";
 import NewGroupMenu from "./group/NewGroupMenu";
 import { useSelector } from "react-redux";
@@ -42,7 +43,6 @@ function LeftMenu() {
       {infoGroupDiv && 
       <GroupInfoMenu />
       }
-      
 
     </div>
   );

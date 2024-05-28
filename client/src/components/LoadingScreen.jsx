@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { PiChatsFill  } from "react-icons/pi";
-import { FaLock } from "react-icons/fa";
+// import { PiChatsFill } from "react-icons/pi";
+// import { FaLock } from "react-icons/fa";
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import { useDispatch, useSelector } from "react-redux";
 import { groupActions } from "../store/groupReducer";
+import { FaLock, PiChatsFill } from "./UI/Icons/CustomIcons";
 
 function LoadingScreen (props) {
   const dispatch = useDispatch();
@@ -80,7 +81,7 @@ function LoadingScreen (props) {
     <div className="flex flex-col justify-center items-center w-screen h-screen bg-[#202d33]">
       {/* Icon  */}
       <span className="text-[#3d464a] text-6xl my-12">
-        <PiChatsFill  />
+        <PiChatsFill />
 
       </span>
       <div className="flex flex-col justify-evenly items-center h-[150px]">

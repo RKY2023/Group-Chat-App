@@ -1,8 +1,9 @@
 import React from "react";
 import RoundedBtn from "../Common/RoundedBtn";
-import { MdOutlineInfo, MdSearch } from "react-icons/md";
+// import { MdOutlineInfo, MdSearch } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../../store/uiReducer";
+import { MdOutlineInfo, MdSearch } from "../UI/Icons/CustomIcons";
 
 function GroupNav (props) {
   const dispatch = useDispatch();

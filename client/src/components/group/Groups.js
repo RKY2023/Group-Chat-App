@@ -1,10 +1,12 @@
 import React from "react";
 // import { chatsData } from "../../data/GroupChat";
-import { MdOutlineGroupAdd  } from "react-icons/md";
+// import { MdOutlineGroupAdd  } from "react-icons/md";
+import { MdOutlineGroupAdd } from "../UI/Icons/CustomIcons";
 import { useDispatch, useSelector } from "react-redux";
 import { grf1 } from "../../assets/groupchat";
 import { uiActions } from "../../store/uiReducer";
 import CardList from "../Common/CardList";
+
 
 function Groups(props) {
   const dispatch = useDispatch();

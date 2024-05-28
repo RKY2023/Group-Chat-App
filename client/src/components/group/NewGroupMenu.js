@@ -1,11 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
-import { FaArrowLeft } from "react-icons/fa";
+// import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft } from "../UI/Icons/CustomIcons";
 import { useDispatch, useSelector } from "react-redux";
 import { pp } from "../../assets/groupchat";
 import { chatActions } from "../../store/chatReducer";
 import { groupActions } from "../../store/groupReducer";
 import { uiActions } from "../../store/uiReducer";
 import AddGroupMember from "./AddGroupMember";
+
 
 function NewGroupMenu() {
   const [users, setUsers] = useState([]);

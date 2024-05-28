@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import RoundedBtn from "../Common/RoundedBtn";
-import { MdSend } from "react-icons/md";
+// import { MdSend } from "react-icons/md";
 import { cs2 } from "../../assets/groupchat";
-import { BiHappy } from "react-icons/bi";
-import { AiOutlinePaperClip } from "react-icons/ai";
-import { BsFillMicFill } from "react-icons/bs";
+// import { BiHappy } from "react-icons/bi";
+// import { AiOutlinePaperClip } from "react-icons/ai";
+// import { BsFillMicFill } from "react-icons/bs";
 import { getTime } from "../../logic/groupchat";
 import { useSelector } from "react-redux";
+import { AiOutlinePaperClip, BiHappy, BsFillMicFill, MdSend } from "../UI/Icons/CustomIcons";
 
 function ChatForm (props) {
   const userId = useSelector(state => state.chat.loggedInUserId);

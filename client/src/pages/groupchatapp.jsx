@@ -33,7 +33,7 @@ function GroupChatsApp () {
         <LeftMenu />
       </div>
       <div className="bg-[#222f35] min-w-[415px] max-w-[1120px] w-100 h-100">
-        {groupId && <ChatDetail />}
+        {groupId === 0 && <ChatDetail />}
       </div>
       {/* <div className="bg-[#111a21] min-w-[340px] max-w-[500px] w-100 h-100">
         <RightMenu />

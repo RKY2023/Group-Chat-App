@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import RoundedBtn from "../Common/RoundedBtn";
 // import { messagesData } from "../data/GroupChat";
-import { HiDotsVertical } from "react-icons/hi";
+// import { HiDotsVertical } from "react-icons/hi";
 
 const DropdownMenu = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,7 +15,7 @@ const DropdownMenu = (props) => {
     <div className="flex flex-row-reverse">
       
     <button class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button" onClick={onClickHandler}>
-      <RoundedBtn icon={<HiDotsVertical />} />
+      {/* <RoundedBtn icon={<HiDotsVertical />} /> */}
     </button>
     {isOpen && 
     <div className="relative w-32 h-32">

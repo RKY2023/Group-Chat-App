@@ -1,8 +1,9 @@
 import React from 'react';
 import RoundedBtn from "../../Common/RoundedBtn";
-import { BiEditAlt } from "react-icons/bi";
+// import { BiEditAlt } from "react-icons/bi";
 import { useSelector } from "react-redux";
-import { FaUserGroup } from "react-icons/fa6";
+import { BiEditAlt, FaUserGroup } from '../../UI/Icons/CustomIcons';
+// import { FaUserGroup } from "react-icons/fa6";
 
 function GroupProfile() {
   const groupMembers = useSelector(state => state.group.groupMembers);
