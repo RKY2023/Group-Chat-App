@@ -19,7 +19,7 @@ const { addAbortListener } = require("stream");
 
 app.use(cors());
 // app.use(cors({
-//     origin: ["http://13.53.45.119:80", "http://13.53.45.119:3000"]
+//   origin: ["http://localhost:3000", "http://13.53.45.119:3000"]
 // }));
 // app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());

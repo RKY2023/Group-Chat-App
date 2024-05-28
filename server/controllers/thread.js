@@ -19,22 +19,23 @@ const getThread = async (req, res, next) => {
     }
 
     try {
-        const grp_list = await Group.findAll({
-            where: {
-                userId : user, id: groupId
-            }
-        })
-        console.log('GRp_lst',grp_list.length);
+        // const grp_list = await Group.findAll({
+        //     where: {
+        //         userId : user, id: groupId
+        //     }
+        // })
+        // console.log('GRp_lst',grp_list.length);
         const threads = await Thread.findAll({
             attributes: ['id', 'message', 'userId'],
             include: {
                 model: User,
-                    attributes: [],
-                    where: {
-                        isLoggedIn: {
-                            [Op.eq]: true,
-                        },
-                    },             
+                attributes: [],
+                where: {
+                    isLoggedIn: {
+                        [Op.eq]: true,
+                    },
+                },   
+                         
             },
             order: [
                 ['createdAt', 'ASC']
