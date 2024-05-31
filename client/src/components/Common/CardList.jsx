@@ -9,7 +9,7 @@ function CardList(props) {
   // const [active, setActive] = useState(false);
   const setGroupHandler = (event) => {
     dispatch(groupActions.setGroupId(props.id));
-    dispatch(groupActions.setCurrentGroup({gp: props.gp, title: props.title, info: props.info}));
+    dispatch(groupActions.setCurrentGroup({gp: props.gp, title: props.title, info: props.info, activeGroupIndex: props.activeGroupIndex}));
     dispatch(chatActions.setNewGroupChats());
   }
   console.log(props['elem-type']);

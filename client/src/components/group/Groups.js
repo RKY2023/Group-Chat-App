@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // import { chatsData } from "../../data/GroupChat";
 // import { MdOutlineGroupAdd  } from "react-icons/md";
 import { MdOutlineGroupAdd } from "../UI/Icons/CustomIcons";
@@ -11,6 +11,7 @@ import CardList from "../Common/CardList";
 function Groups(props) {
   const dispatch = useDispatch();
   const groupsData = useSelector(state => state.group.groups);
+  const activeGroupIndex = useSelector(state => state.group.activeGroupIndex);
  
   const toggleCreateGroupHandler = () => {
     dispatch(uiActions.toggleCreateGroup());
@@ -41,7 +42,8 @@ function Groups(props) {
             time={group.updatedAt}
             info={group.info}
             unreadMsgs={group.unreadMsgs}
-            active={i === 0}
+            active={i === activeGroupIndex}
+            activeGroupIndex={i}
           />
         );
       })}

@@ -4,10 +4,12 @@ const initialGroupStore = {
   groups: [],
   groupId: 0,
   isNewGroupRequired: false,
+  isGroupListSet: false,
   newCreateGroup: [],
   currentGroupName: '',
   currentGroupInfo: '',
   currentGroupImg: '',
+  activeGroupIndex: 0,
   groupMembers: [],
 };
 
@@ -15,6 +17,10 @@ const groupSlice = createSlice({
   name: "group",
   initialState: initialGroupStore,
   reducers: {
+    setIsGroupListSet(state){
+      state.isGroupListSet = true;
+      console.log('Gp set',state.isGroupListSet);
+    },
     setGroupId (state, action) {
       state.groupId = action.payload;
     },
@@ -32,10 +38,11 @@ const groupSlice = createSlice({
     },
     setCurrentGroup(state, action){
       const activeGroup = action.payload;
-      console.log('AGP',activeGroup);
+      // console.log('AGP',activeGroup);
       state.currentGroupImg = activeGroup.gp;
       state.currentGroupName = activeGroup.title;
       state.currentGroupInfo = activeGroup.info;
+      state.activeGroupIndex = activeGroup.activeGroupIndex;
     },
     setIsNewGroupRequired(state, action) {
       state.isNewGroupRequired = action.payload;

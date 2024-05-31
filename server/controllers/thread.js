@@ -56,10 +56,10 @@ const getThread = async (req, res, next) => {
 }
 
 const sendMsg = async (req, res, next) => {
-    console.log('THread', req.body);
+    console.log('Msg Received', req.body);
     const { userId, groupId, message } = req.body;
     // isLink: false, isImg: false
-    console.log(userId, groupId, message);
+    // console.log(userId, groupId, message);
     let trans;
     let chats = []
     try {
@@ -83,14 +83,14 @@ const newGroup = async (req, res, next) => {
         const { title, info, invites } = req.body;
         // console.log('new grp',req.user, title, info, invites);
         invites.push(req.user.id.toString());
-        console.log('new grp',invites);
+        // console.log('new grp',invites);
         // req.user.createGroup
         const newGroup = await Group.create({
             title: title || 'New Group',
             info: info || 'Group Info'
         });
         // console/log(newGroup);
-        console.log('new grp id', newGroup.id);
+        // console.log('new grp id', newGroup.id);
         invites.forEach(async(member) => {
             // console.log('mem',member)
             let isAdmin = false;
@@ -112,14 +112,14 @@ const newGroup = async (req, res, next) => {
 }
 
 const groupList = async (req, res, next) => {
-    console.log('grp');
+    console.log('Getting Group List');
     const groups = await Group.findAll();
     res.status(201).json({ 'message': 'success', groups});
 }
 
 const loadGroupChat = async (req, res, next) => {
     const { groupid } = req.body;
-    console.log(groupid);
+    // console.log(groupid);
     try{
         const group = await Group.findAll({
             where: {
@@ -128,7 +128,7 @@ const loadGroupChat = async (req, res, next) => {
         })
         const groupMembers = group.people.split(',');
         const isMember = groupMembers.find(req.user.id);
-        console.log(isMember);
+        // console.log(isMember);
         if(isMember) {
             res.status(201).json({ status: 'success', groups});
         } else {

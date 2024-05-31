@@ -4,13 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { chatActions } from "../../store/chatReducer";
 import GroupNav from "../group/GroupNav";
 import ChatForm from "./ChatInputForm";
+import SocketComp from "../../socketIO.js";
+import { socket } from "../../socketIO.js";
 
 function ChatDetail() {
   const dispatch = useDispatch();
   const api_url = useSelector(state => state.ui.api_url);
   const groupId = useSelector(state => state.group.groupId);
   const lastMessageId = useSelector(state => state.chat.lastMsgId);
-  const userId = useSelector(state => state.chat.loggedInUserId);
+  const userId = useSelector(state => state.auth.userId);
+  const userName = useSelector(state => state.auth.userName);
 
   // console.log(lastMessageId ,'user', userId, groupId, lastMessageId );
   
@@ -18,6 +21,16 @@ function ChatDetail() {
   // const [messages, setMessages] = useState(messageData);
   // const [sent, setSent] = useState(false);
   const bottomRef = useRef(null);
+
+  const appendMessage2 = (msg) => {
+    const message = {
+      id: Math.random().toString(),
+      message: msg.message,
+      userId: msg.userId,
+      userName: msg.userName
+    };
+    dispatch(chatActions.setNewChatsWS(message));
+  }
 
   const submitMsg = useCallback( async (msgData) => {
     const response = await fetch(api_url+"/sendMsg",{
@@ -27,12 +40,24 @@ function ChatDetail() {
           'Content-Type': 'application/json'
         }
       });
+      console.log('=>>',msgData)
     const data = await response.json();
     // console.log(data);
     if(data && data.thread === 'success'){
       // fetch chat / update chat again
       // setSent(true);
     }
+    // appendMessage(`You: ${msgData.message}`)
+    // socket.emit('send-chat-message', msgData.message)
+    // SendMsgSocket(msgData);
+    const message = {
+      id: data.thread.id,
+      message: data.thread.message,
+      userId: userId,
+      userName: userName
+    };
+    socket.emit('send-chat-message', message);
+    dispatch(chatActions.setNewChats([message]));
   },[]);
 
   const getChats = async (userId, groupId, lastMessageId) => {
@@ -71,19 +96,19 @@ function ChatDetail() {
 
   useEffect(() => { 
     // console.log('gg', groupId)   
-    const timer = setInterval(async () => {
-      if(groupId > 0) {
-        // console.log('fetching chat =>', userId, groupId, lastMessageId);
-        await getChats(userId, groupId, lastMessageId);
-      } else {
-        // console.log('useff');
-      }
-    }, 1000);
+    // const timer = setInterval(async () => {
+    //   if(groupId > 0) {
+    //     // console.log('fetching chat =>', userId, groupId, lastMessageId);
+    //     await getChats(userId, groupId, lastMessageId);
+    //   } else {
+    //     // console.log('useff');
+    //   }
+    // }, 1000);
     return () => {
       // Cleanup logic here
       // clear old timer bfore setting new timer
       (() => {
-        clearInterval(timer);
+        // clearInterval(timer);
       })();
     };
   },[userId, groupId, lastMessageId, getChats]);
@@ -95,6 +120,47 @@ function ChatDetail() {
       // Cleanup logic here
     };
   }, []); 
+
+  useEffect(() => {
+    // Setup logic here
+    console.log('WS =>',userId, userName);
+    const message = {
+      id: Math.random().toString(),
+      message: 'You joined',
+      userId: userId,
+      userName: userName
+    };
+    appendMessage2(message);
+    socket.emit('new-user', { userId, userName})
+
+    socket.on('chat-message', data => {
+      console.log(data.name);
+      appendMessage2(data);
+    })
+
+    socket.on('user-connected', userName => {
+      const message = {
+        id: Math.random().toString(),
+        message: `${userName} connected`,
+        userId: 0,
+        userName: ''
+      };
+      appendMessage2(message);
+    })
+
+    socket.on('user-disconnected', userName => {
+      const message = {
+        id: Math.random().toString(),
+        message: `${userName} disconnected`,
+        userId: 0,
+        userName: ''
+      };
+      appendMessage2(message);
+    })
+    return () => {
+      // Cleanup logic here
+    };
+  }, [userId, userName]); 
     
   return (
     <div className="flex flex-col h-screen">
@@ -107,10 +173,12 @@ function ChatDetail() {
       >
         {messages.map((msg) => {
           return <Message 
+            key={Math.random.toString()}
             message={msg.message}
             time={msg.time}
             isLink={msg.isLink}
             userId={msg.userId}
+            userName={msg.userName}
             img={msg.img}
           />;
         })}
@@ -119,7 +187,7 @@ function ChatDetail() {
 
         </div>
       </div>
-
+      <SocketComp />
       {/* Bottom section  */}
       <ChatForm messages={messages} onSubmitMsg={submitMsg}/>
     </div>

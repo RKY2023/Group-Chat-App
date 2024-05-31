@@ -2,15 +2,24 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 function Message(props) {
-  const userId = useSelector(state => state.chat.loggedInUserId);
+  const userId = useSelector(state => state.auth.userId);
   // const 
   // console.log('meessgae users', userId, props.userId);
   return (
     <div
-      className={`flex justify-center items-center rounded-md w-fit my-1 ${
+      className={`flex flex-col justify-center items-center rounded-md w-fit my-1 ${
         (props.userId === userId) ? "bg-[#005c4b] ml-auto" : "bg-[#202d33] mr-auto"
       }`}
-    >
+    > 
+      {(props.userId !== userId && props.userName !== '') ? 
+        <div className="w-100 text-xs text-white  p-1">
+          {props.userName}
+        </div>
+       :
+      (
+        <></>
+      )
+      }
       {/* Image msg  */}
       {props.img ? (
         <div className="relative w-100 p-2">

@@ -1,8 +1,8 @@
 import React, { useEffect, useCallback, useState, useRef } from "react";
 import { Form, Button} from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import { chatActions } from "../../store/chatReducer";
 import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../../store/authReducer";
 // const apiKey = process.env.REACT_APP_API_KEY;
 
 const Login = () => {
@@ -65,8 +65,9 @@ const Login = () => {
         const data = await response.json();
         console.log(data);
         if(data.token) {
-            localStorage.setItem('token', data.token);
-            dispatch(chatActions.setUserId());
+            dispatch(authActions.login(data.token));
+            // dispatch(authActions.setUserId());
+            dispatch(authActions.setUser(data.userData));
             history.replace('/group');
         }
         if(data.error) {

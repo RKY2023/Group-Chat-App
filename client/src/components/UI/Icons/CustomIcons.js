@@ -4,7 +4,7 @@ export function PiChatsFill() {
       <svg
         stroke="currentColor"
         fill="currentColor"
-        stroke-width="0"
+        strokeWidth="0"
         viewBox="0 0 256 256"
         height="1em"
         width="1em"
@@ -21,7 +21,7 @@ export function FaLock() {
       <svg
         stroke="currentColor"
         fill="currentColor"
-        stroke-width="0"
+        strokeWidth="0"
         viewBox="0 0 448 512"
         height="1em"
         width="1em"
@@ -38,7 +38,7 @@ export function BiFilter() {
       <svg
         stroke="currentColor"
         fill="currentColor"
-        stroke-width="0"
+        strokeWidth="0"
         viewBox="0 0 24 24"
         height="1em"
         width="1em"
@@ -55,7 +55,7 @@ export function MdPeopleAlt() {
       <svg
         stroke="currentColor"
         fill="currentColor"
-        stroke-width="0"
+        strokeWidth="0"
         viewBox="0 0 24 24"
         height="1em"
         width="1em"
@@ -63,12 +63,12 @@ export function MdPeopleAlt() {
       >
         <path fill="none" d="M0 0h24v24H0z"></path>
         <path
-          fill-rule="evenodd"
+          fillRule="evenodd"
           d="M16.67 13.13C18.04 14.06 19 15.32 19 17v3h4v-3c0-2.18-3.57-3.47-6.33-3.87z"
         ></path>
-        <circle cx="9" cy="8" r="4" fill-rule="evenodd"></circle>
+        <circle cx="9" cy="8" r="4" fillRule="evenodd"></circle>
         <path
-          fill-rule="evenodd"
+          fillRule="evenodd"
           d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4c-.47 0-.91.1-1.33.24a5.98 5.98 0 0 1 0 7.52c.42.14.86.24 1.33.24zM9 13c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"
         ></path>
       </svg>
@@ -81,9 +81,9 @@ export function TbCircleDashed() {
       <svg
         stroke="currentColor"
         fill="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         viewBox="0 0 24 24"
         height="1em"
         width="1em"
@@ -107,7 +107,7 @@ export function BsFillChatLeftTextFill() {
       <svg
         stroke="currentColor"
         fill="currentColor"
-        stroke-width="0"
+        strokeWidth="0"
         viewBox="0 0 16 16"
         height="1em"
         width="1em"
@@ -124,9 +124,7 @@ export function HiDotsVertical() {
       <svg
         stroke="currentColor"
         fill="currentColor"
-        stroke-width="0"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="0"
         viewBox="0 0 20 20"
         height="1em"
         width="1em"
@@ -144,7 +142,7 @@ export function MdOutlineGroupAdd() {
       <svg
         stroke="currentColor"
         fill="currentColor"
-        stroke-width="0"
+        strokeWidth="0"
         viewBox="0 0 24 24"
         height="1em"
         width="1em"
@@ -165,7 +163,7 @@ export function FaArrowLeft() {
       <svg
         stroke="currentColor"
         fill="currentColor"
-        stroke-width="0"
+        strokeWidth="0"
         viewBox="0 0 448 512"
         height="1em"
         width="1em"
@@ -182,7 +180,7 @@ export function BiHappy() {
       <svg
         stroke="currentColor"
         fill="currentColor"
-        stroke-width="0"
+        strokeWidth="0"
         viewBox="0 0 24 24"
         height="1em"
         width="1em"
@@ -202,7 +200,7 @@ export function AiOutlinePaperClip() {
       <svg
         stroke="currentColor"
         fill="currentColor"
-        stroke-width="0"
+        strokeWidth="0"
         viewBox="0 0 1024 1024"
         height="1em"
         width="1em"
@@ -219,7 +217,7 @@ export function BsFillMicFill() {
       <svg
         stroke="currentColor"
         fill="currentColor"
-        stroke-width="0"
+        strokeWidth="0"
         viewBox="0 0 16 16"
         height="1em"
         width="1em"
@@ -237,7 +235,7 @@ export function MdSend() {
       <svg
         stroke="currentColor"
         fill="currentColor"
-        stroke-width="0"
+        strokeWidth="0"
         viewBox="0 0 24 24"
         height="1em"
         width="1em"
@@ -255,7 +253,7 @@ export function MdSearch() {
       <svg
         stroke="currentColor"
         fill="currentColor"
-        stroke-width="0"
+        strokeWidth="0"
         viewBox="0 0 24 24"
         height="1em"
         width="1em"
@@ -273,7 +271,7 @@ export function MdOutlineInfo() {
       <svg
         stroke="currentColor"
         fill="currentColor"
-        stroke-width="0"
+        strokeWidth="0"
         viewBox="0 0 24 24"
         height="1em"
         width="1em"
@@ -291,7 +289,7 @@ export function BiEditAlt() {
       <svg
         stroke="currentColor"
         fill="currentColor"
-        stroke-width="0"
+        strokeWidth="0"
         viewBox="0 0 24 24"
         height="1em"
         width="1em"
@@ -308,13 +306,34 @@ export function FaUserGroup() {
       <svg
         stroke="currentColor"
         fill="currentColor"
-        stroke-width="0"
+        strokeWidth="0"
         viewBox="0 0 640 512"
         height="1em"
         width="1em"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM609.3 512H471.4c5.4-9.4 8.6-20.3 8.6-32v-8c0-60.7-27.1-115.2-69.8-151.8c2.4-.1 4.7-.2 7.1-.2h61.4C567.8 320 640 392.2 640 481.3c0 17-13.8 30.7-30.7 30.7zM432 256c-31 0-59-12.6-79.3-32.9C372.4 196.5 384 163.6 384 128c0-26.8-6.6-52.1-18.3-74.3C384.3 40.1 407.2 32 432 32c61.9 0 112 50.1 112 112s-50.1 112-112 112z"></path>
+      </svg>
+    </>
+  );
+}
+export function HiUserCircle() {
+  return (
+    <>
+      <svg
+        stroke="currentColor"
+        fill="currentColor"
+        strokeWidth="0"
+        viewBox="0 0 24 24"
+        height="1em"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fillRule="evenodd"
+          d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+          clipRule="evenodd"
+        ></path>
       </svg>
     </>
   );

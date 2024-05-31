@@ -11,13 +11,15 @@ function GroupChatsApp () {
   const [loading, setLoading] = useState(true);
 
   const groupId = useSelector(state => state.group.groupId);
+  const isGroupListSet = useSelector(state => state.group.isGroupListSet);
 
   useEffect(() => {
     const tm1 = setTimeout(() => {
-      if (progress >= 100) {
+      if (progress >= 100 && isGroupListSet) {
         setLoading(false);
       } else {
         const increment = Math.floor(Math.random() * (10 + 1)) + 8;
+        
         setProgress(progress + increment);
       }
     },300);
@@ -33,7 +35,7 @@ function GroupChatsApp () {
         <LeftMenu />
       </div>
       <div className="bg-[#222f35] min-w-[415px] max-w-[1120px] w-100 h-100">
-        {groupId && <ChatDetail />}
+        {groupId !== 0 && <ChatDetail />}
       </div>
       {/* <div className="bg-[#111a21] min-w-[340px] max-w-[500px] w-100 h-100">
         <RightMenu />

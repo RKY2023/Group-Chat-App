@@ -39,8 +39,14 @@ const signupAPI = async (req, res, next) => {
       username: userData.name,
       useremail: userData.email,
     });
+    const newUserData = {
+      id: userData.id,
+      name: userData.name,
+      email: userData.email,
+      isLoggedIn: userData.isLoggedIn
+    };
 
-    res.status(203).json({ userData, token });
+    res.status(203).json({ newUserData, token });
   } catch (err) {
     console.log(err);
     if (err.errors) {
@@ -74,7 +80,13 @@ const loginAPI = async (req, res, next) => {
           isLoggedIn: true,
         });
         const loggedIn = await user.save();
-        res.status(203).json({ userData: user, token });
+        const userData = {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          isLoggedIn: user.isLoggedIn
+        };
+        res.status(203).json({ userData, token });
       } else {
         res.status(201).json({ error: { message: "Invalid Password" } });
       }

@@ -5,11 +5,13 @@ import ProgressBar from 'react-bootstrap/ProgressBar';
 import { useDispatch, useSelector } from "react-redux";
 import { groupActions } from "../store/groupReducer";
 import { FaLock, PiChatsFill } from "./UI/Icons/CustomIcons";
+import { grf1 } from "../assets/groupchat";
 
 function LoadingScreen (props) {
   const dispatch = useDispatch();
   const api_url = useSelector(state => state.ui.api_url);
   const [error, setError] = useState('');
+  const [isApiLoaded, setIsApiLoaded] = useState(false);
   // console.log(lastMessageId ,'user', userId, groupId, lastMessageId );
 
   const getGroupList = async () => {
@@ -20,15 +22,15 @@ function LoadingScreen (props) {
       }
     });
     const data = await response.json();
-    // console.log(data);
+    console.log('data',data);
     if(data && data.message === 'success'){
       if(data.groups.length === 0) {
         dispatch(groupActions.setIsNewGroupRequired(true));
       } else {
         dispatch(groupActions.setGroupList(data.groups));
         dispatch(groupActions.setGroupId(data.groups[0].id));
-        // dispatch(groupActions.setCurrentGroup(data.groups[0].id));
-        
+        dispatch(groupActions.setCurrentGroup({gp: grf1, title: data.groups[0].title, info: data.groups[0].info, activeGroupIndex: 0}));  
+        dispatch(groupActions.setIsGroupListSet());
       }
     } else {
       setError('Error in fetching groups');
@@ -36,8 +38,10 @@ function LoadingScreen (props) {
   };
 
   useEffect(() => {
-    getGroupList();
-  });
+    console.log('UseEffect running');
+    // if(!isApiLoaded)
+      getGroupList();
+  },[isApiLoaded]);
 
   // const getChats = async (userId, groupId, lastMessageId) => {
   //   console.log('getchat called');
