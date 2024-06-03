@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { createRef, useEffect, useRef, useState } from "react";
 import RoundedBtn from "../Common/RoundedBtn";
 // import { MdSend } from "react-icons/md";
 import { cs2 } from "../../assets/groupchat";
@@ -8,13 +8,18 @@ import { cs2 } from "../../assets/groupchat";
 import { getTime } from "../../logic/groupchat";
 import { useSelector } from "react-redux";
 import { AiOutlinePaperClip, BiHappy, BsFillMicFill, MdSend } from "../UI/Icons/CustomIcons";
+import FileUpload from "../UI/FileUpload";
+import classes from './ChatInputForm.module.css';
 
 function ChatForm (props) {
   const userId = useSelector(state => state.chat.loggedInUserId);
   const groupId = useSelector(state => state.group.groupId);
   const [typing, setTyping] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const fileiNPUT = createRef();
 
   const inputRef = useRef(null);
+  const inputFileRef = useRef(null);
   // console.log('ll',loginUserId, receiverList);
   
   const inputChangeHandler = () => {
@@ -44,12 +49,27 @@ function ChatForm (props) {
     inputRef.current.focus();
   }
   const onClickImgHandler = () => {
-    props.onSubmitMsg({
-      img: cs2,
-      time: getTime(),
-      userId: 1,
-    })
+    // props.onSubmitMsg({
+    //   img: cs2,
+    //   time: getTime(),
+    //   userId: 1,
+    // })
+    // const evt = inputFileRef.current.target.click();
+    // props.onFileChangeHandler(evt);
   };
+
+  const inputFileChangeHandler = (event) => {
+    // event.preventDefault();
+    setSelectedFile(event.target.files[0]);
+    // setSelectedFile(fileiNPUT.current.value);
+    
+  }
+
+  useEffect(() => {
+    if(selectedFile){
+      props.onFileUploadHandler(selectedFile);
+    }
+  },[selectedFile]);
 
   useEffect(() => {
     const listener = (e) => {
@@ -67,9 +87,14 @@ function ChatForm (props) {
       {/* Emoji Btn  */}
       <RoundedBtn icon={<BiHappy />} onClick={onClickEmojiHandler}/>
       {/* Upload Btn  */}
-      <span className="mr-2">
-        <RoundedBtn icon={<AiOutlinePaperClip />} onClick={onClickImgHandler}/>
+      <span className={`${classes['file-upload']} mr-2`}>
+      {/* <RoundedBtn icon={<AiOutlinePaperClip />} onClick={onClickImgHandler} /> */}
+        <RoundedBtn icon={<AiOutlinePaperClip />} className="paperclip" />
+        <input type="file" multiple="multiple" onChange={inputFileChangeHandler} ref={fileiNPUT}/>
       </span>
+      {/* <div>
+        <FileUpload />
+      </div> */}
       {/* Input Btn  */}
       <input
         type="text"
@@ -84,6 +109,7 @@ function ChatForm (props) {
         {typing && <RoundedBtn icon={<MdSend />} onClick={sendMsgHandler} />}
       </span>
     </div>
+    
     </>
   );
 };

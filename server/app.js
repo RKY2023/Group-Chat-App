@@ -9,6 +9,8 @@ const io = require('socket.io')(5010, {
     origin: "http://localhost:3000"
   }
 });
+// const busboy = require('connect-busboy');
+
 
 const sequelize = require("./util/database");
 const User = require("./models/user");
@@ -31,6 +33,7 @@ app.use(bodyParser.json());
 
 app.use(userRoutes);
 app.use(threadRoutes);
+// app.use(busboy()); 
 
 User.hasMany(Thread);
 Thread.belongsTo(User);

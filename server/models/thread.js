@@ -17,6 +17,9 @@ const Thread = sequelize.define('thread', {
     isImg: {
         type: Sequelize.BOOLEAN,
         default: false
+    },
+    img: {
+        type: Sequelize.TEXT
     }
 });
 

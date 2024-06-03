@@ -1,0 +1,14 @@
+.file-upload input {
+  display: block;
+  height: 45px;
+  width: 45px;
+  position: absolute;
+  /* top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0; */
+  opacity: 0;
+  cursor: pointer;
+  transform: translateY(-40px);
+}
+.file-upload input:hover ~ .file-upload .paperclip { background-color: #3c45c1; }

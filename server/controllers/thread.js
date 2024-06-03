@@ -4,6 +4,7 @@ const Thread = require("../models/thread");
 const User = require("../models/user");
 const Group = require("../models/group");
 const Usergroup = require('../models/usergroup');
+const S3Services = require("../services/S3Services");
 
 const Op = Sequelize.Op;
 
@@ -26,7 +27,7 @@ const getThread = async (req, res, next) => {
         // })
         // console.log('GRp_lst',grp_list.length);
         const threads = await Thread.findAll({
-            attributes: ['id', 'message', 'userId'],
+            attributes: ['id', 'message', 'isImg', 'img', 'isLink', 'userId', 'createdAt'],
             include: {
                 model: User,
                 attributes: [],
@@ -210,6 +211,43 @@ const groupInfo = async (req, res, next) => {
     }    
 }
 
+const imgThread = async (req, res, next) => {
+  try {
+    // console.log(req.body, req.file,req.myfile, req.files);
+    const imgData = JSON.parse(req.body.imgData);
+    const { userId, groupId } = imgData;
+    const imgBlob = req.file.path;
+    const timestamp = Math.floor(new Date("2012.08.10").getTime() / 1000);
+    const filename = 'GroupChat/Group_'+groupId+`/${timestamp}_${req.file.originalname}`;
+    const fileUrl = await S3Services.uploadToS3(imgBlob, filename);
+    if(fileUrl){
+      let trans;
+      try {
+        trans = await sequelize.transaction();
+        let thread;
+        if(req.file !== undefined && req.file.fieldname === 'file'){
+          const imgStr = fileUrl;
+          thread = await Thread.create({
+            userId, groupId, img: imgStr, isImg: true
+          } ,{trans})
+        }
+        res.status(201).json({ 'message': 'success', thread});
+        await trans.commit();
+      } catch (err) {
+        res.status(203).json({ 'message': 'failed' });
+        console.log(err);
+        if (trans) await trans.rollback();
+      };
+    } else {
+      res.status(200).json({ fileUrl:'', success: false });
+    }
+    // res.status(200).json({ fileUrl:'', success: true });
+  } catch (err) {
+      console.log(err);
+      res.status(500).json({ fileUrl: "", sucess: false, error: err });
+  }
+};
+
 module.exports = {
     sendMsg,
     getThread,
@@ -218,4 +256,5 @@ module.exports = {
     loadGroupChat,
     checkGroup,
     groupInfo,
+    imgThread,
 };

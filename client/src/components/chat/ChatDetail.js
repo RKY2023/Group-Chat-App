@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Message from "./Message";
 import { useDispatch, useSelector } from "react-redux";
 import { chatActions } from "../../store/chatReducer";
@@ -6,6 +6,7 @@ import GroupNav from "../group/GroupNav";
 import ChatForm from "./ChatInputForm";
 import SocketComp from "../../socketIO.js";
 import { socket } from "../../socketIO.js";
+import axios from 'axios';
 
 function ChatDetail() {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ function ChatDetail() {
   const lastMessageId = useSelector(state => state.chat.lastMsgId);
   const userId = useSelector(state => state.auth.userId);
   const userName = useSelector(state => state.auth.userName);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   // console.log(lastMessageId ,'user', userId, groupId, lastMessageId );
   
@@ -47,9 +49,7 @@ function ChatDetail() {
       // fetch chat / update chat again
       // setSent(true);
     }
-    // appendMessage(`You: ${msgData.message}`)
-    // socket.emit('send-chat-message', msgData.message)
-    // SendMsgSocket(msgData);
+
     const message = {
       id: data.thread.id,
       message: data.thread.message,
@@ -59,6 +59,41 @@ function ChatDetail() {
     socket.emit('send-chat-message', message);
     dispatch(chatActions.setNewChats([message]));
   },[]);
+
+  const onFileUploadHandler = (selectedFile) => {
+    const uploadImgMsg = async (selectedFile) => {
+      let formData = new FormData();
+      formData.append(
+        'file', selectedFile,
+      );
+      const token = localStorage.getItem('token');
+      const sb = {
+        userId,
+        groupId
+      }
+      formData.append('imgData', JSON.stringify(sb))
+      const URL = api_url+"/imgThread";
+      console.log('printing 119:', formData);
+      axios.post(
+        // Endpoint to send files
+        URL,
+        formData,
+        {
+          headers: {
+            authorization: token,
+            'Accept-Language': 'en-US,en;q=0.8',
+            'Content-Type': 'multipart/form-data',
+          },
+        }       
+    )
+    .then((res) => {})
+    .catch((err) => {});
+    }
+    if(selectedFile.size < 5000000000 ){
+      uploadImgMsg(selectedFile);
+    }
+  }
+    
 
   const getChats = async (userId, groupId, lastMessageId) => {
     // console.log('getchat called', userId, groupId, lastMessageId);
@@ -96,22 +131,25 @@ function ChatDetail() {
 
   useEffect(() => { 
     // console.log('gg', groupId)   
-    // const timer = setInterval(async () => {
-    //   if(groupId > 0) {
-    //     // console.log('fetching chat =>', userId, groupId, lastMessageId);
-    //     await getChats(userId, groupId, lastMessageId);
-    //   } else {
-    //     // console.log('useff');
-    //   }
-    // }, 1000);
+    const timer = setTimeout(async () => {
+      if(groupId > 0) {
+        // console.log('fetching chat =>', userId, groupId, lastMessageId);
+        const fetchChats = async () =>{
+          await getChats(userId, groupId, lastMessageId);
+        }
+        fetchChats();
+      } else {
+        // console.log('useff');
+      }
+    }, 1000);
     return () => {
       // Cleanup logic here
       // clear old timer bfore setting new timer
       (() => {
-        // clearInterval(timer);
+        clearTimeout(timer);
       })();
     };
-  },[userId, groupId, lastMessageId, getChats]);
+  },[userId, groupId, lastMessageId]);
 
   useEffect(() => {
     // Setup logic here
@@ -173,7 +211,7 @@ function ChatDetail() {
       >
         {messages.map((msg) => {
           return <Message 
-            key={Math.random.toString()}
+            id={Math.random.toString()}
             message={msg.message}
             time={msg.time}
             isLink={msg.isLink}
@@ -189,7 +227,7 @@ function ChatDetail() {
       </div>
       <SocketComp />
       {/* Bottom section  */}
-      <ChatForm messages={messages} onSubmitMsg={submitMsg}/>
+      <ChatForm messages={messages} onSubmitMsg={submitMsg} onFileUploadHandler={onFileUploadHandler}/>
     </div>
   );
 }

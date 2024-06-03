@@ -6,7 +6,7 @@ function Message(props) {
   // const 
   // console.log('meessgae users', userId, props.userId);
   return (
-    <div
+    <div key={props.id}
       className={`flex flex-col justify-center items-center rounded-md w-fit my-1 ${
         (props.userId === userId) ? "bg-[#005c4b] ml-auto" : "bg-[#202d33] mr-auto"
       }`}
