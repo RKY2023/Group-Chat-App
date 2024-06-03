@@ -283,7 +283,7 @@ const job = new CronJob.CronJob(
   "0 0 0 * * *", // cronTime
   function () {
     console.log(`The job ${job.lastDate()} would run at: ${job.nextDate()}`);
-    console.log("You will see this message every second");
+    console.log("You will see this message every day");
     archiveThreads();
   }, // onTick
   null, // onComplete
