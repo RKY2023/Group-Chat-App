@@ -17,6 +17,7 @@ const User = require("./models/user");
 const Thread = require("./models/thread");
 const Group = require("./models/group");
 const Usergroup = require("./models/usergroup");
+const ArchiveThread = require("./models/archiveThread");
 
 const app = express();
 
