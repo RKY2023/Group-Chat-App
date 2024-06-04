@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 // api_url: 'http://13.53.45.119:5000' || 'http://localhost:5000',
 const initialUIStore = {
   theme: "light",
-  api_url: 'http://localhost:5000',  
+  api_url: 'http://13.53.45.119:5000',  
   // api_url: window.location.origin,
   isModalShown: false,
   isCreateGroupShown: false,
