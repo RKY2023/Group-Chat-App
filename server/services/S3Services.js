@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk');
 
-const uploadToS3 = async (data, filename) => {
+const uploadToS3 = async (data, filename, mimetype) => {
     const BUCKET_NAME = process.env.S3_BUCKET_NAME;
     const IAM_USER_KEY = process.env.IAM_USER_KEY;
     const IAM_USER_SECRET = process.env.IAM_USER_SECRET;
@@ -14,7 +14,8 @@ const uploadToS3 = async (data, filename) => {
       Bucket: BUCKET_NAME,
       Key: filename,
       Body: data,
-      ACL: 'public-read'
+      ACL: 'public-read',
+      ContentType: mimetype
     }
     return new Promise((res, rej) => {
       s3Bucket.upload(params, (err, s3response) => {

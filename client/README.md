@@ -11,3 +11,8 @@ npx tailwindcss init
 
 
 npm install flowbite flowbite-react
+
+
+git fetch origin deployment:prevBranch
+git push origin prevBranch:prevBranch
+git push origin archiveChat:deployment

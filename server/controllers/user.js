@@ -56,7 +56,7 @@ const signupAPI = async (req, res, next) => {
     } else {
       res.status(404).json(err);
     }
-    throw new Error(err);
+    // throw new Error(err);
   }
 };
 

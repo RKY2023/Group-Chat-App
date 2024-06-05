@@ -238,11 +238,17 @@ const imgThread = async (req, res, next) => {
     // console.log(req.body, req.file,req.myfile, req.files);
     const imgData = JSON.parse(req.body.imgData);
     const { userId, groupId } = imgData;
-    const imgBlob = req.file.path;
-    const timestamp = Math.floor(new Date("2012.08.10").getTime() / 1000);
+    const imgBlob = req.file.buffer;
+    // var imageBuffer = request.file.buffer;
+// var imageName = 'public/images/map.png';
+
+// fs.createWriteStream(imageName).write(imageBuffer);
+    console.log(req.file);
+    const mimetype = req.file.mimetype;
+    const timestamp = Math.floor(new Date().getTime() / 1000);
     const filename =
       "GroupChat/Group_" + groupId + `/${timestamp}_${req.file.originalname}`;
-    const fileUrl = await S3Services.uploadToS3(imgBlob, filename);
+    const fileUrl = await S3Services.uploadToS3(imgBlob, filename, mimetype);
     if (fileUrl) {
       let trans;
       try {
