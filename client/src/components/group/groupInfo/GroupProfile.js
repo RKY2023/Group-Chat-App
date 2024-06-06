@@ -26,9 +26,9 @@ function GroupProfile() {
         </span>
       </div>
       <div className="flex justify-between items-center">
-        {/* <div className='text-xs p-2 bg-[#ff000099] rounded-md border-[#fff]'>
+        {/* '<div className='text-xs p-2 bg-[#ff000099] rounded-md border-[#fff]'>
           Add/Remove Members
-        </div> */}
+        </div>' */}
       </div>
     </div>
   )
