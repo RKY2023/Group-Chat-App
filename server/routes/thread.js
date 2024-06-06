@@ -38,11 +38,17 @@ router.get('/checkGroup', userController.authenticate, threadController.checkGro
 
 router.post('/newGroup', userController.authenticate, threadController.newGroup);
 
-router.get('/groupList', threadController.groupList);
+router.get('/groupList', userController.authenticate, threadController.groupList);
 
 router.post('/loadGroupChat', userController.authenticate, threadController.loadGroupChat);
 
 router.post('/groupInfo', userController.authenticate, threadController.groupInfo);
+
+router.post('/addAdmin', userController.authenticate, threadController.addAdmin);
+
+router.post('/removeAdmin', userController.authenticate, threadController.removeAdmin);
+
+router.post('/updateGroupMember', userController.authenticate, threadController.updateGroupMember);
 
 // router.post('/imgThread', multipartMiddleware, threadController.imgThread);
 router.post('/imgThread',upload.single('file'), threadController.imgThread);

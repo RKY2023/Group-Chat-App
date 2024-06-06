@@ -7,9 +7,11 @@ import { chatActions } from "../../store/chatReducer";
 import { groupActions } from "../../store/groupReducer";
 import { uiActions } from "../../store/uiReducer";
 import AddGroupMember from "./AddGroupMember";
+import { useHistory } from "react-router-dom";
 
 
 function NewGroupMenu() {
+  const history = useHistory();
   const [users, setUsers] = useState([]);
   const [invitedUsers, setInvitedUsers] = useState([]);
   const [apiNotCalled, setApiNotCalled] = useState(true);
@@ -72,6 +74,8 @@ function NewGroupMenu() {
       dispatch(chatActions.setNewCreatedGroup(data.group));
       // dispatch(uiActions.toggleModal());
       dispatch(groupActions.addGroup(data.group));
+      toggleCreateGroupHandler();
+      history.replace('/group');
     }
   };
 
@@ -114,7 +118,7 @@ function NewGroupMenu() {
       </div>
       {/* Group member List */}
       <div className="flex justify-between items-center w-100 h-[50px]">
-        <input type="textarea" className="flex w-100 rounded-md bg-[#445566] text-white m-2 px-2 py-1" ref={inputGroupMembersRef} />
+        <input disabled type="textarea" className="flex w-100 rounded-md bg-[#445566] text-white m-2 px-2 py-1" ref={inputGroupMembersRef} />
       </div>
       {/* Search bar  */}
       {/* members list */}

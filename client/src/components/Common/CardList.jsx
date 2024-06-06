@@ -1,10 +1,14 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { groupActions } from "../../store/groupReducer";
 import { chatActions } from "../../store/chatReducer";
+import { useHistory } from "react-router-dom";
 
 function CardList(props) {
+  const history = useHistory();
   const dispatch = useDispatch();
+  const api_url = useSelector(state => state.ui.api_url);
+  // const groupId = useSelector(state => state.group.groupId);
   // const userId = useSelector(state => state.chat.loggedInUserId);
   // const [active, setActive] = useState(false);
   const setGroupHandler = (event) => {
@@ -12,18 +16,59 @@ function CardList(props) {
     dispatch(groupActions.setCurrentGroup({gp: props.gp, title: props.title, info: props.info, activeGroupIndex: props.activeGroupIndex}));
     dispatch(chatActions.setNewGroupChats());
   }
-  console.log(props['elem-type']);
+  // console.log(props['elem-type']);
+  // removeGroupAdminApi
+  const changeGroupAdmin = async (type) => {
+    if(type !== 'add' && type !== 'remove')
+      return;
+    let api_path = '/removeAdmin';
+    if(type === 'add')
+      api_path = '/addAdmin';
+    console.log('remove api', props);
+    const token = localStorage.getItem("token");
+    const response = await fetch(api_url+api_path, {
+      method: "POST",
+      body: JSON.stringify({
+        ChangeAdminUserId: props.userid,
+        ChangeAdminGroupId: props.groupid,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+    if (data && data.message === "success") {
+      // dispatch(chatActions.setNewCreatedGroup(data.group));
+      // // dispatch(uiActions.toggleModal());
+      // dispatch(groupActions.addGroup(data.group));
+      history.replace('/group');
+    }
+  };
 
   const removeGroupAdmin = () => {
-
+    console.log('remove',props);
+    changeGroupAdmin('remove');
   }
 
   const addGroupAdmin = () => {
-    
+    console.log('add', props);
+    changeGroupAdmin('add');
+  }
+
+  const onClickDiv = (event) =>{
+    if(props['elem-type'] === 'groupMembers') {
+      console.log('here');
+      // return;
+    } else {
+      setGroupHandler(event);
+    }
   }
 
   return (
-    <div onClick={setGroupHandler}
+    <>
+    <div onClick={onClickDiv}
       className={`flex justify-between items-center cursor-pointer w-100 h-[85px] px-3 hover:bg-[#202d33] ${
         props.active ? "bg-[#202d33]" : ""
       }`}
@@ -91,6 +136,7 @@ function CardList(props) {
       </div>
       
     </div>
+    </>
   );
 }
 

@@ -15,10 +15,12 @@ function LoadingScreen (props) {
   // console.log(lastMessageId ,'user', userId, groupId, lastMessageId );
 
   const getGroupList = async () => {
+    const token = localStorage.getItem('token');
     const response = await fetch(api_url+'/groupList',{
       method: "GET",
       headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          authorization: token,
       }
     });
     const data = await response.json();
@@ -26,6 +28,7 @@ function LoadingScreen (props) {
     if(data && data.message === 'success'){
       if(data.groups.length === 0) {
         dispatch(groupActions.setIsNewGroupRequired(true));
+        dispatch(groupActions.setIsGroupListSet());
       } else {
         dispatch(groupActions.setGroupList(data.groups));
         dispatch(groupActions.setGroupId(data.groups[0].id));

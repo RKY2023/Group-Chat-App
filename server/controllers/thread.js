@@ -123,7 +123,33 @@ const newGroup = async (req, res, next) => {
 
 const groupList = async (req, res, next) => {
   console.log("Getting Group List");
-  const groups = await Group.findAll();
+  // const groups = await Group.findAll();
+  const groups = await Group.findAll({
+    attributes: [
+      "id",
+      "title",
+      "info",
+      "updatedAt",
+      "createdAt",
+    ],
+    include: {
+      model: Usergroup,
+      attributes: [],
+      where: {
+        userId: {
+          [Op.eq]: req.user.id,
+        },
+      },
+    },
+    order: [["createdAt", "ASC"]],
+    // where: {
+    //   id: {
+    //     [Op.gt]: lastThreadId,
+    //   },
+    //   groupId: groupId,
+    // },
+  });
+  console.log(groups)
   res.status(201).json({ message: "success", groups });
 };
 
@@ -207,6 +233,7 @@ const groupInfo = async (req, res, next) => {
     for (let i = 0; i < group.length; i++) {
       usergroups[i] = {};
       usergroups[i]["id"] = group[i]["id"];
+      usergroups[i]["groupid"] = group[i]["groupId"];
       usergroups[i]["userid"] = group[i]["user"]["id"];
       usergroups[i]["name"] = group[i]["user"]["name"];
       usergroups[i]["isLoggedIn"] = group[i]["user"]["isLoggedIn"];
@@ -232,6 +259,79 @@ const groupInfo = async (req, res, next) => {
     res.status(500).json({ status: "fail", message: "server error" });
   }
 };
+const addAdmin = async (req, res, next) => {
+  const { ChangeAdminUserId, ChangeAdminGroupId } = req.body;
+  console.log(req.body);
+  try {
+    const groupAdminInfo = await Usergroup.update(
+      {
+        isAdmin: true
+      },{
+        where: {
+          userId: ChangeAdminUserId,
+          groupId: ChangeAdminGroupId,
+      }
+      }
+    );
+    if(groupAdminInfo.length >= 0){
+      res.status(200).json({ success: true, status: 'Added', groupAdminInfo });
+    } else {
+      res.status(200).json({ success: false, status: 'Failed'});
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ success: false, error: err });
+  }
+};
+const removeAdmin = async (req, res, next) => {
+  const { ChangeAdminUserId, ChangeAdminGroupId } = req.body;
+  console.log(req.body);
+  try {
+    const groupAdminInfo = await Usergroup.update(
+      {
+        isAdmin: false
+      },{
+        where: {
+          userId: ChangeAdminUserId,
+          groupId: ChangeAdminGroupId,
+      }
+      }
+    );
+    if(groupAdminInfo.length >= 0){
+      res.status(200).json({ success: true, status: 'Removed', groupAdminInfo });
+    } else {
+      res.status(200).json({ success: false, status: 'Failed'});
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ success: false, error: err });
+  }
+};
+const updateGroupMember = async (req, res, next) => {
+  const { ChangeAdminUserId, ChangeAdminGroupId } = req.body;
+  console.log(req.body);
+  try {
+    const groupAdminInfo = await Usergroup.update(
+      {
+        isAdmin: true
+      },{
+        where: {
+          userId: ChangeAdminUserId,
+          groupId: ChangeAdminGroupId,
+      }
+      }
+    );
+    if(groupAdminInfo.length >= 0){
+      res.status(200).json({ success: true, status: 'Removed', groupAdminInfo });
+    } else {
+      res.status(200).json({ success: false, status: 'Failed'});
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ success: false, error: err });
+  }
+};
+
 
 const imgThread = async (req, res, next) => {
   try {
@@ -335,6 +435,9 @@ module.exports = {
   loadGroupChat,
   checkGroup,
   groupInfo,
+  addAdmin,
+  removeAdmin,
+  updateGroupMember,
   imgThread,
   archiveThreads,
 };

@@ -3,6 +3,7 @@ import LeftMenu from "../components/LeftMenu";
 import ChatDetail from "../components/chat/ChatDetail";
 import LoadingScreen from "../components/LoadingScreen";
 import { useSelector } from "react-redux";
+import CreateNewGroup from "../components/group/NewGroup/CreateNewGroup";
 
 // TODO: loading screen component
 
@@ -12,6 +13,7 @@ function GroupChatsApp () {
 
   const groupId = useSelector(state => state.group.groupId);
   const isGroupListSet = useSelector(state => state.group.isGroupListSet);
+  const isNewGroupRequired = useSelector(state => state.group.isNewGroupRequired);
 
   useEffect(() => {
     const tm1 = setTimeout(() => {
@@ -36,6 +38,7 @@ function GroupChatsApp () {
       </div>
       <div className="bg-[#222f35] min-w-[415px] max-w-[1120px] w-100 h-100">
         {groupId !== 0 && <ChatDetail />}
+        {isNewGroupRequired && <CreateNewGroup />}
       </div>
       {/* <div className="bg-[#111a21] min-w-[340px] max-w-[500px] w-100 h-100">
         <RightMenu />

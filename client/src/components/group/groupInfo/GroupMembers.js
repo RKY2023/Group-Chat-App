@@ -12,6 +12,7 @@ function GroupMembers() {
         <CardList
           elem-type={'groupMembers'}
           id={group.id}
+          groupid={group.groupid}
           userid={group.userid}
           gp={grf1}
           name={group.name}
