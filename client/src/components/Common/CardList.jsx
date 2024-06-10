@@ -7,7 +7,6 @@ import { useHistory } from "react-router-dom";
 function CardList(props) {
   const history = useHistory();
   const dispatch = useDispatch();
-  const api_url = useSelector(state => state.ui.api_url);
   // const groupId = useSelector(state => state.group.groupId);
   // const userId = useSelector(state => state.chat.loggedInUserId);
   // const [active, setActive] = useState(false);
@@ -26,7 +25,7 @@ function CardList(props) {
       api_path = '/addAdmin';
     console.log('remove api', props);
     const token = localStorage.getItem("token");
-    const response = await fetch(api_url+api_path, {
+    const response = await fetch(process.env.REACT_APP_API_URL+api_path, {
       method: "POST",
       body: JSON.stringify({
         ChangeAdminUserId: props.userid,

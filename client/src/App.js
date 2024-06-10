@@ -13,7 +13,7 @@ const App = () => {
   // const NewGroupModal = useSelector(state => state.ui.isModalShown);
 
   useEffect(() => {
-    dispatch(uiActions.updateUrl());
+    // dispatch(uiActions.updateUrl());
     dispatch(uiActions.setTheme());
     // console.log('App');
     dispatch(authActions.setUserId());
@@ -21,6 +21,7 @@ const App = () => {
 
   return (
     <div className="App">
+      
       {/* <h1 className='text-blue-500'> aaa</h1> */}
       {/* <MainHeader /> */}
       {/* {NewGroupModal && <NewGroupForm />}       */}

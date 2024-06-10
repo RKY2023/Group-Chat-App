@@ -9,7 +9,6 @@ const Login = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const [loginMode, setLoginMode] = useState('login');
-    const api_url = useSelector(state => state.ui.api_url);
     const [error, setError] = useState();
     const inputNameRef = useRef();
     const inputEmailRef = useRef();
@@ -40,7 +39,7 @@ const Login = () => {
     const loginHandler = useCallback( async (userData) => {
         let loginUrl, payload;
         if(loginMode === 'signup') {
-            loginUrl = api_url + "/api/signup";
+            loginUrl = process.env.REACT_APP_API_URL + "/api/signup";
             payload = {
                 email: userData.email,
                 password: userData.password,
@@ -48,7 +47,7 @@ const Login = () => {
                 phoneno: userData.phoneno,
             };
         } else {
-            loginUrl = api_url + "/api/login"
+            loginUrl = process.env.REACT_APP_API_URL + "/api/login"
             payload = {
                 email: userData.email,
                 password: userData.password,
@@ -76,7 +75,7 @@ const Login = () => {
         if (loginMode === 'login' || loginMode === 'signup') {
             
         }
-    },[loginMode, dispatch, history, api_url]);
+    },[loginMode, dispatch, history]);
 
     const switchLoginModeHandler = () => {
         if(loginMode === 'signup') {

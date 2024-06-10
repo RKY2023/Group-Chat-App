@@ -17,7 +17,6 @@ function NewGroupMenu() {
   const [invitedUsers, setInvitedUsers] = useState([]);
   const [apiNotCalled, setApiNotCalled] = useState(true);
   const dispatch = useDispatch();
-  const api_url = useSelector(state => state.ui.api_url);
 
   const inputGroupNameRef = useRef();
   const inputGroupMembersRef = useRef();
@@ -41,7 +40,7 @@ function NewGroupMenu() {
 
   const userListApi = async () => {
     const token = localStorage.getItem("token");
-    const response = await fetch(api_url+"/userList", {
+    const response = await fetch(process.env.REACT_APP_API_URL+"/userList", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -59,7 +58,7 @@ function NewGroupMenu() {
   const submitHandler = async (event) => {
     event.preventDefault();
     const token = localStorage.getItem("token");
-    const response = await fetch(api_url+"/newGroup", {
+    const response = await fetch(process.env.REACT_APP_API_URL+"/newGroup", {
       method: "POST",
       body: JSON.stringify({
         title: inputGroupNameRef.current.value,

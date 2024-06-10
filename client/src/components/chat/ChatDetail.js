@@ -10,7 +10,6 @@ import axios from 'axios';
 
 function ChatDetail() {
   const dispatch = useDispatch();
-  const api_url = useSelector(state => state.ui.api_url);
   const groupId = useSelector(state => state.group.groupId);
   const lastMessageId = useSelector(state => state.chat.lastMsgId);
   const userId = useSelector(state => state.auth.userId);
@@ -35,7 +34,7 @@ function ChatDetail() {
   }
 
   const submitMsg = useCallback( async (msgData) => {
-    const response = await fetch(api_url+"/sendMsg",{
+    const response = await fetch(process.env.REACT_APP_API_URL+"/sendMsg",{
         method: "POST",
         body: JSON.stringify(msgData),
         headers: {
@@ -72,7 +71,7 @@ function ChatDetail() {
         groupId
       }
       formData.append('imgData', JSON.stringify(sb))
-      const URL = api_url+"/imgThread";
+      const URL = process.env.REACT_APP_API_URL+"/imgThread";
       console.log('printing 119:', formData);
       axios.post(
         // Endpoint to send files
@@ -103,7 +102,7 @@ function ChatDetail() {
       lastMessageId: lastMessageId
     }
     // console.log(msgData);
-    const response = await fetch(api_url+"/getThread",{
+    const response = await fetch(process.env.REACT_APP_API_URL+"/getThread",{
         method: "POST",
         body: JSON.stringify(msgData),
         headers: {

@@ -1,50 +1,56 @@
 import React, { useEffect, useState } from "react";
 // import { PiChatsFill } from "react-icons/pi";
 // import { FaLock } from "react-icons/fa";
-import ProgressBar from 'react-bootstrap/ProgressBar';
+import ProgressBar from "react-bootstrap/ProgressBar";
 import { useDispatch, useSelector } from "react-redux";
 import { groupActions } from "../store/groupReducer";
 import { FaLock, PiChatsFill } from "./UI/Icons/CustomIcons";
 import { grf1 } from "../assets/groupchat";
 
-function LoadingScreen (props) {
+function LoadingScreen(props) {
   const dispatch = useDispatch();
-  const api_url = useSelector(state => state.ui.api_url);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [isApiLoaded, setIsApiLoaded] = useState(false);
   // console.log(lastMessageId ,'user', userId, groupId, lastMessageId );
 
   const getGroupList = async () => {
-    const token = localStorage.getItem('token');
-    const response = await fetch(api_url+'/groupList',{
+    const token = localStorage.getItem("token");
+    const response = await fetch(process.env.REACT_APP_API_URL + "/groupList", {
       method: "GET",
       headers: {
-          'Content-Type': 'application/json',
-          authorization: token,
-      }
+        "Content-Type": "application/json",
+        authorization: token,
+      },
     });
     const data = await response.json();
-    console.log('data',data);
-    if(data && data.message === 'success'){
-      if(data.groups.length === 0) {
+    console.log("data", data);
+    if (data && data.message === "success") {
+      if (data.groups.length === 0) {
         dispatch(groupActions.setIsNewGroupRequired(true));
         dispatch(groupActions.setIsGroupListSet());
       } else {
         dispatch(groupActions.setGroupList(data.groups));
         dispatch(groupActions.setGroupId(data.groups[0].id));
-        dispatch(groupActions.setCurrentGroup({gp: grf1, title: data.groups[0].title, info: data.groups[0].info, activeGroupIndex: 0}));  
+        dispatch(
+          groupActions.setCurrentGroup({
+            gp: grf1,
+            title: data.groups[0].title,
+            info: data.groups[0].info,
+            activeGroupIndex: 0,
+          })
+        );
         dispatch(groupActions.setIsGroupListSet());
       }
     } else {
-      setError('Error in fetching groups');
+      setError("Error in fetching groups");
     }
   };
 
   useEffect(() => {
-    console.log('UseEffect running');
+    console.log("UseEffect running");
     // if(!isApiLoaded)
-      getGroupList();
-  },[isApiLoaded]);
+    getGroupList();
+  }, [isApiLoaded]);
 
   // const getChats = async (userId, groupId, lastMessageId) => {
   //   console.log('getchat called');
@@ -89,16 +95,17 @@ function LoadingScreen (props) {
       {/* Icon  */}
       <span className="text-[#3d464a] text-6xl my-12">
         <PiChatsFill />
-
       </span>
       <div className="flex flex-col justify-evenly items-center h-[150px]">
         {/* Progress bar  */}
-        <ProgressBar variant="success" now={props.progress} className="bg-[#243138]  rounded-lg w-[320px] h-[3px]"/>
+        <ProgressBar
+          variant="success"
+          now={props.progress}
+          className="bg-[#243138]  rounded-lg w-[320px] h-[3px]"
+        />
         {/* Name  */}
         <div className="flex flex-col items-center">
-          <h1 className="text-[#c1c6c9] text-lg font-medium">
-            GroupChatApp
-          </h1>
+          <h1 className="text-[#c1c6c9] text-lg font-medium">GroupChatApp</h1>
           {/* lock & encryped  */}
           <div className="flex items-center text-[#687782]">
             <span className="text-sm mr-3">
@@ -108,11 +115,9 @@ function LoadingScreen (props) {
             <p className="flex word-break ml-3">{error}</p>
           </div>
         </div>
-        
-
       </div>
     </div>
   );
-};
+}
 
 export default LoadingScreen;

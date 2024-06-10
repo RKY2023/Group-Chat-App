@@ -10,7 +10,6 @@ function AddMemberToGroup(props) {
   const [searchUser, setSearchUser] = useState('');
   const [isMemberModified, setIsMemberModified] = useState(false);
   const users = useSelector(state => state.auth.users);
-  const api_url = useSelector(state => state.ui.api_url);
   const groupId = useSelector(state => state.group.groupId);
 
 
@@ -25,7 +24,7 @@ function AddMemberToGroup(props) {
   // call api search
   const searchUserAndUserGroup = async() => {
     const token = localStorage.getItem("token");
-    const response = await fetch(api_url+"/searchUserAndUserGroup", {
+    const response = await fetch(process.env.REACT_APP_API_URL+"/searchUserAndUserGroup", {
       method: "POST",
       body: JSON.stringify({
         search: searchUser,
@@ -46,7 +45,7 @@ function AddMemberToGroup(props) {
   const modifyGroupMember = async(method) => {
     console.log('method', method);
     const token = localStorage.getItem("token");
-    const response = await fetch(api_url+"/addUserGroup", {
+    const response = await fetch(process.env.REACT_APP_API_URL+"/addUserGroup", {
       method: "POST",
       body: JSON.stringify({
         type : method.type,

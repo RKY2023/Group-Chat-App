@@ -1,13 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// api_url: 'http://13.53.45.119:5000' || 'http://localhost:5000',
 const initialUIStore = {
   theme: "light",
-  api_url: 'http://13.53.45.119:5000',  
-  // api_url: window.location.origin,
   isModalShown: false,
   isCreateGroupShown: false,
-  isGroupInfoShown: false,
+  isGroupInfoShown: false
 };
 
 const uiSlice = createSlice({
@@ -44,9 +41,6 @@ const uiSlice = createSlice({
         bodyElement.setAttribute("data-bs-theme", "light");
         localStorage.setItem("theme", "light");
       }
-    },
-    updateUrl(state){
-      state.api_url = state.api_url.replace('3000','5000');
     },
     toggleModal( state, action) {
       state.isModalShown = !state.isModalShown;

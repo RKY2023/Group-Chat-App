@@ -8,12 +8,11 @@ import AddMemberToGroup from "./AddMemberToGroup";
 function GroupInfoMenu() {
   const dispatch = useDispatch();
   const groupId = useSelector(state => state.group.groupId);
-  const api_url = useSelector(state => state.ui.api_url);
   const [isShownAddMemberToGroup, setIsShownAddMemberToGroup] = useState(false);
 
   const groupInfo = async () => {
     const token = localStorage.getItem("token");
-    const response = await fetch(api_url+"/groupInfo", {
+    const response = await fetch(process.env.REACT_APP_API_URL+"/groupInfo", {
       method: "POST",
       body: JSON.stringify({
         groupId: groupId
