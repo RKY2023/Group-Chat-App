@@ -5,8 +5,12 @@ import { useSelector } from "react-redux";
 import { BiEditAlt, FaUserGroup } from '../../UI/Icons/CustomIcons';
 // import { FaUserGroup } from "react-icons/fa6";
 
-function GroupProfile() {
+function GroupProfile(props) {
   const groupMembers = useSelector(state => state.group.groupMembers);
+
+  const addRemoveGroupMemberHandler = () => {
+    props.toggleShow();
+  }
   return (
     <div className="flex flex-col justify-between items-center bg-{#202d33] h-[300px] p-3 text-white">
       <div className="flex justify-center items-center rounded-full p-5 bg-[#45454430]">
@@ -26,9 +30,9 @@ function GroupProfile() {
         </span>
       </div>
       <div className="flex justify-between items-center">
-        {/* '<div className='text-xs p-2 bg-[#ff000099] rounded-md border-[#fff]'>
+        <div className='text-xs p-2 bg-[#ff000099] rounded-md border-[#fff]' onClick={addRemoveGroupMemberHandler}>
           Add/Remove Members
-        </div>' */}
+        </div>
       </div>
     </div>
   )

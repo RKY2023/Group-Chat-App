@@ -8,6 +8,7 @@ import { groupActions } from "../../store/groupReducer";
 import { uiActions } from "../../store/uiReducer";
 import AddGroupMember from "./AddGroupMember";
 import { useHistory } from "react-router-dom";
+import { authActions } from "../../store/authReducer";
 
 
 function NewGroupMenu() {
@@ -51,6 +52,7 @@ function NewGroupMenu() {
     console.log(data);
     if (data && data.message === "success") {
       setUsers(data.users);
+      dispatch(authActions.setUsers(data.users));
     }
   };
 

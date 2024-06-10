@@ -5,6 +5,8 @@ function Message(props) {
   const userId = useSelector(state => state.auth.userId);
   // const 
   // console.log('meessgae users', userId, props.userId);
+  const fadeInClassCss = 'fadeer';
+
   return (
     <div key={props.id}
       className={`flex flex-col justify-center items-center rounded-md w-fit my-1 ${
@@ -48,7 +50,7 @@ function Message(props) {
             </a>
           ) : (
             // Normal text 
-            <p className="text-white text-sm mr-2"> 
+            <p className={`text-white text-sm mr-2 ${fadeInClassCss}`}> 
               {props.message}
             </p>
           )}

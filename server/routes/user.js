@@ -16,4 +16,6 @@ router.get('/api/onlineUsers', userController.getOnlineUsers);
 
 router.get('/userList', userController.authenticate, userController.userList);
 
+router.post('/searchUser', userController.searchUser);
+
 module.exports = router;

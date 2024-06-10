@@ -119,11 +119,37 @@ const getOnlineUsers = async (req, res, next) => {
 const userList = async (req, res, next) => {
   try {
     const users = await User.findAll({
-      attributes: ["id", "name"],
+      attributes: ["id", "name", "email", "phoneno"],
       where: {
         id: {
           [Op.ne]: req.user.id,
         },
+      },
+    });
+    res.status(201).json({ message: "success", users });
+  } catch (err) {
+    console.log(err);
+    res.status(203).json({ message: "fail" });
+  }
+};
+
+const searchUser = async (req, res, next) => {
+  try {
+    const { search } = req.body;
+    const users = await User.findAll({
+      attributes: ["id", "name", "email", "phoneno"],
+      where: {
+        [Op.or] : {
+          name: {
+            [Op.like]: '%'+search+'%',
+          },
+          email: {
+            [Op.like]: '%'+search+'%',
+          },
+          phoneno: {
+            [Op.like]: '%'+search+'%',
+          },
+        }
       },
     });
     res.status(201).json({ message: "success", users });
@@ -145,4 +171,5 @@ module.exports = {
   loginAPI,
   getOnlineUsers,
   userList,
+  searchUser,
 };

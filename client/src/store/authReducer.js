@@ -5,6 +5,7 @@ const initialAuthStore = {
   userName: 'user',
   isAuthenticated: false,
   token: localStorage.getItem('token'),
+  users: [],
 };
 
 const authSlice = createSlice({
@@ -49,7 +50,13 @@ const authSlice = createSlice({
       state.userEmail = user.email;
       state.isLoggedIn = user.isLoggedIn;
     },
+    setUsers(state, action) {
+      const payload = action.payload;
+      state.users = payload;
+      // console.log(state.users);
+    },
   },
+  
 });
 
 export const authActions = authSlice.actions;

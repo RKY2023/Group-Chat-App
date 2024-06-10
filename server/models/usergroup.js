@@ -13,6 +13,15 @@ const Usergroup = sequelize.define('usergroup', {
         type: Sequelize.BOOLEAN,
         default: false
     }
-});
+},
+// {
+//     indexes: [
+//         {
+//             unique: true,
+//             fields: ['userId', 'groupId']
+//         }
+//     ]
+// }
+);
 
 module.exports = Usergroup;

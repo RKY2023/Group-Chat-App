@@ -20,7 +20,7 @@ const chatSlice = createSlice({
     setNewChats(state, action) {
       const payload = action.payload;
       let newPayload;
-      // console.log('tt',state.receiverList.length);
+      // console.log('chats',payload);
       if (payload.length > 0 && payload[0].uid > 0) {
         // newPayload = payload.filter((p) => {
         //   // for ( let  pp of state.receiverList )
@@ -54,11 +54,6 @@ const chatSlice = createSlice({
       const payload = action.payload;
       const newOnlineUserList = [...state.onlineUserList, ...payload];
       state.onlineUserList = newOnlineUserList;
-    },
-    setUsers(state, action) {
-      const payload = action.payload;
-      state.users = payload;
-      // console.log(state.users);
     },
     setNewCreatedGroup(state, action) {
       state.newCreateGroup = action.payload;

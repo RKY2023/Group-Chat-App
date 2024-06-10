@@ -58,12 +58,18 @@ function CardList(props) {
   }
 
   const onClickDiv = (event) =>{
-    if(props['elem-type'] === 'groupMembers') {
+    if(props['elem-type'] === 'groupMembers' || props['elem-type'] === 'membersearch') {
       console.log('here');
       // return;
     } else {
       setGroupHandler(event);
     }
+  }
+  const onAddGroupMember = () => {
+    props.modifyGroupMember({type : 'add', userId : props.id});
+  }
+  const onRemoveGroupMember = () => {
+    props.modifyGroupMember({type : 'remove', userId : props.id});
   }
 
   return (
@@ -88,6 +94,9 @@ function CardList(props) {
           <h1 className="font-medium mb-1">{props.name}</h1>
           }
           {props['elem-type'] === 'group' &&
+          <h1 className="font-medium mb-1">{props.title}</h1>
+          }
+          {props['elem-type'] === 'membersearch' &&
           <h1 className="font-medium mb-1">{props.title}</h1>
           }
           {/* Group Info / Group Admin */}
@@ -132,6 +141,17 @@ function CardList(props) {
             }
           </div>
         </div>
+        }
+        {/* Add member button */}
+        {props['elem-type'] === 'membersearch' &&
+          <>
+          {!props.isMember && 
+          <div onClick={onAddGroupMember}>Add</div>
+          }
+          {props.isMember && 
+          <div onClick={onRemoveGroupMember}>Remove</div>
+          }
+          </>
         }
       </div>
       

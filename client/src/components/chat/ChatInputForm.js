@@ -12,7 +12,7 @@ import FileUpload from "../UI/FileUpload";
 import classes from './ChatInputForm.module.css';
 
 function ChatForm (props) {
-  const userId = useSelector(state => state.chat.loggedInUserId);
+  const userId = useSelector(state => state.auth.userId);
   const groupId = useSelector(state => state.group.groupId);
   const [typing, setTyping] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);

@@ -23,6 +23,7 @@ const app = express();
 
 const userRoutes = require("./routes/user");
 const threadRoutes = require("./routes/thread");
+const usergroupRoutes = require("./routes/usergroup");
 const { addAbortListener } = require("stream");
 
 app.use(cors());
@@ -34,6 +35,7 @@ app.use(bodyParser.json());
 
 app.use(userRoutes);
 app.use(threadRoutes);
+app.use(usergroupRoutes);
 // app.use(busboy()); 
 
 User.hasMany(Thread);
