@@ -23,7 +23,7 @@ function LoadingScreen(props) {
       },
     });
     const data = await response.json();
-    console.log("data", data);
+    // console.log("data", data);
     if (data && data.message === "success") {
       if (data.groups.length === 0) {
         dispatch(groupActions.setIsNewGroupRequired(true));
@@ -47,7 +47,7 @@ function LoadingScreen(props) {
   };
 
   useEffect(() => {
-    console.log("UseEffect running");
+    // console.log("UseEffect running");
     // if(!isApiLoaded)
     getGroupList();
   }, [isApiLoaded]);

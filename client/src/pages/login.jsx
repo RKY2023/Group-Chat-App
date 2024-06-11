@@ -3,7 +3,6 @@ import Login from "../components/Login/login";
 // import logo from "../assets/Welcome.gif";
 import logo from "../assets/images/grf1.PNG";
 // import DropdownMenu from "../components/dropdown";
-console.log([process.env]);
 
 function LoginPage () {
   return (

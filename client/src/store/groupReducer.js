@@ -19,7 +19,7 @@ const groupSlice = createSlice({
   reducers: {
     setIsGroupListSet(state){
       state.isGroupListSet = true;
-      console.log('Gp set',state.isGroupListSet);
+      // console.log('Gp set',state.isGroupListSet);
     },
     setGroupId (state, action) {
       state.groupId = action.payload;

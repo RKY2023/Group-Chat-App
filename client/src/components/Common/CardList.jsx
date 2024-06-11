@@ -73,7 +73,7 @@ function CardList(props) {
 
   return (
     <>
-    <div onClick={onClickDiv}
+    <div key={props.id} onClick={onClickDiv}
       className={`flex justify-between items-center cursor-pointer w-100 h-[85px] px-3 hover:bg-[#202d33] ${
         props.active ? "bg-[#202d33]" : ""
       }`}

@@ -19,7 +19,7 @@ function Groups(props) {
 
   return (
     <div className="flex flex-col overflow-y-scroll cursor-pointer h-100">
-      <div className="flex justify-between items-center w-100 min-h-[55px] px-3 hover:bg-[#202d33]">
+      <div key='z123' className="flex justify-between items-center w-100 min-h-[55px] px-3 hover:bg-[#202d33]">
         <div className="flex justify-around items-center w-[150px]" onClick={toggleCreateGroupHandler}>
           {/* <span className="text-emerald-500 text-lg">
             <ImFolderDownload />

@@ -31,7 +31,7 @@ const Login = () => {
                 password: inputPasswordRef.current.value,
             }
         }        
-        console.log(userData)
+        // console.log(userData)
         loginHandler(userData);
 
     }
@@ -62,7 +62,7 @@ const Login = () => {
             }
         });
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         if(data.token) {
             dispatch(authActions.login(data.token));
             // dispatch(authActions.setUserId());
@@ -87,8 +87,8 @@ const Login = () => {
     }
 
     useEffect( () => {
-        console.log('useEffect');
-        console.log('Mode:', loginMode);
+        // console.log('useEffect');
+        // console.log('Mode:', loginMode);
     },[loginMode]);
 
 

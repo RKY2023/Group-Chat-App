@@ -39,7 +39,7 @@ const chatSlice = createSlice({
         }
       }
       const newChats = [...state.chats, ...newPayload];
-      console.log(newChats, state.lastMsgId);
+      // console.log(newChats, state.lastMsgId);
       localStorage.setItem("msg", newChats);
       state.chats = newChats;
     },
@@ -48,7 +48,7 @@ const chatSlice = createSlice({
       const newChats = [...state.chats, payload];
       localStorage.setItem("msg", newChats);
       state.chats = newChats;
-      console.log('chats=> ',newChats);
+      // console.log('chats=> ',newChats);
     },
     setReceiverList(state, action) {
       const payload = action.payload;

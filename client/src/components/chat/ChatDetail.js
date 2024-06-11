@@ -41,7 +41,7 @@ function ChatDetail() {
           'Content-Type': 'application/json'
         }
       });
-      console.log('=>>',msgData)
+      // console.log('=>>',msgData)
     const data = await response.json();
     // console.log(data);
     if(data && data.thread === 'success'){
@@ -160,7 +160,7 @@ function ChatDetail() {
 
   useEffect(() => {
     // Setup logic here
-    console.log('WS =>',userId, userName);
+    // console.log('WS =>',userId, userName);
     const message = {
       id: Math.random().toString(),
       message: 'You joined',
