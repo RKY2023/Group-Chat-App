@@ -6,7 +6,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const io = require('socket.io')(5010, {
   cors: {
-    origin: ["https://gchat.rajkumaryd.in"]
+    origin: ["http://gchat.rajkumaryd.in"]
   }
 });
 // const busboy = require('connect-busboy');
