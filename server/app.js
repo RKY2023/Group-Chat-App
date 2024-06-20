@@ -1,4 +1,5 @@
 const path = require("path");
+const https = require('https');
 var cors = require("cors");
 require("dotenv").config();
 
@@ -6,7 +7,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const io = require('socket.io')(5010, {
   cors: {
-    origin: ["http://gchat.rajkumaryd.in"]
+    origin: ["https://gchat.rajkumaryd.in"],
+    credentials: true,
   }
 });
 // const busboy = require('connect-busboy');
