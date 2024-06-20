@@ -10,7 +10,7 @@ import { io } from 'socket.io-client';
 import { chatActions } from './store/chatReducer';
 
 
-export const socket = io('http://localhost:5010');
+export const socket = io('https://gchat.rajkumaryd.in:5010');
 
 // export const SendMsgSocket = (msgData) => {
   
