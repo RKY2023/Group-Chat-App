@@ -63,7 +63,7 @@ var options = {
   key: fs.readFileSync('/etc/letsencrypt/live/gchat.rajkumaryd.in/privkey.pem'),
   cert: fs.readFileSync('/etc/letsencrypt/live/gchat.rajkumaryd.in/fullchain.pem'),
 };
-https.createServer(options, express).listen(443, function(){
+https.createServer(options, express).listen(5000, function(){
   console.log('HTTPS listening on port 443');
 });
 
@@ -71,7 +71,7 @@ sequelize
   // .sync({ force: true})
   .sync()
   .then((k) => {
-    app.listen( process.env.PORT || 5000);
+    app.listen( process.env.PORaT || 5000);
   })
   .catch((err) => console.log(err));
 
