@@ -1,5 +1,6 @@
 const path = require("path");
-// const https = require('https');
+const http = require('http');
+const https = require('https');
 var cors = require("cors");
 require("dotenv").config({ path: '../.env' });
 
@@ -34,9 +35,9 @@ app.use(cors());
 //   credentials:true,
 //   optionSuccessStatus:200
 // }));
-app.use(function(req, res) {
-  res.redirect('https://' + '16.170.14.225' + req.originalUrl);
-});
+// app.use(function(req, res) {
+//   res.redirect('https://' + '16.170.14.225' + req.originalUrl);
+// });
 // app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
@@ -58,6 +59,13 @@ User.hasMany(Usergroup);
 Usergroup.belongsTo(User);
 
 console.log('asdas',process.env.NODE_ENV);
+var options = {
+  key: fs.readFileSync('/etc/letsencrypt/live/gchat.rajkumaryd.in/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/gchat.rajkumaryd.in/fullchain.pem'),
+};
+https.createServer(options, express).listen(443, function(){
+  console.log('HTTPS listening on port 443');
+});
 
 sequelize
   // .sync({ force: true})
