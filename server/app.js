@@ -28,12 +28,12 @@ const threadRoutes = require("./routes/thread");
 const usergroupRoutes = require("./routes/usergroup");
 const { addAbortListener } = require("stream");
 
-// app.use(cors());
-app.use(cors({
-  origin: [process.env.WEB_HOST+':'+process.env.WEB_HOST_PORT],
-  credentials:true,
-  optionSuccessStatus:200
-}));
+app.use(cors());
+// app.use(cors({
+//   origin: [process.env.WEB_HOST+':'+process.env.WEB_HOST_PORT],
+//   credentials:true,
+//   optionSuccessStatus:200
+// }));
 // app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
