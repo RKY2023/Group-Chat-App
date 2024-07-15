@@ -34,6 +34,9 @@ app.use(cors());
 //   credentials:true,
 //   optionSuccessStatus:200
 // }));
+app.use(function(req, res) {
+  res.redirect('https://' + '16.170.14.225' + req.originalUrl);
+});
 // app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
