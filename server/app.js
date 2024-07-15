@@ -1,13 +1,13 @@
 const path = require("path");
 // const https = require('https');
 var cors = require("cors");
-require("dotenv").config();
+require("dotenv").config({ path: '../.env' });
 
 const express = require("express");
 const bodyParser = require("body-parser");
 const io = require('socket.io')(5010, {
   cors: {
-    origin: ["https://gchat.rajkumaryd.in"],
+    origin: [process.env.WEB_HOST+':'+process.env.WEB_HOST_PORT],
     credentials: true,
   }
 });
@@ -28,10 +28,12 @@ const threadRoutes = require("./routes/thread");
 const usergroupRoutes = require("./routes/usergroup");
 const { addAbortListener } = require("stream");
 
-app.use(cors());
-// app.use(cors({
-//   origin: ["http://localhost:3000", "http://13.53.45.119:3000"]
-// }));
+// app.use(cors());
+app.use(cors({
+  origin: [process.env.WEB_HOST+':'+process.env.WEB_HOST_PORT],
+  credentials:true,
+  optionSuccessStatus:200
+}));
 // app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
@@ -51,6 +53,8 @@ Group.hasMany(Usergroup);
 Usergroup.belongsTo(Group);
 User.hasMany(Usergroup);
 Usergroup.belongsTo(User);
+
+console.log('asdas',process.env.NODE_ENV);
 
 sequelize
   // .sync({ force: true})
