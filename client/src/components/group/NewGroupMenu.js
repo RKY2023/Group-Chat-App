@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { pp } from "../../assets/groupchat";
@@ -22,7 +22,6 @@ function NewGroupMenu() {
   }
 
   const inviteHandler = (addRef) => {
-    console.log(addRef);
     const newInvitedUser = addRef.dataset.key;
     if (addRef.value === "Add") {
       setInvitedUsers([...invitedUsers, newInvitedUser]);
@@ -34,7 +33,7 @@ function NewGroupMenu() {
     }
   };
 
-  const userListApi = async () => {
+  const userListApi = useCallback(async () => {
     const token = localStorage.getItem("token");
     const response = await fetch(api_url+"/userList", {
       method: "GET",
@@ -44,11 +43,10 @@ function NewGroupMenu() {
       },
     });
     const data = await response.json();
-    console.log(data);
     if (data && data.message === "success") {
       setUsers(data.users);
     }
-  };
+  }, [api_url]);
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -65,7 +63,6 @@ function NewGroupMenu() {
       },
     });
     const data = await response.json();
-    console.log(data);
     if (data && data.message === "success") {
       dispatch(chatActions.setNewCreatedGroup(data.group));
       // dispatch(uiActions.toggleModal());

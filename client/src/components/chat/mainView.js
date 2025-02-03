@@ -17,7 +17,6 @@ const MainView = () => {
         }
     });
     const data = await response.json();
-    // console.log(data);
     
     if( data && data.onlineUsers){
       dispatch(chatActions.setUsers(data.onlineUsers));

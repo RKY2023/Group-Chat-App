@@ -22,14 +22,12 @@ function GroupInfoMenu() {
       },
     });
     const data = await response.json();
-    console.log(data);
     if (data && data.status === "success") {
       dispatch(groupActions.setGroupMembersList(data.usergroups));
     }
   };
 
   useEffect(() => {
-    console.log('groupInfo =>');
     groupInfo();
   });
 

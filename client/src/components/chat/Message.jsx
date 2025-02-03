@@ -3,8 +3,7 @@ import { useSelector } from "react-redux";
 
 function Message(props) {
   const userId = useSelector(state => state.chat.loggedInUserId);
-  // const 
-  // console.log('meessgae users', userId, props.userId);
+  
   return (
     <div
       className={`flex justify-center items-center rounded-md w-fit my-1 ${

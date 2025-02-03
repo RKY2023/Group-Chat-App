@@ -32,7 +32,6 @@ const groupSlice = createSlice({
     },
     setCurrentGroup(state, action){
       const activeGroup = action.payload;
-      console.log('AGP',activeGroup);
       state.currentGroupImg = activeGroup.gp;
       state.currentGroupName = activeGroup.title;
       state.currentGroupInfo = activeGroup.info;

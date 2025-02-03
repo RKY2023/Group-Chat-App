@@ -29,11 +29,9 @@ const chatSlice = createSlice({
       }
     },
     setTheme(state, action) {
-      // console.log("aatt");
       const bodyElement = document.getElementsByTagName("body")[0];
       const getTheme = localStorage.getItem("theme");
       if (getTheme === null) {
-        // console.log("tat");
         state.theme = "light";
         bodyElement.setAttribute("data-bs-theme", "light");
         localStorage.setItem("theme", "light");
@@ -53,13 +51,10 @@ const chatSlice = createSlice({
     setNewChats(state, action) {
       const payload = action.payload;
       let newPayload;
-      // console.log('tt',state.receiverList.length);
       if (payload.length > 0 && payload[0].uid > 0) {
         // newPayload = payload.filter((p) => {
         //   // for ( let  pp of state.receiverList )
-        //   // console.log('tt',state.receiverList.length,p);
         // });
-        // console.log("uid", newPayload);
         newPayload = payload;
       } else {
         newPayload = payload.filter((p) => {
@@ -67,12 +62,10 @@ const chatSlice = createSlice({
         });
         if (newPayload.length > 0) {
           const lastMessageId = newPayload[newPayload.length - 1].id;
-          // console.log('lmsg', lastMessageId);
           if (lastMessageId !== undefined) state.lastMsgId = lastMessageId;
         }
       }
       const newChats = [...state.chats, ...newPayload];
-      // console.log(newChats, state.lastMsgId);
       localStorage.setItem("msg", newChats);
       state.chats = newChats;
     },
@@ -84,7 +77,6 @@ const chatSlice = createSlice({
     setUsers(state, action) {
       const payload = action.payload;
       state.users = payload;
-      // console.log(state.users);
     },
     setUserId(state, action) {
       const token = localStorage.getItem('token');
@@ -96,7 +88,6 @@ const chatSlice = createSlice({
         }).join(''));
   
         const userData = JSON.parse(jsonPayload);
-        console.log(userData);
         state.loggedInUserId = userData.userid;
       }
     },
