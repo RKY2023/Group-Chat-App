@@ -13,13 +13,11 @@ export const getTime = () => {
 }
 
 // export const getChats = async (userId, groupId, lastMessageId) => {
-//   console.log('getchat called');
 //   const msgData = {
 //     user: userId,
 //     groupId,
 //     lastMessageId: lastMessageId
 //   }
-//   console.log(msgData);
 //   const response = await fetch("http://localhost:5000/getThread",{
 //       method: "POST",
 //       body: JSON.stringify(msgData),
@@ -29,12 +27,10 @@ export const getTime = () => {
 //   });
 //   const data = await response.json();
 //   const tt = new Date();
-//   console.log(tt.getMinutes(), tt.getSeconds());
 //   if(data.threads) {
 //     dispatch(chatActions.setNewChats(data.threads));
 //   } else {
 //     //
 //   }
-//   console.log('Threads =>',data.threads);
 // };
 

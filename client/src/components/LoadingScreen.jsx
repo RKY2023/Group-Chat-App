@@ -9,7 +9,6 @@ function LoadingScreen (props) {
   const dispatch = useDispatch();
   const api_url = useSelector(state => state.ui.api_url);
   const [error, setError] = useState('');
-  // console.log(lastMessageId ,'user', userId, groupId, lastMessageId );
 
   const getGroupList = async () => {
     const response = await fetch(api_url+'/groupList',{
@@ -19,7 +18,6 @@ function LoadingScreen (props) {
       }
     });
     const data = await response.json();
-    // console.log(data);
     if(data && data.message === 'success'){
       if(data.groups.length === 0) {
         dispatch(groupActions.setIsNewGroupRequired(true));
@@ -39,13 +37,11 @@ function LoadingScreen (props) {
   });
 
   // const getChats = async (userId, groupId, lastMessageId) => {
-  //   console.log('getchat called');
   //   const msgData = {
   //     user: userId,
   //     groupId,
   //     lastMessageId: lastMessageId
   //   }
-  //   console.log(msgData);
   //   const response = await fetch("http://localhost:5000/getThread",{
   //       method: "POST",
   //       body: JSON.stringify(msgData),
@@ -55,20 +51,17 @@ function LoadingScreen (props) {
   //   });
   //   const data = await response.json();
   //   const tt = new Date();
-  //   console.log(tt.getMinutes(), tt.getSeconds());
   //   if(data.threads) {
   //     dispatch(chatActions.setNewChats(data.threads));
   //   } else {
   //     setError(data.error);
   //   }
-  //   console.log('Threads =>',data.threads);
   // };
 
   // useEffect(() => {
   //   if(groupId > 0) {
   //     setError('');
   //     (async () => {
-  //       console.log('fetching chat[Load] =>', userId, groupId, lastMessageId);
   //       await getChats(userId, groupId, lastMessageId);
   //     })();
   //   } else {

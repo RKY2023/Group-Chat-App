@@ -12,7 +12,6 @@ function CardList(props) {
     dispatch(groupActions.setCurrentGroup({gp: props.gp, title: props.title, info: props.info}));
     dispatch(chatActions.setNewGroupChats());
   }
-  console.log(props['elem-type']);
 
   const removeGroupAdmin = () => {
 

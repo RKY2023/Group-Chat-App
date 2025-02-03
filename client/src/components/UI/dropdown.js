@@ -8,7 +8,6 @@ const DropdownMenu = (props) => {
   const dropdownRef = useRef();
   
   const onClickHandler = () => {
-    console.log(isOpen);
     setIsOpen(!isOpen);
   }
   return (
