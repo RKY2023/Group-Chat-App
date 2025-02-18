@@ -1,36 +1,28 @@
-const Sequelize = require('sequelize');
+const mongoose = require('mongoose');
 
-const sequelize = require('../util/database');
+const phoneValidationRegex = /\d{3}-\d{3}-\d{4}/;
 
-const phoneValidationRegex = /\d{3}-\d{3}-\d{4}/ 
-
-const User = sequelize.define('user', {
-    id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        allowNull: false,
-        primaryKey: true
-    },
-    name: Sequelize.STRING,
+const userSchema = new mongoose.Schema({
+    name: String,
     email: {
-        type: Sequelize.STRING,
-        allowNull: false,
+        type: String,
+        required: true,
         unique: true
     },
-    password: Sequelize.STRING,
+    password: String,
     phoneno: {
-        type: Sequelize.STRING,
-        allowNull: false,
+        type: String,
+        required: true,
         validate: {
             validator: function(v) {
-                return phoneValidationRegex.test(v); 
+                return phoneValidationRegex.test(v);
             },
         }
     },
     isLoggedIn: {
-        type: Sequelize.BOOLEAN,
+        type: Boolean,
         default: false,
     }
 });
 
-module.exports = User;
+module.exports = mongoose.model('User', userSchema);

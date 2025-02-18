@@ -1,212 +1,124 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../util/database');
 const Thread = require("../models/thread");
 const User = require("../models/user");
 const Group = require("../models/group");
 const Usergroup = require('../models/usergroup');
 
-const Op = Sequelize.Op;
-
 const getThread = async (req, res, next) => {
-    // console.log('THread', req.body);
     const { user, groupId, lastMessageId } = req.body;
-    console.log(user, groupId, lastMessageId);
-    let lastThreadId ;
-    if(lastMessageId == null || lastMessageId == undefined) {
-        lastThreadId = 0;
-    } else {
-        lastThreadId = lastMessageId;
-    }
+    let lastThreadId = lastMessageId || 0;
 
     try {
-        const grp_list = await Group.findAll({
-            where: {
-                userId : user, id: groupId
-            }
-        })
-        console.log('GRp_lst',grp_list.length);
-        const threads = await Thread.findAll({
-            attributes: ['id', 'message', 'userId'],
-            include: {
-                model: User,
-                    attributes: [],
-                    where: {
-                        isLoggedIn: {
-                            [Op.eq]: true,
-                        },
-                    },             
-            },
-            order: [
-                ['createdAt', 'ASC']
-            ],
-            where: {
-                id: {
-                    [Op.gt]: lastThreadId,
-                },
-                groupId: groupId,
-            }
-        })
-        // console.log(threads);
+        const grp_list = await Group.find({ userId: user, _id: groupId });
+        const threads = await Thread.find({
+            _id: { $gt: lastThreadId },
+            groupId: groupId,
+        }).populate('userId', 'isLoggedIn').sort({ createdAt: 'asc' });
+
         res.status(203).json({ 'threads': threads });
     } catch (err) {
         console.log(err);
         res.status(203).json({ 'error': err });
-    };
+    }
 }
 
 const sendMsg = async (req, res, next) => {
-    console.log('THread', req.body);
     const { userId, groupId, message } = req.body;
-    // isLink: false, isImg: false
-    console.log(userId, groupId, message);
-    let trans;
-    let chats = []
     try {
-        trans = await sequelize.transaction();
-        const thread = await Thread.create({
-                message, userId, groupId
-            } ,{trans})
-        res.status(201).json({ 'message': 'success', thread});
-        await trans.commit();
+        const thread = new Thread({
+            message, userId, groupId
+        });
+        await thread.save();
+        res.status(201).json({ 'message': 'success', thread });
     } catch (err) {
         res.status(203).json({ 'message': 'failed' });
         console.log(err);
-        if (trans) await trans.rollback();
-    };
+    }
 }
 
 const newGroup = async (req, res, next) => {
-    // let trans;
     try {
-        // trans = await sequelize.transaction();
         const { title, info, invites } = req.body;
-        // console.log('new grp',req.user, title, info, invites);
-        invites.push(req.user.id.toString());
-        console.log('new grp',invites);
-        // req.user.createGroup
-        const newGroup = await Group.create({
+        invites.push(req.user._id.toString());
+        const newGroup = new Group({
             title: title || 'New Group',
             info: info || 'Group Info'
         });
-        // console/log(newGroup);
-        console.log('new grp id', newGroup.id);
-        invites.forEach(async(member) => {
-            // console.log('mem',member)
-            let isAdmin = false;
-            if(member === req.user.id.toString())
-                isAdmin = true;
+        await newGroup.save();
 
-            const newMember = await Usergroup.create({
+        for (const member of invites) {
+            let isAdmin = member === req.user._id.toString();
+            const newMember = new Usergroup({
                 userId: member,
-                groupId: newGroup.id,
+                groupId: newGroup._id,
                 isAdmin: isAdmin,
             });
-        });
-        // await trans.commit();
-        res.status(201).json({ 'message': 'success', group: newGroup});
+            await newMember.save();
+        }
+
+        res.status(201).json({ 'message': 'success', group: newGroup });
     } catch (err) {
-        // await trans.rollback();
-        res.status(203).json({ 'message': 'fail'});
+        res.status(203).json({ 'message': 'fail' });
+        console.log(err);
     }
 }
 
 const groupList = async (req, res, next) => {
-    console.log('grp');
-    const groups = await Group.findAll();
-    res.status(201).json({ 'message': 'success', groups});
+    const groups = await Group.find();
+    res.status(201).json({ 'message': 'success', groups });
 }
 
 const loadGroupChat = async (req, res, next) => {
     const { groupid } = req.body;
-    console.log(groupid);
-    try{
-        const group = await Group.findAll({
-            where: {
-                id: groupid
-            }
-        })
+    try {
+        const group = await Group.findById(groupid);
         const groupMembers = group.people.split(',');
-        const isMember = groupMembers.find(req.user.id);
-        console.log(isMember);
-        if(isMember) {
-            res.status(201).json({ status: 'success', groups});
+        const isMember = groupMembers.includes(req.user._id.toString());
+        if (isMember) {
+            res.status(201).json({ status: 'success', groups });
         } else {
-            res.status(401).json({ status: 'fail', message: 'You are not the member of this group'});
+            res.status(401).json({ status: 'fail', message: 'You are not the member of this group' });
         }
     } catch (err) {
         console.log(err);
-        res.status(500).json({ status: 'fail', message: 'server error'});
-    }    
+        res.status(500).json({ status: 'fail', message: 'server error' });
+    }
 }
 
 const checkGroup = async (req, res, next) => {
-    try{
-        const group = await Group.findAll({
-            where: {
-                userId: req.user.id
-            }
-        })
-        // console.log('ttttt',group);
-        if(group.length === 0) {
-            // const tt = await newGroup(req, res, next);
-            // console.log(tt)
-            res.status(401).json({ status: 'fail', message: 'no group found'});
-        } else  if(group.length > 0) {
-            res.status(201).json({ status: 'success', group});
+    try {
+        const group = await Group.find({ userId: req.user._id });
+        if (group.length === 0) {
+            res.status(401).json({ status: 'fail', message: 'no group found' });
         } else {
-            res.status(401).json({ status: 'fail', message: 'You are not the member of this group'});
+            res.status(201).json({ status: 'success', group });
         }
     } catch (err) {
         console.log(err);
-        res.status(500).json({ status: 'fail', message: 'server error'});
-    }    
+        res.status(500).json({ status: 'fail', message: 'server error' });
+    }
 }
+
 const groupInfo = async (req, res, next) => {
-    try{
+    try {
         const groupId = req.body.groupId;
-        console.log(groupId);
-        // const group = await UserGroup.findAll({
-        //     attributes: ['id', 'Members', 'isAdmin', 'groupId'],
-        //     where: {
-        //         groupId
-        //     }
-        // })
-        const group = await Usergroup.findAll({
-            attributes: ['id','userId','isAdmin','groupId'],
-            include: {
-                model: User,
-                    attributes: ['id','name','isLoggedIn'],            
-            },
-            order: [
-                ['createdAt', 'ASC']
-            ],
-            where: {
-                groupId,
-            }
-        })
-        let usergroups = [];
-        for( let i=0; i< group.length; i++) {
-            usergroups[i] = {};
-            usergroups[i]['id'] = group[i]['id'];
-            usergroups[i]['userid'] = group[i]['user']['id'];
-            usergroups[i]['name'] = group[i]['user']['name'];
-            usergroups[i]['isLoggedIn'] = group[i]['user']['isLoggedIn'];
-            usergroups[i]['isAdmin'] = group[i]['isAdmin'];                        
-        }
-        // console.log('ttttt',group);
-        if(usergroups.length === 0) {
-            // const tt = await newGroup(req, res, next);
-            // console.log(tt)
-            res.status(401).json({ status: 'fail', message: 'no group found'});
-        } else  if(usergroups.length > 0) {
-            res.status(201).json({ status: 'success', usergroups});
+        const group = await Usergroup.find({ groupId }).populate('userId', 'name isLoggedIn');
+        let usergroups = group.map(g => ({
+            id: g._id,
+            userid: g.userId._id,
+            name: g.userId.name,
+            isLoggedIn: g.userId.isLoggedIn,
+            isAdmin: g.isAdmin
+        }));
+
+        if (usergroups.length === 0) {
+            res.status(401).json({ status: 'fail', message: 'no group found' });
         } else {
-            res.status(401).json({ status: 'fail', message: 'You are not the member of this group'});
+            res.status(201).json({ status: 'success', usergroups });
         }
     } catch (err) {
         console.log(err);
-        res.status(500).json({ status: 'fail', message: 'server error'});
-    }    
+        res.status(500).json({ status: 'fail', message: 'server error' });
+    }
 }
 
 module.exports = {
