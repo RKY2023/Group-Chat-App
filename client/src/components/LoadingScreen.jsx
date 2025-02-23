@@ -7,7 +7,7 @@ import { groupActions } from "../store/groupReducer";
 
 function LoadingScreen (props) {
   const dispatch = useDispatch();
-  const api_url = useSelector(state => state.ui.api_url);
+  const api_url = `${process.env.REACT_APP_API_URL}`;
   const [error, setError] = useState('');
   // console.log(lastMessageId ,'user', userId, groupId, lastMessageId );
 

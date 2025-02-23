@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { FaArrowLeft } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { pp } from "../../assets/groupchat";
 import { chatActions } from "../../store/chatReducer";
 import { groupActions } from "../../store/groupReducer";
@@ -12,7 +12,7 @@ function NewGroupMenu() {
   const [invitedUsers, setInvitedUsers] = useState([]);
   const [apiNotCalled, setApiNotCalled] = useState(true);
   const dispatch = useDispatch();
-  const api_url = useSelector(state => state.ui.api_url);
+  const api_url = `${process.env.REACT_APP_API_URL}`;
 
   const inputGroupNameRef = useRef();
   const inputGroupMembersRef = useRef();

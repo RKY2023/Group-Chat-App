@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const phoneValidationRegex = /\d{3}-\d{3}-\d{4}/;
+const phoneValidationRegex = /\d{10}/;
 
 const userSchema = new mongoose.Schema({
     name: String,

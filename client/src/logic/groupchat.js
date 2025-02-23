@@ -20,7 +20,7 @@ export const getTime = () => {
 //     lastMessageId: lastMessageId
 //   }
 //   console.log(msgData);
-//   const response = await fetch("http://localhost:5000/getThread",{
+//   const response = await fetch(`${process.env.REACT_APP_API_URL}`+"/getThread",{
 //       method: "POST",
 //       body: JSON.stringify(msgData),
 //       headers: {

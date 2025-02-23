@@ -13,7 +13,6 @@ const App = () => {
 
   useEffect(() => {
     dispatch(chatActions.setTheme());
-    // console.log('App');
     dispatch(chatActions.setUserId());
   },[dispatch]);
 

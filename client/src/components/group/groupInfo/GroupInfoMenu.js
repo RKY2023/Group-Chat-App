@@ -7,7 +7,7 @@ import GroupProfile from "./GroupProfile";
 function GroupInfoMenu() {
   const dispatch = useDispatch();
   const groupId = useSelector(state => state.group.groupId);
-  const api_url = useSelector(state => state.ui.api_url);
+  const api_url = `${process.env.REACT_APP_API_URL}`;
 
   const groupInfo = async () => {
     const token = localStorage.getItem("token");
