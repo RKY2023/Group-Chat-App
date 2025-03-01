@@ -4,7 +4,7 @@ const initialChatStore = {
   theme: "light",
   chats: [],
   users: [],
-  groupId: 0,
+  groupId: '',
   onlineUserList: [],
   loggedInUserId: null,
   isInit: true,

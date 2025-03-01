@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialGroupStore = {
   groups: [],
-  groupId: 0,
+  groupId: '',
   isNewGroupRequired: false,
   newCreateGroup: [],
   currentGroupName: '',

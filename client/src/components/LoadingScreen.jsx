@@ -19,13 +19,18 @@ function LoadingScreen (props) {
       }
     });
     const data = await response.json();
-    // console.log(data);
+
     if(data && data.message === 'success'){
       if(data.groups.length === 0) {
         dispatch(groupActions.setIsNewGroupRequired(true));
       } else {
-        dispatch(groupActions.setGroupList(data.groups));
-        dispatch(groupActions.setGroupId(data.groups[0].id));
+        const transformedGroups = data.groups.map(group => ({
+          ...group,
+          id: group._id
+        }));
+
+        dispatch(groupActions.setGroupList(transformedGroups));
+        dispatch(groupActions.setGroupId(transformedGroups[0].id));
         // dispatch(groupActions.setCurrentGroup(data.groups[0].id));
         
       }
