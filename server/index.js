@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
+const PORT = process.env.PORT || 3001;
 
 const bodyParser = require("body-parser");
 
@@ -25,7 +26,7 @@ app.use(userRoutes);
 app.use(threadRoutes);
 
 connectDB().then(() => {
-    app.listen(3001, () => console.log("Server ready on port 3001."));
+    app.listen(PORT, () => console.log(`Server ready on port ${PORT}.`));
 }).catch(err => console.log(err));
 
 module.exports = app;

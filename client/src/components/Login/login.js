@@ -94,37 +94,36 @@ const Login = () => {
 
     return (
         <>
-        <div className="container">
-        <div className="text-warning">{error}</div>
+        <div className="container mt-5">
+        <div className="card p-4">
+        <h2 className="text-center mb-4">{loginMode === 'signup' ? 'Sign Up' : 'Login'}</h2>
         <Form onSubmit={submitHandler}>
+        <div className="text-warning text-center mb-3">{error}</div>
             { loginMode === 'signup' && 
-            <Form.Group className="text-white mt-2">
-                <Form.Label>Name</Form.Label>
+            <Form.Group className="text-dark mb-3">
                 <Form.Control type="text" placeholder="Enter Name" ref={inputNameRef}/>
             </Form.Group>
             }
-            <Form.Group className="text-white mt-2">
-                <Form.Label>Email</Form.Label>
+            <Form.Group className="text-dark mb-3">
                 <Form.Control type="email" placeholder="Enter Email" ref={inputEmailRef}/>
             </Form.Group>
-            <Form.Group className="text-white mt-2">
-                <Form.Label>Password</Form.Label>
+            <Form.Group className="text-dark mb-3">
                 <Form.Control type="password" placeholder="Password" ref={inputPasswordRef}/>
             </Form.Group>
             { loginMode === 'signup' && 
-            <Form.Group className="text-white mt-2">
-                <Form.Label>Phone No</Form.Label>
+            <Form.Group className="text-dark mb-3">
                 <Form.Control type="number" placeholder="Phone no" ref={inputPhonenoRef}/>
             </Form.Group>
             }
-            <Button variant="primary" type="submit" className="mt-3">
+            <Button variant="primary" type="submit" className="mt-2 w-100">
                 {loginMode === 'signup' ? 'Sign Up': 'Login' }
             </Button>
-            <hr/>
-            <Button onClick={switchLoginModeHandler} variant="success" className="mt-3">
+            
+            <Button onClick={switchLoginModeHandler} variant="link" className="mt-3 w-100 text-decoration-none">
                 {(loginMode === 'signup') ? 'Already have an Account? Login' : 'Don\'t have an account? Signup' }
             </Button>
         </Form>
+        </div>
         </div>
         </>
     );

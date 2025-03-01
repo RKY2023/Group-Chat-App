@@ -31,7 +31,7 @@ function GroupInfoMenu() {
   useEffect(() => {
     console.log('groupInfo =>');
     groupInfo();
-  });
+  }, [groupId, api_url, dispatch]);
 
   return (
     <div className="flex flex-col border-r border-neutral-700 w-100 h-screen">
