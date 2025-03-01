@@ -17,6 +17,10 @@ const groupSlice = createSlice({
   reducers: {
     setGroupId (state, action) {
       state.groupId = action.payload;
+      state.currentGroupName = '';
+      state.currentGroupInfo = '';
+      state.currentGroupImg = '';
+      state.groupMembers = [];
     },
     setGroupList (state, action) {
       state.groups = action.payload;
@@ -47,4 +51,7 @@ const groupSlice = createSlice({
 });
 
 export const groupActions = groupSlice.actions;
+
+export const selectGroupId = (state) => state.group.groupId;
+
 export default groupSlice.reducer;

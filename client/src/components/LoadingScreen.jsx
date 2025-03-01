@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { PiChatsFill  } from "react-icons/pi";
 import { FaLock } from "react-icons/fa";
 import ProgressBar from 'react-bootstrap/ProgressBar';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { groupActions } from "../store/groupReducer";
 
 function LoadingScreen (props) {

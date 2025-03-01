@@ -98,6 +98,9 @@ const chatSlice = createSlice({
         const userData = JSON.parse(jsonPayload);
         console.log(userData);
         state.loggedInUserId = userData.userid;
+      } else {
+        state.loggedInUserId = null;
+        state.groupId = 0;
       }
     },
     setNewCreatedGroup(state, action) {

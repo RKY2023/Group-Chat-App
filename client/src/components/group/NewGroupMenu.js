@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { pp } from "../../assets/groupchat";
@@ -34,7 +34,7 @@ function NewGroupMenu() {
     }
   };
 
-  const userListApi = async () => {
+  const userListApi = useCallback(async () => {
     const token = localStorage.getItem("token");
     const response = await fetch(api_url+"/userList", {
       method: "GET",
@@ -48,7 +48,7 @@ function NewGroupMenu() {
     if (data && data.message === "success") {
       setUsers(data.users);
     }
-  };
+  }, [api_url]);
 
   const submitHandler = async (event) => {
     event.preventDefault();

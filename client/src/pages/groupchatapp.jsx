@@ -3,14 +3,14 @@ import LeftMenu from "../components/LeftMenu";
 import ChatDetail from "../components/chat/ChatDetail";
 import LoadingScreen from "../components/LoadingScreen";
 import { useSelector } from "react-redux";
-
-// TODO: loading screen component
+import { selectGroupId } from "../store/groupReducer";
 
 function GroupChatsApp () {
   const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  const groupId = useSelector(state => state.group.groupId);
+  const groupId = useSelector(selectGroupId);
+  console.log(groupId);
 
   useEffect(() => {
     const tm1 = setTimeout(() => {

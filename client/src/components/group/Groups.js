@@ -29,6 +29,7 @@ function Groups(props) {
         </div>
         <p className="text-emerald-500 text-xs font-light"></p>
       </div>
+      <div className="groupList">
       {groupsData.map((group, i) => {
         return (
           <CardList
@@ -43,6 +44,7 @@ function Groups(props) {
           />
         );
       })}
+      </div>
     </div>
   );
 }

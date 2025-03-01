@@ -2,7 +2,7 @@ import React, { useEffect, useCallback, useState, useRef } from "react";
 import { Form, Button} from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { chatActions } from "../../store/chatReducer";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
     const history = useHistory();

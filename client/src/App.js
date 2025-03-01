@@ -28,7 +28,7 @@ const App = () => {
         <Route path='/chat'>
           {/* <MainView /> */}
         </Route>
-        <Route path='/group'>
+        <Route path='/groupchatapp'>
           <GroupChatsApp />
         </Route>
         <Route path='/chat'>

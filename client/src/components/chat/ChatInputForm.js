@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import RoundedBtn from "../Common/RoundedBtn";
 import { MdSend } from "react-icons/md";
 import { cs2 } from "../../assets/groupchat";
@@ -20,7 +20,7 @@ function ChatForm (props) {
     inputRef.current.value.length === 0 ? setTyping(false) : setTyping(true);
   };
 
-  const sendMsgHandler = (msg) => {
+  const sendMsgHandler = useCallback((msg) => {
     if(inputRef.current.value.length > 0) {
       const msgData= {
         message: inputRef.current.value,
@@ -36,7 +36,7 @@ function ChatForm (props) {
     } else {
       // for imag submit
     }
-  };
+  }, [groupId, props, userId]);
 
   const onClickEmojiHandler = () => {
     inputRef.current.value += "🔥💯";
