@@ -8,7 +8,7 @@ const initialChatStore = {
   onlineUserList: [],
   loggedInUserId: null,
   isInit: true,
-  lastMsgId: 0,
+  lastMsgId: '',
   newCreateGroup: [],
 };
 
@@ -52,6 +52,7 @@ const chatSlice = createSlice({
     },
     setNewChats(state, action) {
       const payload = action.payload;
+      console.log('pl',payload);
       let newPayload;
       // console.log('tt',state.receiverList.length);
       if (payload.length > 0 && payload[0].uid > 0) {
@@ -100,7 +101,7 @@ const chatSlice = createSlice({
         state.loggedInUserId = userData.userid;
       } else {
         state.loggedInUserId = null;
-        state.groupId = 0;
+        state.groupId = '';
       }
     },
     setNewCreatedGroup(state, action) {
@@ -110,7 +111,7 @@ const chatSlice = createSlice({
       state.lastMsgId = action.payload;
     },
     setNewGroupChats(state, action) {
-      state.lastMsgId = 0;
+      state.lastMsgId = '';
       state.chats = [];
     }
   }

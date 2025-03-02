@@ -7,10 +7,11 @@ import ChatForm from "./ChatInputForm";
 
 function ChatDetail() {
   const dispatch = useDispatch();
-  const api_url = useSelector(state => state.ui.api_url);
+  const api_url = `${process.env.REACT_APP_API_URL}`;
   const groupId = useSelector(state => state.group.groupId);
   const lastMessageId = useSelector(state => state.chat.lastMsgId);
   const userId = useSelector(state => state.chat.loggedInUserId);
+  console.log(groupId, userId, lastMessageId);  
 
   const messages = useSelector(state => state.chat.chats);
   const bottomRef = useRef(null);
@@ -43,6 +44,7 @@ function ChatDetail() {
         }
     });
     const data = await response.json();
+    console.log(data);  
     if(data.threads) {
       dispatch(chatActions.setNewChats(data.threads));
     }

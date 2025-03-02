@@ -15,7 +15,7 @@ const threadRoutes = require("./routes/thread");
 const app = express();
 
 app.use(cors({
-    origin: ["http://localhost:3000", "http://127.0.0.1:5000"]
+    origin: [process.env.CLIENT_URL_DEV, process.env.CLIENT_URL],
 }));
 
 app.use(bodyParser.json());
