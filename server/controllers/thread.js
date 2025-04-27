@@ -10,7 +10,7 @@ const getThread = async (req, res, next) => {
     try {
         const grp_list = await Group.find({ userId: user, _id: groupId });
         const threads = await Thread.find({
-            _id: { $gt: lastThreadId },
+            // _id: { $gt: lastThreadId },
             groupId: groupId,
         }).populate('userId', 'isLoggedIn').sort({ createdAt: 'asc' });
 
@@ -22,10 +22,10 @@ const getThread = async (req, res, next) => {
 }
 
 const sendMsg = async (req, res, next) => {
-    const { userId, groupId, message } = req.body;
+    const { userId, groupId, message, time } = req.body;
     try {
         const thread = new Thread({
-            message, userId, groupId
+            message, userId, groupId, time
         });
         await thread.save();
         res.status(201).json({ 'message': 'success', thread });

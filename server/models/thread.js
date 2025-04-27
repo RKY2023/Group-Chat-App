@@ -19,6 +19,11 @@ const threadSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Group',
         required: true
+    },
+    time: {
+        type: Date,
+        default: Date.now,
+        required: true
     }
 });
 
