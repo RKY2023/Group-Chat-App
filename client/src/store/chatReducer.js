@@ -128,14 +128,16 @@ const chatSlice = createSlice({
         if (newPayload.length !== 0) {
           const lastMessageId = newPayload[newPayload.length - 1]._id;
           if (lastMessageId !== undefined) state.lastMsgId = lastMessageId;
+          console.log('newPayload', newPayload);
+      const newChats = [...state.chats, ...newPayload];
+      console.log(newChats, state.lastMsgId);
+      localStorage.setItem("msg", newChats);
+      state.chats = newChats;
         }
       } else {
         console.log('Empty threads');
       }
-      const newChats = [...state.chats, ...newPayload];
-      // console.log(newChats, state.lastMsgId);
-      localStorage.setItem("msg", newChats);
-      state.chats = newChats;
+      
     },
     setReceiverList(state, action) {
       const payload = action.payload;

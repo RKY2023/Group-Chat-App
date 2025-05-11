@@ -1,11 +1,14 @@
-import React, { useEffect, useRef, useCallback } from "react";
+import React, { useEffect, useRef, useCallback, useState } from "react";
 import Message from "./Message";
 import { useDispatch, useSelector } from "react-redux";
 import { chatActions } from "../../store/chatReducer";
 import GroupNav from "../group/GroupNav";
 import ChatForm from "./ChatInputForm";
+import EmptyChat from "../Common/EmptyChat";
+import Loading from "../Common/Loading";
 
 function ChatDetail() {
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const api_url = `${process.env.REACT_APP_API_URL}`;
   const groupId = useSelector(state => state.group.groupId);
@@ -18,6 +21,7 @@ function ChatDetail() {
   const bottomRef = useRef(null);
   
   const getChats = useCallback(async (userId, groupId, lastMessageId) => {
+    setIsLoading(true);
     const msgData = {
       user: userId,
       groupId,
@@ -35,6 +39,7 @@ function ChatDetail() {
     if(data.threads) {
       dispatch(chatActions.setNewChats(data.threads));
     }
+    setIsLoading(false);
   }, [api_url, dispatch]);
 
   const submitMsg = useCallback( async (msgData) => {
@@ -75,6 +80,9 @@ function ChatDetail() {
         className={`bg-[#0a131a] bg-[url('./assets/images/bg.webp')] bg-contain overflow-y-scroll h-100`}
         style={{ padding: "12px 7%" }}
       >
+      {isLoading && messages.length === 0 && <Loading />}
+      {!isLoading && messages.length === 0 && <EmptyChat />}
+      {console.log(messages)}
         {messages.map((msg) => {
           return <Message 
             message={msg.message}
