@@ -8,7 +8,7 @@ const initialChatStore = {
   onlineUserList: [],
   loggedInUserId: null,
   isInit: true,
-  lastMsgId: 0,
+  lastMsgId: '',
   newCreateGroup: [],
 };
 
@@ -52,29 +52,92 @@ const chatSlice = createSlice({
     },
     setNewChats(state, action) {
       const payload = action.payload;
+      // let threads = [
+      //   {
+      //     "_id": "67c38fac5eb18c7d34251509",
+      //     "message": "sdasdasd",
+      //     "isLink": false,
+      //     "isImg": false,
+      //     "userId": {
+      //       "_id": "67bb5d76433b01753d7044d7",
+      //       "isLoggedIn": true
+      //     },
+      //     "groupId": "67bb5fdc433b01753d7044e6",
+      //     "__v": 0
+      //   },
+      //   {
+      //     "_id": "67c6d98c32394f4c06430cb7",
+      //     "message": "msg1",
+      //     "isLink": false,
+      //     "isImg": false,
+      //     "userId": {
+      //       "_id": "67bb5d76433b01753d7044d7",
+      //       "isLoggedIn": true
+      //     },
+      //     "groupId": "67bb5fdc433b01753d7044e6",
+      //     "__v": 0
+      //   },
+      //   {
+      //     "_id": "67c6daa732394f4c06430cb9",
+      //     "message": "msg1",
+      //     "isLink": false,
+      //     "isImg": false,
+      //     "userId": {
+      //       "_id": "67bb5d76433b01753d7044d7",
+      //       "isLoggedIn": true
+      //     },
+      //     "groupId": "67bb5fdc433b01753d7044e6",
+      //     "__v": 0
+      //   },
+      //   {
+      //     "_id": "67c6db1332394f4c06430cbb",
+      //     "message": "msg11",
+      //     "isLink": false,
+      //     "isImg": false,
+      //     "userId": {
+      //       "_id": "67bb5d76433b01753d7044d7",
+      //       "isLoggedIn": true
+      //     },
+      //     "groupId": "67bb5fdc433b01753d7044e6",
+      //     "__v": 0
+      //   },
+      //   {
+      //     "_id": "67c6db8016d0c0517c8ca2be",
+      //     "message": "dasd",
+      //     "isLink": false,
+      //     "isImg": false,
+      //     "userId": {
+      //       "_id": "67bb5d76433b01753d7044d7",
+      //       "isLoggedIn": true
+      //     },
+      //     "groupId": "67bb5fdc433b01753d7044e6",
+      //     "__v": 0
+      //   }
+      // ]
+      console.log('pl',payload, state.lastMsgId);
       let newPayload;
-      // console.log('tt',state.receiverList.length);
-      if (payload.length > 0 && payload[0].uid > 0) {
-        // newPayload = payload.filter((p) => {
-        //   // for ( let  pp of state.receiverList )
-        //   // console.log('tt',state.receiverList.length,p);
-        // });
-        // console.log("uid", newPayload);
-        newPayload = payload;
-      } else {
-        newPayload = payload.filter((p) => {
-          return p.id > state.lastMsgId;
-        });
-        if (newPayload.length > 0) {
-          const lastMessageId = newPayload[newPayload.length - 1].id;
-          // console.log('lmsg', lastMessageId);
-          if (lastMessageId !== undefined) state.lastMsgId = lastMessageId;
+      // if (payload.length > 0 && payload[0].uid > 0) {
+      if (payload.length > 0) {
+        if (state.lastMsgId.length > 12) {
+          newPayload = payload.filter((p) => {
+            return p._id > state.lastMsgId;
+          });
+        } else {
+          newPayload = payload;
         }
-      }
+        if (newPayload.length !== 0) {
+          const lastMessageId = newPayload[newPayload.length - 1]._id;
+          if (lastMessageId !== undefined) state.lastMsgId = lastMessageId;
+          console.log('newPayload', newPayload);
       const newChats = [...state.chats, ...newPayload];
-      // console.log(newChats, state.lastMsgId);
+      console.log(newChats, state.lastMsgId);
       localStorage.setItem("msg", newChats);
       state.chats = newChats;
+        }
+      } else {
+        console.log('Empty threads');
+      }
+      
     },
     setReceiverList(state, action) {
       const payload = action.payload;
@@ -100,7 +163,7 @@ const chatSlice = createSlice({
         state.loggedInUserId = userData.userid;
       } else {
         state.loggedInUserId = null;
-        state.groupId = 0;
+        state.groupId = '';
       }
     },
     setNewCreatedGroup(state, action) {
@@ -110,9 +173,9 @@ const chatSlice = createSlice({
       state.lastMsgId = action.payload;
     },
     setNewGroupChats(state, action) {
-      state.lastMsgId = 0;
+      state.lastMsgId = '';
       state.chats = [];
-    }
+    },
   }
 });
 

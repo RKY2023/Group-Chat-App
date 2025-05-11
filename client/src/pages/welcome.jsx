@@ -4,7 +4,7 @@ import Login from "../components/Login/login";
 import logo from "../assets/images/grf1.PNG";
 // import DropdownMenu from "../components/dropdown";
 
-function LoginPage () {
+function WelcomePage () {
   return (
     <div className="flex justify-center items-center w-screen h-screen bg-[#202d33]">
         <div className="flex flex-col justify-center items-center w-1/2 h-full p-5" style={{flex: 1}}>
@@ -18,4 +18,4 @@ function LoginPage () {
   );
 };
 
-export default LoginPage;
+export default WelcomePage;

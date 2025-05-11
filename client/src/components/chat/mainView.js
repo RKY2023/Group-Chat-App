@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 const MainView = () => {
   const dispatch = useDispatch();
-  const api_url = useSelector(state => state.ui.api_url);
+  const api_url = `${process.env.REACT_APP_API_URL}`;
   const userId = useSelector(state => state.chat.loggedInUserId);
 
   const getOnlineUsers = async () => {

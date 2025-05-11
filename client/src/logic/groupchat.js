@@ -11,6 +11,13 @@ export const getTime = () => {
   })
   .toLocaleLowerCase();
 }
+export const formatTime = (time) => {
+  return new Date(time).toLocaleDateString("en-us", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  }).toLowerCase();
+};
 
 // export const getChats = async (userId, groupId, lastMessageId) => {
 //   console.log('getchat called');
