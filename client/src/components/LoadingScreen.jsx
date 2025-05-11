@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { PiChatsFill  } from "react-icons/pi";
 import { FaLock } from "react-icons/fa";
 import ProgressBar from 'react-bootstrap/ProgressBar';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { groupActions } from "../store/groupReducer";
+import {chatActions} from "../store/chatReducer";
 
 function LoadingScreen (props) {
   const dispatch = useDispatch();
   const api_url = `${process.env.REACT_APP_API_URL}`;
   const [error, setError] = useState('');
+  const loggedInUserId = useSelector(state => state.chat.loggedInUserId);
   // console.log(lastMessageId ,'user', userId, groupId, lastMessageId );
 
-  const getGroupList = async () => {
+  const getGroupList = useCallback(async () => {
     const response = await fetch(api_url+'/groupList',{
       method: "GET",
       headers: {
@@ -33,41 +35,44 @@ function LoadingScreen (props) {
         dispatch(groupActions.setGroupId(transformedGroups[0].id));
         // dispatch(groupActions.setCurrentGroup(data.groups[0].id));
         
+        // setTimeout(() => {
+        //   getChats(loggedInUserId, transformedGroups[0].id, '');
+        // }, 1000);
       }
     } else {
       setError('Error in fetching groups');
     }
-  };
+  }, [api_url, dispatch, loggedInUserId]);
 
   useEffect(() => {
     getGroupList();
-  });
+  }, [getGroupList]);
 
-  // const getChats = async (userId, groupId, lastMessageId) => {
-  //   console.log('getchat called');
-  //   const msgData = {
-  //     user: userId,
-  //     groupId,
-  //     lastMessageId: lastMessageId
-  //   }
-  //   console.log(msgData);
-  //   const response = await fetch("http://localhost:5000/getThread",{
-  //       method: "POST",
-  //       body: JSON.stringify(msgData),
-  //       headers: {
-  //           'Content-Type': 'application/json'
-  //       }
-  //   });
-  //   const data = await response.json();
-  //   const tt = new Date();
-  //   console.log(tt.getMinutes(), tt.getSeconds());
-  //   if(data.threads) {
-  //     dispatch(chatActions.setNewChats(data.threads));
-  //   } else {
-  //     setError(data.error);
-  //   }
-  //   console.log('Threads =>',data.threads);
-  // };
+  const getChats = async (userId, groupId, lastMessageId) => {
+    console.log('getchat called');
+    const msgData = {
+      user: userId,
+      groupId,
+      lastMessageId: lastMessageId
+    }
+    console.log(msgData);
+    const response = await fetch(api_url+'/getThread',{
+        method: "POST",
+        body: JSON.stringify(msgData),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    const data = await response.json();
+    const tt = new Date();
+    console.log(tt.getMinutes(), tt.getSeconds());
+    if(data.threads) {
+      dispatch(chatActions.setNewChats(data.threads));
+    } else {
+      setError(data.error);
+    }
+    console.log('Threads =>',data.threads);
+  };
 
   // useEffect(() => {
   //   if(groupId > 0) {

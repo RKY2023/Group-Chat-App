@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { chatActions } from './store/chatReducer';
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import GroupChatsApp from './pages/groupchatapp';
-import LoginPage from './pages/login';
+import WelcomePage from './pages/welcome';
 
 
 const App = () => {
@@ -23,7 +23,7 @@ const App = () => {
       {/* {NewGroupModal && <NewGroupForm />}       */}
       <Switch>
         <Route path='/' exact>
-          <LoginPage />
+          <WelcomePage />
         </Route>
         <Route path='/chat'>
           {/* <MainView /> */}

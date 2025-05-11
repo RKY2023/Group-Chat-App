@@ -1,35 +1,27 @@
-import React, { useEffect, useRef, useCallback } from "react";
+import React, { useEffect, useRef, useCallback, useState } from "react";
 import Message from "./Message";
 import { useDispatch, useSelector } from "react-redux";
 import { chatActions } from "../../store/chatReducer";
 import GroupNav from "../group/GroupNav";
 import ChatForm from "./ChatInputForm";
+import EmptyChat from "../Common/EmptyChat";
+import Loading from "../Common/Loading";
 
 function ChatDetail() {
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
-  const api_url = useSelector(state => state.ui.api_url);
+  const api_url = `${process.env.REACT_APP_API_URL}`;
   const groupId = useSelector(state => state.group.groupId);
   const lastMessageId = useSelector(state => state.chat.lastMsgId);
   const userId = useSelector(state => state.chat.loggedInUserId);
 
+  console.log(groupId, userId, lastMessageId);  
+
   const messages = useSelector(state => state.chat.chats);
   const bottomRef = useRef(null);
-
-  const submitMsg = useCallback( async (msgData) => {
-    const response = await fetch(api_url+"/sendMsg",{
-        method: "POST",
-        body: JSON.stringify(msgData),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-    const data = await response.json();
-    if(data && data.thread === 'success'){
-      // fetch chat / update chat again
-    }
-  },[api_url]);
-
+  
   const getChats = useCallback(async (userId, groupId, lastMessageId) => {
+    setIsLoading(true);
     const msgData = {
       user: userId,
       groupId,
@@ -43,10 +35,29 @@ function ChatDetail() {
         }
     });
     const data = await response.json();
+    console.log(data);  
     if(data.threads) {
       dispatch(chatActions.setNewChats(data.threads));
     }
+    setIsLoading(false);
   }, [api_url, dispatch]);
+
+  const submitMsg = useCallback( async (msgData) => {
+    const response = await fetch(api_url+"/sendMsg",{
+        method: "POST",
+        body: JSON.stringify(msgData),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+    const data = await response.json();
+    console.log(data);
+    if(data && data.message === 'success'){
+      // fetch chat / update chat again
+      await getChats(userId, groupId, data.thread._id);
+    }
+  },[api_url, userId, groupId, getChats]);
+
 
   useEffect(() => {
     bottomRef.current.scrollIntoView({
@@ -55,14 +66,11 @@ function ChatDetail() {
   },[messages]);
   
   useEffect(() => { 
-    const timer = setInterval(async () => {
-      if(groupId > 0) {
+    setTimeout(async () => {
+      if(groupId) {
         await getChats(userId, groupId, lastMessageId);
       }
     }, 1000);
-    return () => {
-      clearInterval(timer);
-    };
   },[userId, groupId, lastMessageId, getChats]);
 
   return (
@@ -72,6 +80,9 @@ function ChatDetail() {
         className={`bg-[#0a131a] bg-[url('./assets/images/bg.webp')] bg-contain overflow-y-scroll h-100`}
         style={{ padding: "12px 7%" }}
       >
+      {isLoading && messages.length === 0 && <Loading />}
+      {!isLoading && messages.length === 0 && <EmptyChat />}
+      {console.log(messages)}
         {messages.map((msg) => {
           return <Message 
             message={msg.message}

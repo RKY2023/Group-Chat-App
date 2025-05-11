@@ -1,14 +1,15 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { formatTime } from "../../logic/groupchat";
 
 function Message(props) {
   const userId = useSelector(state => state.chat.loggedInUserId);
-  // const 
-  // console.log('meessgae users', userId, props.userId);
+  console.log('meessgae users', userId, props.userId);
+
   return (
     <div
       className={`flex justify-center items-center rounded-md w-fit my-1 ${
-        (props.userId === userId) ? "bg-[#005c4b] ml-auto" : "bg-[#202d33] mr-auto"
+        (props.userId._id === userId) ? "bg-[#005c4b] ml-auto" : "bg-[#202d33] mr-auto"
       }`}
     >
       {/* Image msg  */}
@@ -22,7 +23,7 @@ function Message(props) {
           {/* Time  */}
           <p 
             className="absolute right-2 bottom-3 text-[#8796a1] text-[10px] min-w-[50px]">
-            {props.time}
+            {formatTime(props.time)}
           </p>
         </div>
       ) : (
@@ -44,8 +45,8 @@ function Message(props) {
             </p>
           )}
           <p className="text-[#8796a1] text-[10px] min-w-[50px]">
-            {props.time}
-            </p>
+            {formatTime(props.time)}
+          </p>
         </div>
       )}
     </div>
