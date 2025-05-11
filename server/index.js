@@ -20,7 +20,7 @@ app.use(cors({
 
 app.use(bodyParser.json());
 
-app.get("/", (req, res) => res.send("Express on Vercel"));
+app.get("/", (req, res) => res.send("Express on Vercel"+process.env.CLIENT_URL_DEV));
 
 app.use(userRoutes);
 app.use(threadRoutes);
